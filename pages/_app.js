@@ -6,6 +6,7 @@ import CommandBar from '../components/CommandBar'
 import MobileNavbar from '../components/MobileNavbar'
 import * as gtag from '../lib/gtag'
 import '../public/static/css/prism.css'
+import React from 'react'
 
 Router.events.on('routeChangeComplete', url => gtag.pageview(url))
 

@@ -9,9 +9,9 @@ import { motion } from 'framer-motion'
 
 export async function getStaticProps() {
   const meta = {
-    title: 'Contact // Parth Desai',
-    tagline: 'Email me. Like in the old days.',
-    image: '/static/images/contact-bw.jpg',
+    title: 'Contact // Gangadhar S',
+    tagline: 'Let\'s connect! Email, call, or reach out on social.',
+    image: '/static/images/avatar.jpg',
     primaryColor: 'cyan',
     secondaryColor: 'green',
   }
@@ -65,7 +65,14 @@ function Contact(props) {
       </Head>
 
       <Box>
-        <p dangerouslySetInnerHTML={{ __html: description }} />
+        <p>Rajajinagar, Bengaluru<br />
+        <a href="mailto:sgangadhar.exe@gmail.com">sgangadhar.exe@gmail.com</a><br />
+        <a href="tel:6302966383">6302966383</a><br />
+        <a href="https://www.linkedin.com/in/gangadhar02/" target="_blank">LinkedIn</a> | 
+        <a href="https://x.com/gangadhar__s" target="_blank">X</a> | 
+        <a href="https://www.instagram.com/gangadhar__s/" target="_blank">Instagram</a> | 
+        <a href="https://sgangadhar.carrd.co/" target="_blank">Personal Site</a>
+        </p>
         <h2>Send me an email</h2>
         <Form onSubmit={onSendEmail}>
           {[

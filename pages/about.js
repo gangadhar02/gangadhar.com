@@ -17,11 +17,11 @@ const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 export async function getStaticProps() {
   const meta = {
-    title: 'About // Parth Desai',
+    title: 'About // Gangadhar S',
     description:
-      "Parth Desai is a results-driven Data Engineer with 2+ YoE passionate about architecting scalable big data solutions across AWS, GCP, and Kubernetes. With expertise in SQL, Python, and distributed frameworks like Spark and Kafka, he specializes in high-performance ETL pipelines and real-time data processing. Parth led the migration of the AppsFlyer data pipeline to a DataLocker-based architecture, reducing latency by 95% and saving $1.1M in operational costs. He has successfully undertaken digital transformation projects and led multiple migrations from Dev to Prod. Parth is committed to delivering production-ready, impactful code that drives business value.",
-    tagline: 'Build. Code. Deliver.',
-    image: '/static/images/about-bw.jpg',
+      "Hello! I'm Gangadhar, a Creative Strategist and Performance Marketer based in Bengaluru. I help scale businesses by producing high performance creatives and leveraging design, digital marketing, creative strategy, and data analytics to drive impact for organisations. My journey began in 2019 with a deep interest in technology and marketing, running campaigns across industries like film, automotive, and politics. Currently, I work at GrowthSchool and Demandlane, focusing on creative strategy for marketing initiatives.",
+    tagline: 'Creative. Strategic. Impactful.',
+    image: '/static/images/avatar.jpg',
     primaryColor: 'pink',
     secondaryColor: 'purple',
   }
@@ -42,7 +42,7 @@ function About(props) {
       <Container>
         <Section>
           <Image
-            alt="Parth"
+            alt="Gangadhar S"
             src="/static/images/avatar.jpg"
             width="336"
             height="336"
@@ -58,10 +58,8 @@ function About(props) {
               '@bp2': { marginTop: '-6px' },
             }}
           >
-            <strong>Hey, I'm Parth Desai</strong>
-            <Pronunciation />I once bricked an iPod at 13 while jailbreaking
-            it—igniting my lifelong obsession with tech. Now, I transform raw
-            data into meaningful impact.
+            <strong>Hey, I'm Gangadhar S</strong>
+            <Pronunciation />I'm a Creative Strategist and Performance Marketer based in Bengaluru, passionate about digital marketing, creative strategy, and data analytics.
           </Paragraph>
           <Paragraph>
             I love{' '}
@@ -138,9 +136,7 @@ function About(props) {
           <span style={{ margin: '0 20px 0 10px' }}>•</span>
           <ButtonPrimary
             as="a"
-            download
-            role="button"
-            href="https://docs.google.com/document/d/19lnmad43-oLgP8UrADQt_p3l0cQz7gpDQGiIQjxGg38/edit?usp=sharing"
+            href="https://drive.google.com/"
             target="_blank"
             style={btnStyle}
             onClick={downloadResume}

@@ -1,6 +1,8 @@
 {
   "private": true,
-  "name": "parthdesai.site",
+  "name": "gangadhar-portfolio",
+  "description": "Portfolio website for Gangadhar S, Creative Strategist and Performance Marketer.",
+  "author": "Gangadhar S",
   "version": "5.0.0",
   "scripts": {
     "dev": "next dev",
@@ -13,11 +15,12 @@
     "@google-analytics/admin": "^7.4.0",
     "@google-analytics/data": "^4.7.0",
     "@notionhq/client": "^2.3.0",
+    "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-toast": "^1.0.0",
     "@react-email/html": "^0.0.1",
     "@stitches/react": "^1.2.6",
     "date-fns": "^2.21.3",
-    "framer-motion": "^6.2.3",
+    "framer-motion": "^6.5.1",
     "googleapis": "^95.0.0",
     "gray-matter": "^4.0.3",
     "kbar": "^0.1.0-beta.21",
@@ -41,8 +44,14 @@
     "resend": "^0.9.1"
   },
   "devDependencies": {
+    "@types/node": "^24.0.3",
+    "@types/react": "^19.1.8",
+    "autoprefixer": "^10.4.21",
     "eslint": "^8.9.0",
     "eslint-config-next": "^12.0.10",
-    "eslint-config-prettier": "^8.3.0"
+    "eslint-config-prettier": "^8.3.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.10",
+    "typescript": "^5.8.3"
   }
 }

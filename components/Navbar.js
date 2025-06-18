@@ -12,12 +12,7 @@ export default function Navbar() {
     'Articles',
     'Projects',
     'Work',
-    'Uses',
-    'Tweets',
-    'Connections',
-    'Contact',
-    // 'Podcasts',
-    // 'Investing',
+    'Archive',
   ]
   const [hovered, setHovered] = useState('')
   const { query } = useKBar()
@@ -26,7 +21,7 @@ export default function Navbar() {
     <AnimateSharedLayout>
       <Header>
         <Link href="/" passHref>
-          <ButtonLogo as="a">P</ButtonLogo>
+          <ButtonLogo as="a">G</ButtonLogo>
         </Link>
 
         <Nav>
