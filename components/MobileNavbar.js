@@ -1,8 +1,8 @@
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { styled } from '../stitches.config'
 
 import aboutIcon from '../public/static/icons/about.json'
@@ -23,43 +23,9 @@ const navItems = [
 
 export default function MobileNavbar() {
   const router = useRouter()
-  const controls = useAnimation()
-  const [lastScrollY, setLastScrollY] = useState(0)
-  const [timeoutId, setTimeoutId] = useState(null)
-
-  useEffect(() => {
-    controls.set({ opacity: 1, y: 0 })
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        controls.start({ y: 100, opacity: 0 })
-      } else {
-        controls.start({ y: 0, opacity: 1 })
-        if (timeoutId) clearTimeout(timeoutId)
-        const newTimeout = setTimeout(() => {
-          controls.start({ y: 100, opacity: 0 })
-        }, 30000)
-        setTimeoutId(newTimeout)
-      }
-
-      setLastScrollY(currentScrollY)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY, controls, timeoutId])
 
   return (
-    <NavBarContainer
-      as={motion.nav}
-      initial={{ opacity: 0, y: 40 }}
-      animate={controls}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-    >
+    <NavBarContainer>
       <NavBarInner>
         {navItems.map(item => (
           <Link href={item.path} passHref key={item.path}>
@@ -88,11 +54,13 @@ const NavBarContainer = styled('nav', {
   maxWidth: '500px',
   background: '#101111',
   borderRadius: '16px',
-  zIndex: 50,
+  zIndex: 999,
   padding: '8px 8px',
   '@bp2': { display: 'none' },
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+  backdropFilter: 'blur(10px)',
+  '-webkit-backdrop-filter': 'blur(10px)',
 })
-
 
 const NavBarInner = styled('div', {
   display: 'flex',
