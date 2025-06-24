@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { styled } from '../stitches.config'
+import { useTheme } from '../contexts/ThemeContext'
 
 export default function Footer() {
+  const { theme, toggleTheme } = useTheme()
   const links = [
     {
       title: 'Email',
@@ -55,7 +57,15 @@ export default function Footer() {
     )
   }
 
-  return <Container>{links.map(renderAnchor)}</Container>
+  return (
+    <Container>
+      <ThemeToggle onClick={toggleTheme}>
+        <Title>{theme === 'dark' ? 'Light' : 'Dark'}</Title>
+        <Icon className={theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line'} />
+      </ThemeToggle>
+      {links.map(renderAnchor)}
+    </Container>
+  )
 }
 
 const Container = styled('footer', {
@@ -98,4 +108,28 @@ const Anchor = styled('a', {
 const Title = styled('span', {
   display: 'none',
   '@bp2': { display: 'block' },
+})
+
+const ThemeToggle = styled('button', {
+  color: '$secondary',
+  display: 'flex',
+  alignItems: 'center',
+  fontSize: '15px',
+  border: 0,
+  background: 'none',
+  cursor: 'pointer',
+  padding: '4px 8px',
+  borderRadius: '$borderRadius',
+  textDecoration: 'none',
+  textTransform: 'lowercase',
+  transition: 'all $duration ease-in-out',
+  '&:hover, &:focus': {
+    color: '$primary',
+    background: '$hover',
+    opacity: 1,
+  },
+  [`&:hover ${Icon}`]: {
+    transition: 'opacity $duration ease-in-out',
+    opacity: 1,
+  },
 })

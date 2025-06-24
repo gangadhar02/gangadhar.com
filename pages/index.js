@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { PostContainer, PostContent, PostMain } from '../components/Post'
@@ -9,6 +9,8 @@ import { Wrapper } from '../components/Wrapper'
 import { getPersonJsonLd } from '../lib/json-ld'
 import { styled } from '../stitches.config'
 import { Modal } from '../components/modal/Modal'
+import Preloader from '../components/Preloader'
+import { Particles } from '../components/Particles'
 
 export async function getStaticProps() {
   return {
@@ -24,7 +26,7 @@ const Description = styled('h2', {
   fontSize: '1.5rem',
   fontWeight: 'normal',
   margin: '1.5rem 0',
-  color: '#888',
+  color: '$secondary',
   lineHeight: 1.4,
 })
 
@@ -33,14 +35,14 @@ const LocationContainer = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   gap: '8px',
-  color: '#666',
+  color: '$secondary',
   fontSize: '0.9rem',
   marginTop: '1rem',
 })
 
 const LocationIcon = styled('i', {
   fontSize: '16px',
-  color: '#666',
+  color: '$secondary',
 })
 
 const ThreeColumnSection = styled('div', {
@@ -57,7 +59,7 @@ const ThreeColumnSection = styled('div', {
 
 const Column = styled('button', {
   background: 'none',
-  border: '1px solid #333',
+  border: '1px solid $secondary',
   borderRadius: '8px',
   padding: '24px',
   textAlign: 'left',
@@ -76,7 +78,7 @@ const ColumnTitle = styled('h3', {
   margin: '0 0 4px 0',
   fontSize: '1.25rem',
   fontWeight: 500,
-  color: '#fff',
+  color: '$primary',
   '@bp2': {
     fontSize: '1.5rem',
     marginBottom: '8px',
@@ -86,10 +88,10 @@ const ColumnTitle = styled('h3', {
 const ColumnSubtitle = styled('p', {
   margin: 0,
   fontSize: '0.875rem',
-  color: '#666',
+  color: '$secondary',
   '@bp2': {
     fontSize: '0.9rem',
-    color: '#888',
+    color: '$secondary',
   },
 })
 
@@ -97,7 +99,7 @@ const MainTitle = styled(motion.h1, {
   fontSize: '2.5rem',
   fontWeight: 500,
   marginBottom: '0',
-  color: '#fff',
+  color: '$primary',
 })
 
 const MainContainer = styled('div', {
@@ -116,6 +118,8 @@ const CenteredContent = styled('div', {
   width: '100%',
   padding: '0 20px',
   boxSizing: 'border-box',
+  position: 'relative',
+  zIndex: 1,
   // Account for navbar height
   paddingTop: '$navHeightMobile',
   '@bp2': {
@@ -186,6 +190,7 @@ export default function Index(props) {
   const { title, description, image } = props
   const [modalContent, setModalContent] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const openModal = (content) => {
     setModalContent(content)
@@ -195,6 +200,10 @@ export default function Index(props) {
   const closeModal = () => {
     setIsModalOpen(false)
     setModalContent(null)
+  }
+
+  const handlePreloaderComplete = () => {
+    setIsLoading(false)
   }
 
   const aboutContent = (
@@ -277,37 +286,71 @@ export default function Index(props) {
           </p>
         </SectionContent>
       </Section>
+
+      <Section>
+        <SectionContent>
+          <p style={{ fontSize: '14px', color: '#666', marginTop: '20px', fontStyle: 'italic' }}>
+            Updated on December 24, 2024
+          </p>
+        </SectionContent>
+      </Section>
     </>
   )
 
   const somedayContent = (
     <>
       <ModalTitle>Someday</ModalTitle>
-      <ModalSubtitle>Long-term focus</ModalSubtitle>
+      <ModalSubtitle>Long-term aspirations</ModalSubtitle>
       
       <Section>
-        <SectionTitle>Personal Projects</SectionTitle>
+        <SectionTitle>Someday, I want to work at my dream company</SectionTitle>
         <SectionContent>
           <p>
-            Planning to ship more personal projects that combine my interests in marketing, automation, and creative strategy. Building tools and solutions that can help other marketers and creators.
+            I really don't know what my dream company is, but I want to work at a place where I can learn a lot, have fun and be surrounded by great people. I want to be in a place where I can grow and be challenged. In someways my current company matches all of these things, but I'm still early in my career and there are lot of great companies out there.
           </p>
         </SectionContent>
       </Section>
 
       <Section>
-        <SectionTitle>Community Building</SectionTitle>
+        <SectionTitle>Someday, I want to live abroad</SectionTitle>
         <SectionContent>
           <p>
-            Creating a community around performance marketing and creative strategy. Sharing knowledge, building networks, and helping others grow in their marketing careers.
+            India is great, has its pros and its cons, like all places. But I would like to try to live abroad sometime, preferably somewhere warmer.
           </p>
         </SectionContent>
       </Section>
 
       <Section>
-        <SectionTitle>Innovation</SectionTitle>
+        <SectionTitle>Someday, I want to speak at a tech conference</SectionTitle>
         <SectionContent>
           <p>
-            Exploring the intersection of AI, automation, and creative marketing. Building solutions that make marketing more efficient, effective, and human-centered.
+            I have been to a few conferences, and I think it would be fun challenge to speak at one. I have to prepare, practice and do uncomfortable things to get there. It also means I need to know the stuff I will be talking about!
+          </p>
+        </SectionContent>
+      </Section>
+
+      <Section>
+        <SectionTitle>Someday, I want to learn to fly</SectionTitle>
+        <SectionContent>
+          <p>
+            Not that I want to become a pilot and work as one. Airplanes, flight and the sky has always fascinated me. I think it would be fun to learn to fly.
+          </p>
+        </SectionContent>
+      </Section>
+
+      <Section>
+        <SectionTitle>Someday, I want to work because I want to</SectionTitle>
+        <SectionContent>
+          <p>
+            I want to be at the place where I work because I do it for fun, not because it pays the salary. Of course the "salary" has to come way, but I want to be in the situation where I can choose where and if I work because I want to, not because I have to.
+          </p>
+        </SectionContent>
+      </Section>
+
+      <Section>
+        <SectionContent>
+          <p style={{ fontSize: '14px', color: '#666', marginTop: '20px', fontStyle: 'italic' }}>
+            Updated on December 24, 2024
           </p>
         </SectionContent>
       </Section>
@@ -315,65 +358,68 @@ export default function Index(props) {
   )
 
   return (
-    <MainContainer>
-      <Head>
-        <title>{title}</title>
-        <meta content={title} property="og:title" />
-        <meta content={description} name="description" />
-        <meta content={description} property="og:description" />
-        <meta content="https://gangadhar.com" property="og:url" />
-        <meta content={`https://gangadhar.com${image}`} property="og:image" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(getPersonJsonLd()),
-          }}
-          key="person-jsonld"
-        />
-      </Head>
-      <Navbar />
-      <CenteredContent>
-        <ContentWrapper>
-          <ContentBlock
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          >
-            <MainTitle>
-              {title}
-            </MainTitle>
-            <Description>Curious, Tinkerer, Nerd and a Marketer</Description>
-            <LocationContainer>
-              <LocationIcon className="ri-map-pin-fill" />
-              <span>Bangalore, India</span>
-            </LocationContainer>
-          </ContentBlock>
+    <>
+      {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
+      <MainContainer style={{ opacity: isLoading ? 0 : 1 }}>
+        <Head>
+          <title>{title}</title>
+          <meta content={title} property="og:title" />
+          <meta content={description} name="description" />
+          <meta content={description} property="og:description" />
+          <meta content="https://gangadhar.com" property="og:url" />
+          <meta content={`https://gangadhar.com${image}`} property="og:image" />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(getPersonJsonLd()),
+            }}
+            key="person-jsonld"
+          />
+        </Head>
+        <Navbar />
+        <CenteredContent>
+          <ContentWrapper>
+            <ContentBlock
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+            >
+              <MainTitle>
+                {title}
+              </MainTitle>
+              <Description>Curious, Tinkerer, Nerd and a Marketer</Description>
+              <LocationContainer>
+                <LocationIcon className="ri-map-pin-fill" />
+                <span>Bangalore, India</span>
+              </LocationContainer>
+            </ContentBlock>
 
-          <ThreeColumnSection>
-            <Column onClick={() => openModal(aboutContent)}>
-              <ColumnTitle>About</ColumnTitle>
-              <ColumnSubtitle>Who, What, Why</ColumnSubtitle>
-            </Column>
+            <ThreeColumnSection>
+              <Column onClick={() => openModal(aboutContent)}>
+                <ColumnTitle>About</ColumnTitle>
+                <ColumnSubtitle>Who, What, Why</ColumnSubtitle>
+              </Column>
 
-            <Column onClick={() => openModal(nowContent)}>
-              <ColumnTitle>Now</ColumnTitle>
-              <ColumnSubtitle>Short-term focus</ColumnSubtitle>
-            </Column>
+              <Column onClick={() => openModal(nowContent)}>
+                <ColumnTitle>Now</ColumnTitle>
+                <ColumnSubtitle>Short-term focus</ColumnSubtitle>
+              </Column>
 
-            <Column onClick={() => openModal(somedayContent)}>
-              <ColumnTitle>Someday</ColumnTitle>
-              <ColumnSubtitle>Long-term focus</ColumnSubtitle>
-            </Column>
-          </ThreeColumnSection>
+              <Column onClick={() => openModal(somedayContent)}>
+                <ColumnTitle>Someday</ColumnTitle>
+                <ColumnSubtitle>Long-term focus</ColumnSubtitle>
+              </Column>
+            </ThreeColumnSection>
 
-          <ShortcutHome />
-        </ContentWrapper>
-      </CenteredContent>
-      <Footer />
-      
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        {modalContent}
-      </Modal>
-    </MainContainer>
+            <ShortcutHome />
+          </ContentWrapper>
+        </CenteredContent>
+        <Footer />
+        
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          {modalContent}
+        </Modal>
+      </MainContainer>
+    </>
   )
 }

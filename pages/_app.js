@@ -6,42 +6,76 @@ import CommandBar from '../components/CommandBar'
 import MobileNavbar from '../components/MobileNavbar'
 import * as gtag from '../lib/gtag'
 import '../public/static/css/prism.css'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { ThemeProvider, useTheme } from '../contexts/ThemeContext'
+import { lightTheme, styled } from '../stitches.config'
+import { Particles } from '../components/Particles'
 
 Router.events.on('routeChangeComplete', url => gtag.pageview(url))
 
 const Noop = ({ children }) => children
 
-export default function MyApp({ Component, pageProps }) {
+const AppWrapper = styled('div', {
+  position: 'relative',
+  minHeight: '100vh',
+  width: '100%',
+  background: 'transparent',
+})
+
+function AppContent({ Component, pageProps }) {
   const Layout = Component.Layout || Noop
+  const { theme } = useTheme()
+
+  useEffect(() => {
+    // Apply theme class to document
+    document.documentElement.className = theme === 'light' ? lightTheme : ''
+  }, [theme])
 
   return (
-    <CommandBar>
-      {!isMobile && (
-        <AnimatedCursor
-          innerSize={13}
-          outerSize={25}
-          color="255, 255, 255"
-          outerAlpha={0.2}
-          innerScale={1.2}
-          outerScale={1.8}
-          trailingSpeed={4}
-          clickables={[
-            'a',
-            'button',
-            '.link',
-            '.link-button',
-            '.cursor-pointer',
-            '.cursor-text',
-            '[tabindex]',
-          ]}
-        />
-      )}
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+    <>
+      <Particles 
+        quantity={150}
+        staticity={30}
+        ease={80}
+        size={0.4}
+      />
+      <AppWrapper>
+        <CommandBar>
+          {!isMobile && (
+            <AnimatedCursor
+              innerSize={13}
+              outerSize={25}
+              color={theme === 'dark' ? "255, 255, 255" : "0, 0, 0"}
+              outerAlpha={0.2}
+              innerScale={1.2}
+              outerScale={1.8}
+              trailingSpeed={4}
+              clickables={[
+                'a',
+                'button',
+                '.link',
+                '.link-button',
+                '.cursor-pointer',
+                '.cursor-text',
+                '[tabindex]',
+              ]}
+            />
+          )}
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
 
-      {isMobile && <MobileNavbar />}
-    </CommandBar>
+          {isMobile && <MobileNavbar />}
+        </CommandBar>
+      </AppWrapper>
+    </>
+  )
+}
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <ThemeProvider>
+      <AppContent Component={Component} pageProps={pageProps} />
+    </ThemeProvider>
   )
 }

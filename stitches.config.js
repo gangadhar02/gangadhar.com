@@ -49,15 +49,42 @@ export const {
   },
 })
 
+export const lightTheme = createTheme('light', {
+  colors: {
+    yellow: '#b59f00',
+    pink: '#d1006b',
+    purple: '#7a5fff',
+    red: '#ff6b5a',
+    orange: '#ff9f40',
+    green: '#4caf50',
+    cyan: '#00bcd4',
+    primary: '#0d0d0d',
+    secondary: '#6b7280',
+    background: '#ffffff',
+    hover: '#f3f4f6',
+    command: 'rgba(0, 0, 0, 0.05)',
+  },
+})
+
 const globalStyles = globalCss({
   '*': {
     fontFamily: '$body',
+    boxSizing: 'border-box',
   },
-  'html, body': {
+  'html': {
+    margin: '0',
+    padding: '0',
+    minHeight: '100vh',
+    width: '100%',
+  },
+  'body': {
     margin: '0',
     padding: '0',
     WebkitFontSmoothing: 'antialiased',
     background: '$background',
+    transition: 'background-color 0.3s ease, color 0.3s ease',
+    minHeight: '100vh',
+    width: '100%',
   },
   kbd: {
     color: '$background',
@@ -71,7 +98,7 @@ const globalStyles = globalCss({
   svg: {
     width: '32px',
     height: '32px',
-    fill: 'white',
+    fill: 'currentColor',
   },
   figure: {
     margin: 0,
@@ -80,7 +107,7 @@ const globalStyles = globalCss({
     margin: '0 auto',
   },
   code: {
-    background: '#151417',
+    background: '$hover',
     borderRadius: '$borderRadius',
     color: '$primary',
     fontFamily: '$code',

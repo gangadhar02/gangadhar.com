@@ -269,6 +269,7 @@ const Positioner = styled(KBarPositioner, {
   padding: '14vh 16px 16px',
   background: 'rgba(0, 0, 0, .8)',
   boxSizing: 'border-box',
+  zIndex: 9999,
 })
 
 const Search = styled(KBarSearch, {
