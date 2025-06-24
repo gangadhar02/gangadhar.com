@@ -121,11 +121,9 @@ const CenteredContent = styled('div', {
   position: 'relative',
   zIndex: 1,
   // Account for navbar height
-  paddingTop: '$navHeightMobile',
-  paddingBottom: '$navHeightMobile',
+  paddingTop: '$navHeightDesktop',
   '@bp2': {
     paddingTop: '$navHeightDesktop',
-    paddingBottom: '0',
   },
 })
 

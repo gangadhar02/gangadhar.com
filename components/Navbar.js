@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { styled } from '../stitches.config'
+import MobileHamburgerNav from './MobileHamburgerNav'
 
 export default function Navbar() {
   const router = useRouter()
@@ -13,6 +14,7 @@ export default function Navbar() {
     'Projects',
     'Work',
     'Archive',
+    'Contact',
   ]
   const [hovered, setHovered] = useState('')
   const { query } = useKBar()
@@ -64,12 +66,16 @@ export default function Navbar() {
         </Nav>
 
         <Aside>
+          <MobileHamburgerNav />
           <ButtonHeader
             as="button"
             type="button"
             aria-label="Command"
             onClick={query.toggle}
-            css={{ padding: '0 8px' }}
+            css={{ 
+              padding: '0 8px',
+              '@bp3': { display: 'none' }
+            }}
           >
             <Icon className="ri-command-line" />
           </ButtonHeader>

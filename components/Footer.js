@@ -12,22 +12,22 @@ export default function Footer() {
     },
     {
       title: 'Twitter',
-      url: 'https://x.com/_ParthDesai_',
+      url: 'https://x.com/gangadhar__s',
       icon: 'ri-twitter-line',
     },
     {
       title: 'GitHub',
-      url: 'https://github.com/pycoder2000',
+      url: 'https://github.com/gangadhar02',
       icon: 'ri-github-line',
     },
     {
       title: 'linkedin',
-      url: 'https://www.linkedin.com/in/desaiparth2000',
+      url: 'https://www.linkedin.com/in/gangadhar02',
       icon: 'ri-linkedin-line',
     },
     {
       title: 'Medium',
-      url: 'https://medium.com/@desaiparth2000',
+      url: 'https://medium.com/@gangadhar02',
       icon: 'ri-medium-line',
     },
     {

@@ -1,16 +1,5 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="16.000000pt" height="16.000000pt" viewBox="0 0 16.000000 16.000000"
- preserveAspectRatio="xMidYMid meet">
-
-<g transform="translate(0.000000,16.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
-<path d="M0 80 l0 -80 80 0 80 0 0 80 0 80 -80 0 -80 0 0 -80z m110 25 c16
--20 6 -45 -19 -45 -11 0 -25 -8 -30 -17 -8 -14 -10 -8 -11 30 0 43 2 47 24 47
-13 0 29 -7 36 -15z"/>
-<path d="M60 85 c0 -8 9 -15 20 -15 11 0 20 7 20 15 0 8 -9 15 -20 15 -11 0
--20 -7 -20 -15z"/>
-</g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" fill="#08070b" rx="4"/>
+  <text x="16" y="24" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="#f2f2f2">G</text>
 </svg>

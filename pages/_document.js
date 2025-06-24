@@ -16,21 +16,23 @@ export default class extends Document {
       <Html lang={lang ? lang : 'en-US'}>
         <Head>
           <meta charSet="utf-8" />
-          <meta content="Parth Desai" name="author" />
+          <meta content="Gangadhar S" name="author" />
           <meta property="og:type" content="website" />
           <meta content="summary_large_image" name="twitter:card" />
           <meta name="theme-color" content="#08070b" />
+          <meta name="msapplication-TileColor" content="#08070b" />
           <style
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
 
-          <link
-            rel="icon"
-            href="/favicon.ico"
-            sizes="any"
-            type="image/x-icon"
-          />
+          {/* Favicons */}
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="manifest" href="/site.webmanifest" />
 
           <script
             async

@@ -1,8 +1,7 @@
 import { styled } from '../stitches.config'
 
 export const PostMain = styled('main', {
-  '@bp2': { padding: '$navHeightDesktop 0' },
-  padding: '$navHeightMobile 0',
+  padding: '$navHeightDesktop 0',
   overflow: 'hidden',
   flex: '1 1',
 })
