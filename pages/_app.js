@@ -33,12 +33,14 @@ function AppContent({ Component, pageProps }) {
 
   return (
     <>
-      <Particles 
-        quantity={150}
-        staticity={30}
-        ease={80}
-        size={0.4}
-      />
+      {!isMobile && (
+        <Particles 
+          quantity={60}
+          staticity={50}
+          ease={50}
+          size={0.4}
+        />
+      )}
       <AppWrapper>
         <CommandBar>
           {!isMobile && (

@@ -269,6 +269,7 @@ const Container = styled('div', {
 const Canvas = styled('canvas', {
   width: '100%',
   height: '100%',
+  willChange: 'transform',
 })
 
 export { Particles }
