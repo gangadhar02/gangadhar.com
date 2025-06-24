@@ -32,7 +32,7 @@ export const {
     },
     space: {
       navHeightDesktop: '60px',
-      navHeightMobile: '110px',
+      navHeightMobile: '120px',
     },
     transitions: {
       duration: '0.2s',
