@@ -1,27 +1,13 @@
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 import { styled } from '../../stitches.config'
-import { parseISO, differenceInMonths } from 'date-fns'
+import { Icon } from '../Icon'
 
-export default function WorkItem({ work, onClick }) {
+export default function ProjectItem({ project, onClick }) {
   const [isHovered, setIsHovered] = useState(false)
 
-  const getDuration = (start, end) => {
-    const startDate = parseISO(start)
-    const endDate = end ? parseISO(end) : new Date()
-    const months = differenceInMonths(endDate, startDate)
-    const decimalYears = Math.ceil((months / 12) * 10) / 10
-
-    if (decimalYears >= 1) {
-      return `${decimalYears.toFixed(1)} yr${decimalYears !== 1 ? 's' : ''}`
-    }
-    return `${months + 1} mos`
-  }
-
-
-
   return (
-    <WorkContainer
+    <ProjectContainer
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -37,33 +23,26 @@ export default function WorkItem({ work, onClick }) {
           />
         )}
 
-        <Logo src={work.companyLogo} alt={`${work.company} logo`} />
+        <ProjectIcon className={project.icon || 'ri-folder-line'} />
         <Body>
-          <Title>{work.jobTitle}</Title>
-          <Company>
-            {work.company}
-            {work.startDate && (
-              <>
-                {' • '}
-                {getDuration(work.startDate, work.endDate)}
-              </>
-            )}
-          </Company>
+          <Title>{project.title}</Title>
+          <Description>{project.description}</Description>
           <TechList>
-            {work.technologies?.slice(0, 4).map((tech, index) => (
+            {project.technologies?.slice(0, 3).map((tech, index) => (
               <TechItem key={index}>{tech}</TechItem>
             ))}
-            {work.technologies?.length > 4 && (
-              <MoreTech>+{work.technologies.length - 4}</MoreTech>
+            {project.technologies?.length > 3 && (
+              <MoreTech>+{project.technologies.length - 3}</MoreTech>
             )}
           </TechList>
+          {project.stats && <Stats>{project.stats}</Stats>}
         </Body>
       </AnimContainer>
-    </WorkContainer>
+    </ProjectContainer>
   )
 }
 
-export const WorkContainer = styled('div', {
+export const ProjectContainer = styled('div', {
   display: 'flex',
   cursor: 'pointer',
   transition: 'opacity $duration ease-in-out',
@@ -74,14 +53,15 @@ export const WorkContainer = styled('div', {
   '&:hover': { opacity: 1 },
 })
 
-export const Logo = styled('img', {
-  width: '60px',
-  height: '60px',
+export const ProjectIcon = styled(Icon, {
+  fontSize: '48px',
   marginBottom: '10px',
   marginTop: '10px',
-  objectFit: 'contain',
   position: 'relative',
   zIndex: 1,
+  textAlign: 'center',
+  color: '$primary',
+  transition: 'all 0.2s ease',
 })
 
 export const Body = styled('div', {
@@ -98,17 +78,19 @@ export const Title = styled('p', {
   fontWeight: 'bold',
 })
 
-export const Company = styled('p', {
+export const Description = styled('p', {
   color: '$secondary',
   fontSize: '14px',
   margin: '5px 0 0',
+  lineHeight: 1.4,
 })
 
-export const RoleType = styled('p', {
+export const Stats = styled('p', {
   color: '$highlight',
   fontSize: '13px',
-  margin: '2px 0 0',
+  margin: '8px 0 0',
   fontStyle: 'italic',
+  fontWeight: 'bold',
 })
 
 export const TechList = styled('div', {
@@ -147,6 +129,11 @@ const AnimContainer = styled(motion.div, {
     opacity: 1,
     transform: 'translateY(-12px) scale(1.07)',
     boxShadow: '0 20px 48px 0 rgba(31,38,135,0.28)',
+    
+    '& ${ProjectIcon}': {
+      transform: 'scale(1.1)',
+      color: '$highlight',
+    },
   },
 })
 

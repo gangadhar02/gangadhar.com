@@ -1,16 +1,17 @@
 import { AnimateSharedLayout, motion } from 'framer-motion'
 import Head from 'next/head'
-import React from 'react'
-import FeaturedProject from '../components/FeaturedProject'
-import { FeaturedProjects } from '../components/FeaturedProjects'
+import React, { useState } from 'react'
+import ProjectItem from '../components/projects/ProjectItem'
+import ProjectModal from '../components/projects/ProjectModal'
 import items from '../data/projects'
 import Base from '../layouts/Base'
 import stripHtml from '../lib/strip-html'
+import { styled } from '../stitches.config'
 
 export async function getStaticProps() {
   const meta = {
-    title: 'Projects // Parth Desai',
-    tagline: 'Work. Hobby. Open Source.',
+    title: 'Projects // Gangadhar Srinivas',
+    tagline: 'AI-Powered Marketing Solutions.',
     image: '/static/images/projects-bw.jpg',
     primaryColor: 'cyan',
     secondaryColor: 'green',
@@ -19,28 +20,11 @@ export async function getStaticProps() {
   return { props: meta }
 }
 
-function ProjectItem({ project, pIndex }) {
-  return (
-    <motion.li
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        delay: pIndex * 0.05,
-        duration: 0.4,
-        type: 'spring',
-        stiffness: 60,
-      }}
-    >
-      <a href={project.url} target="_blank" rel="noopener noreferrer">
-        {project.title}
-      </a>
-    </motion.li>
-  )
-}
-
 function Projects(props) {
+  const [selectedProject, setSelectedProject] = useState(null)
+
   const renderFeatured = () => {
-    const featured = ['GRE Prep Tool', 'Daily Word Pro', 'Musing', 'Instant MD']
+    const featured = ['Email Subject Line Checker', 'UTM Generator Pro']
 
     return items
       .map(item => {
@@ -48,7 +32,7 @@ function Projects(props) {
       })
       .filter(item => item.length > 0)
       .flat()
-      .map((item, index) => (
+      .map((project, index) => (
         <motion.div
           key={index}
           initial={{ opacity: 0, y: 40 }}
@@ -60,21 +44,34 @@ function Projects(props) {
             stiffness: 60,
           }}
         >
-          <FeaturedProject project={item} />
+          <ProjectItem 
+            project={project} 
+            onClick={() => setSelectedProject(project)} 
+          />
         </motion.div>
       ))
   }
 
-  const renderAll = () => {
-    return items.map((item, index) => (
-      <div key={index}>
-        <h3>{item.year}</h3>
-        <ul>
-          {item.projects.map((project, pIndex) => (
-            <ProjectItem project={project} pIndex={pIndex} key={pIndex} />
-          ))}
-        </ul>
-      </div>
+  const renderAllProjects = () => {
+    const allProjects = items.flatMap(item => item.projects)
+    
+    return allProjects.map((project, index) => (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: index * 0.08,
+          duration: 0.5,
+          type: 'spring',
+          stiffness: 60,
+        }}
+      >
+        <ProjectItem 
+          project={project} 
+          onClick={() => setSelectedProject(project)} 
+        />
+      </motion.div>
     ))
   }
 
@@ -89,7 +86,7 @@ function Projects(props) {
   }
 
   const { title, image } = props
-  const description = `I love building <strong>side projects</strong>. Here you can navigate to all <strong>${getTotalProjects()} projects</strong> that I have built.`
+  const description = `I specialize in creating <strong>AI-powered marketing solutions</strong> using modern AI platforms. Here you can explore all <strong>${getTotalProjects()} marketing tools</strong> that demonstrate my expertise in leveraging AI for performance marketing and campaign optimization.`
 
   return (
     <>
@@ -98,23 +95,37 @@ function Projects(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://parthdesai.site/projects" property="og:url" />
-        <meta content={`https://parthdesai.site${image}`} property="og:image" />
+        <meta content="https://gangadhar.com/projects" property="og:url" />
+        <meta content={`https://gangadhar.com${image}`} property="og:image" />
       </Head>
 
       <AnimateSharedLayout>
         <p dangerouslySetInnerHTML={{ __html: description }} />
 
         <h2>Featured Projects</h2>
-
-        <FeaturedProjects>{renderFeatured()}</FeaturedProjects>
+        <Grid>{renderFeatured()}</Grid>
 
         <h2>All Projects</h2>
-        {renderAll()}
+        <Grid>
+          {renderAllProjects()}
+        </Grid>
       </AnimateSharedLayout>
+
+      <ProjectModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </>
   )
 }
+
+const Grid = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+  gap: '20px',
+  padding: '40px 0',
+})
 
 Projects.Layout = Base
 

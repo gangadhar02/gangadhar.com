@@ -49,4 +49,14 @@ const GradientTitle = styled('h1', {
   WebkitTextFillColor: 'transparent',
   MozTextFillColor: 'transparent',
   WebkitBoxDecorationBreak: 'clone',
+  marginBottom: '40px',
+  fontSize: '48px',
+  fontWeight: '600',
+  lineHeight: '1.2',
+  '@bp3': {
+    fontSize: '36px',
+  },
+  '@bp1': {
+    fontSize: '32px',
+  },
 })
