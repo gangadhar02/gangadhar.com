@@ -7,6 +7,7 @@ import * as gtag from '../lib/gtag'
 import '../public/static/css/prism.css'
 import React, { useEffect } from 'react'
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext'
+import { PreloadProvider } from '../contexts/PreloadContext'
 import { lightTheme, styled } from '../stitches.config'
 import { Particles } from '../components/Particles'
 
@@ -74,7 +75,9 @@ function AppContent({ Component, pageProps }) {
 export default function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider>
-      <AppContent Component={Component} pageProps={pageProps} />
+      <PreloadProvider>
+        <AppContent Component={Component} pageProps={pageProps} />
+      </PreloadProvider>
     </ThemeProvider>
   )
 }

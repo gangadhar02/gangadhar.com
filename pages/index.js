@@ -11,6 +11,7 @@ import { styled } from '../stitches.config'
 import { Modal } from '../components/modal/Modal'
 import Preloader from '../components/Preloader'
 import { Particles } from '../components/Particles'
+import { usePreload } from '../contexts/PreloadContext'
 
 export async function getStaticProps() {
   return {
@@ -190,7 +191,7 @@ export default function Index(props) {
   const { title, description, image } = props
   const [modalContent, setModalContent] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const { shouldShowPreloader, isPreloaderComplete, markPreloaderShown } = usePreload()
 
   const openModal = (content) => {
     setModalContent(content)
@@ -203,7 +204,7 @@ export default function Index(props) {
   }
 
   const handlePreloaderComplete = () => {
-    setIsLoading(false)
+    markPreloaderShown()
   }
 
   const aboutContent = (
@@ -359,8 +360,10 @@ export default function Index(props) {
 
   return (
     <>
-      {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
-      <MainContainer style={{ opacity: isLoading ? 0 : 1 }}>
+      {shouldShowPreloader && !isPreloaderComplete && (
+        <Preloader onComplete={handlePreloaderComplete} />
+      )}
+      <MainContainer style={{ opacity: (!shouldShowPreloader || isPreloaderComplete) ? 1 : 0 }}>
         <Head>
           <title>{title}</title>
           <meta content={title} property="og:title" />

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import { RoughNotation } from 'react-rough-notation'
 import { ButtonPrimary } from '../components/ButtonPrimary'
-import Pronunciation from '../components/Pronunciation'
+import AudioIntro from '../components/AudioIntro'
 import Toast from '../components/Toast'
 import Toolbox from '../components/Toolbox'
 import Base from '../layouts/Base'
@@ -19,7 +19,7 @@ export async function getStaticProps() {
   const meta = {
     title: 'About // Gangadhar S',
     description:
-      "Hello! I'm Gangadhar, a Creative Strategist and Performance Marketer based in Bengaluru. I help scale businesses by producing high performance creatives and leveraging design, digital marketing, creative strategy, and data analytics to drive impact for organisations. My journey began in 2019 with a deep interest in technology and marketing, running campaigns across industries like film, automotive, and politics. Currently, I work at GrowthSchool and Demandlane, focusing on creative strategy for marketing initiatives.",
+      "Hello! I'm Gangadhar, a Creative Strategist and Performance Marketer based in Bengaluru. I help scale businesses by producing high performance creatives and leveraging design, digital marketing, creative strategy, and data analytics to drive impact for organisations. My journey began in 2019 with a deep interest in technology and marketing, running campaigns across industries like film, automotive, and politics. Currently, I work at DemandLane, focusing on creative strategy for marketing initiatives that feel native to platforms like TikTok, Reels, and Shorts.",
     tagline: 'Creative. Strategic. Impactful.',
     image: '/static/images/avatar.jpg',
     primaryColor: 'pink',
@@ -59,24 +59,26 @@ function About(props) {
             }}
           >
             <strong>Hey, I'm Gangadhar S</strong>
-            <Pronunciation />I'm a Creative Strategist and Performance Marketer based in Bengaluru, passionate about digital marketing, creative strategy, and data analytics.
+            <AudioIntro />
+            I'm a Creative Strategist and Performance Marketer based in Bengaluru, passionate about digital marketing, creative strategy, and data analytics.
           </Paragraph>
+          
           <Paragraph>
             I love{' '}
             <strong>
-              <a href="https://www.parthdesai.site/contact" target="_blank">
+              <a href="/contact" target="_blank">
                 connecting
               </a>
             </strong>{' '}
-            with fellow nerds over the weekend in {' '}<strong>San Francisco</strong>. When I'm not working, you'll
+            with fellow creatives and marketers. When I'm not working, you'll
             find me{' '}
             <strong>
-              <a href="https://x.com/_ParthDesai_" target="_blank">
+              <a href="https://x.com/gangadhar__s" target="_blank">
                 tweeting
               </a>
             </strong>
-            , losing chess games, solving crosswords, and binge-watching
-            fascinating video essays.
+            , playing badminton, exploring new tools, and diving deep into 
+            the latest marketing trends and technologies.
           </Paragraph>
           <Paragraph>
             <strong>
@@ -87,10 +89,10 @@ function About(props) {
                 iterations={2}
                 strokeWidth={3}
                 multiline={true}
-                color="#E50914"
+                color="#9580ff"
                 show={true}
               >
-                This summer, you'll find me at Netflix.
+                Currently building high-performance ad creatives at DemandLane.
               </RoughNotation>
             </strong>
           </Paragraph>
@@ -136,10 +138,8 @@ function About(props) {
           <span style={{ margin: '0 20px 0 10px' }}>•</span>
           <ButtonPrimary
             as="a"
-            href="https://drive.google.com/"
-            target="_blank"
+            href="/contact"
             style={btnStyle}
-            onClick={downloadResume}
             onMouseEnter={() => downloadRef.current?.play()}
             onMouseLeave={() => downloadRef.current?.stop()}
           >
@@ -150,7 +150,7 @@ function About(props) {
               loop={false}
               autoplay={false}
             />
-            Download Resume
+            Get in Touch
           </ButtonPrimary>
         </ButtonsContainer>
       </div>
@@ -158,8 +158,8 @@ function About(props) {
   }
 
   const downloadResume = () => {
-    setToastTitle('Downloading...')
-    setToastDescription('You can now hire me :)')
+    setToastTitle('Redirecting...')
+    setToastDescription('Let\'s connect and discuss opportunities!')
     setShowToast(true)
   }
 
@@ -179,8 +179,8 @@ function About(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://parthdesai.site/about" property="og:url" />
-        <meta content={`https://parthdesai.site${image}`} property="og:image" />
+        <meta content="https://gangadhar.com/about" property="og:url" />
+        <meta content={`https://gangadhar.com${image}`} property="og:image" />
       </Head>
 
       {renderIntro()}

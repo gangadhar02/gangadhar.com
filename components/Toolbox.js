@@ -1,35 +1,34 @@
 import { motion } from 'framer-motion'
 import {
-  SiAmazonwebservices,
-  SiApacheairflow,
-  SiApacheflink,
-  SiApachekafka,
-  SiApachespark,
-  SiKubernetes,
-  SiMysql,
-  SiPython,
-  SiScala,
-  SiSnowflake,
+  SiMeta,
+  SiGoogleads,
+  SiFramer,
+  SiGooglesheets,
+  SiMidjourney,
+  SiOpenai,
+  SiAnthropic,
+  SiNotion,
 } from 'react-icons/si'
+import { RiVideoLine, RiSearchLine } from 'react-icons/ri'
 import { styled } from '../stitches.config'
 
 const tools = [
-  { name: 'SQL', icon: SiMysql, color: '#61DAFB' },
-  { name: 'Scala', icon: SiScala, color: '#F7DF1E' },
-  { name: 'Kafka', icon: SiApachekafka, color: '#3178C6' },
-  { name: 'Spark', icon: SiApachespark, color: '#000000' },
-  { name: 'Airflow', icon: SiApacheairflow, color: '#339933' },
-  { name: 'Python', icon: SiPython, color: '#1572B6' },
-  { name: 'Kubernetes', icon: SiKubernetes, color: '#06B6D4' },
-  { name: 'AWS', icon: SiAmazonwebservices, color: '#F24E1E' },
-  { name: 'Flink', icon: SiApacheflink, color: '#007ACC' },
-  { name: 'Snowflake', icon: SiSnowflake, color: '#FF6C37' },
+  { name: 'Meta Ads', icon: SiMeta, color: '#1877F2' },
+  { name: 'Google Ads', icon: SiGoogleads, color: '#4285F4' },
+  { name: 'Motion', icon: SiFramer, color: '#0055FF' },
+  { name: 'Google Sheets', icon: SiGooglesheets, color: '#34A853' },
+  { name: 'Mid Journey', icon: SiMidjourney, color: '#000000' },
+  { name: 'Kling', icon: RiVideoLine, color: '#FF6B6B' },
+  { name: 'ChatGPT', icon: SiOpenai, color: '#74AA9C' },
+  { name: 'Claude', icon: SiAnthropic, color: '#D97706' },
+  { name: 'Perplexity', icon: RiSearchLine, color: '#20B2AA' },
+  { name: 'Notion', icon: SiNotion, color: '#000000' },
 ]
 
 export default function Toolbox() {
   return (
     <ToolboxContainer>
-      <h2>My Toolbox</h2>
+      <h2>My Tools</h2>
       <ToolGrid>
         {tools.map((tool, index) => {
           if (!tool.icon) return null

@@ -21,17 +21,17 @@ export async function getStaticProps() {
   ]
 
   const featuredPosts = [
-    getPostBySlug('end-to-end-streaming-pipeline.md', featuredParams),
-    getPostBySlug('curiosity-cost-to-company.md', featuredParams),
+    getPostBySlug('gpt-to-ads-generative-ai-marketing.md', featuredParams),
+    getPostBySlug('mastering-performance-marketing-analytics.md', featuredParams),
   ]
 
   return {
     props: {
-      title: 'Articles // Parth Desai',
-      tagline: 'Stories. Experiences. Musings.',
+      title: 'Articles // Gangadhar S',
+      tagline: 'Marketing. Strategy. AI.',
       image: '/static/images/articles-bw.jpg',
-      primaryColor: 'yellow',
-      secondaryColor: 'pink',
+      primaryColor: 'purple',
+      secondaryColor: 'orange',
       featuredPosts,
       allPosts,
     },
@@ -84,7 +84,7 @@ function Articles(props) {
   }
 
   const { title, image } = props
-  const description = `Here you can find all <strong>${props.allPosts.length} articles</strong> that I've written. My writing primarily covers topics related to technology, conferences, my personal experiences, and my thoughts.`
+  const description = `Here you can find all <strong>${props.allPosts.length} articles</strong> that I've written. My writing primarily covers topics related to performance marketing, generative AI, creative strategy, and digital marketing insights.`
 
   return (
     <>
@@ -93,8 +93,8 @@ function Articles(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://parthdesai.site/articles" property="og:url" />
-        <meta content={`https://parthdesai.site${image}`} property="og:image" />
+        <meta content="https://gangadhar.com/articles" property="og:url" />
+        <meta content={`https://gangadhar.com${image}`} property="og:image" />
       </Head>
 
       <AnimateSharedLayout>
