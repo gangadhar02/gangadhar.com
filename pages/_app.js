@@ -52,6 +52,12 @@ function AppContent({ Component, pageProps }) {
               innerScale={1.2}
               outerScale={1.8}
               trailingSpeed={4}
+              outerStyle={{
+                zIndex: 10000
+              }}
+              innerStyle={{
+                zIndex: 10001
+              }}
               clickables={[
                 'a',
                 'button',
