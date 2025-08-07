@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import React from 'react'
-import { RoughNotation } from 'react-rough-notation'
 import { ButtonPrimary } from '../components/ButtonPrimary'
 import AudioIntro from '../components/AudioIntro'
 import Toast from '../components/Toast'
@@ -81,20 +80,9 @@ function About(props) {
             the latest marketing trends and technologies.
           </Paragraph>
           <Paragraph>
-            <strong>
-              <RoughNotation
-                animationDelay="1000"
-                animationDuration="3000"
-                type="highlight"
-                iterations={2}
-                strokeWidth={3}
-                multiline={true}
-                color="#9580ff"
-                show={true}
-              >
-                Currently building high-performance ad creatives at DemandLane.
-              </RoughNotation>
-            </strong>
+            Currently building{' '}
+            <strong>high-performance ad creatives</strong>
+            {' '}at DemandLane.
           </Paragraph>
         </Section>
       </Container>
