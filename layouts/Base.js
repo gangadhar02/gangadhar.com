@@ -21,15 +21,7 @@ export default function Base({ children }) {
       >
         <PostContent>
           <PostContainer>
-            <GradientTitle
-              css={{
-                backgroundImage: `linear-gradient(
-                135deg,
-                $${primaryColor} 0%,
-                $${secondaryColor} 100%
-              );`,
-              }}
-            >
+            <GradientTitle>
               {tagline ? tagline : title}
             </GradientTitle>
             {children}
@@ -42,17 +34,13 @@ export default function Base({ children }) {
 }
 
 const GradientTitle = styled('h1', {
-  backgroundSize: '100%',
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text',
-  MozBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  MozTextFillColor: 'transparent',
-  WebkitBoxDecorationBreak: 'clone',
+  color: '$primary',
+  textAlign: 'center',
   marginBottom: '40px',
   fontSize: '48px',
   fontWeight: '600',
   lineHeight: '1.2',
+  fontFamily: '$heading',
   '@bp3': {
     fontSize: '36px',
   },

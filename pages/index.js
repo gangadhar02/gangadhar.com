@@ -12,6 +12,9 @@ import { Modal } from '../components/modal/Modal'
 import Preloader from '../components/Preloader'
 import { Particles } from '../components/Particles'
 import { usePreload } from '../contexts/PreloadContext'
+import MobileWorkPreview from '../components/MobileWorkPreview'
+import MobileProjectsPreview from '../components/MobileProjectsPreview'
+import MobileArticlesPreview from '../components/MobileArticlesPreview'
 
 export async function getStaticProps() {
   return {
@@ -415,6 +418,11 @@ export default function Index(props) {
             </ThreeColumnSection>
 
             <ShortcutHome />
+
+            {/* Mobile-only content preview sections */}
+            <MobileWorkPreview />
+            <MobileProjectsPreview />
+            <MobileArticlesPreview />
           </ContentWrapper>
         </CenteredContent>
         <Footer />

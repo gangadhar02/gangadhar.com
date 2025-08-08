@@ -5,6 +5,7 @@ import 'remixicon/fonts/remixicon.css'
 import CommandBar from '../components/CommandBar'
 import * as gtag from '../lib/gtag'
 import '../public/static/css/prism.css'
+import '../styles/tailwind.css'
 import React, { useEffect } from 'react'
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext'
 import { PreloadProvider } from '../contexts/PreloadContext'
@@ -45,18 +46,21 @@ function AppContent({ Component, pageProps }) {
         <CommandBar>
           {!isMobile && (
             <AnimatedCursor
+              key={theme}
               innerSize={13}
               outerSize={25}
-              color={theme === 'dark' ? "255, 255, 255" : "0, 0, 0"}
+              color={theme === 'light' ? "0, 0, 0" : "255, 255, 255"}
               outerAlpha={0.2}
               innerScale={1.2}
               outerScale={1.8}
               trailingSpeed={4}
               outerStyle={{
-                zIndex: 10000
+                zIndex: 10000,
+                mixBlendMode: theme === 'light' ? 'normal' : 'normal'
               }}
               innerStyle={{
-                zIndex: 10001
+                zIndex: 10001,
+                backgroundColor: theme === 'light' ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)'
               }}
               clickables={[
                 'a',
