@@ -57,7 +57,7 @@ function Clicks(props) {
       src: "/static/images/clicks/IMG_5198_jpg.webp",
     },
     {
-      title: "Zostel Gate",
+      title: "Zostel Pondi",
       src: "/static/images/clicks/IMG_6420.webp",
     },
     {
@@ -69,7 +69,7 @@ function Clicks(props) {
       src: "/static/images/clicks/IMG_7692.webp",
     },
     {
-      title: "Zostel Stay",
+      title: "Zostel Hampi",
       src: "/static/images/clicks/IMG_7991.webp",
     },
     {
