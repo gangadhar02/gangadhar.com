@@ -1,7 +1,11 @@
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
-export const ListGroup = styled('ul', {
-  listStyle: 'none',
-  margin: '10px 0 0',
-  padding: '0',
-})
+export const ListGroup = ({ className, ...props }) => (
+  <ul 
+    className={cn(
+      "list-none mt-[10px] m-0 p-0",
+      className
+    )}
+    {...props}
+  />
+)

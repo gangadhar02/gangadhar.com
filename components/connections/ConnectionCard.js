@@ -1,106 +1,64 @@
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
-import { styled } from '../../stitches.config'
+import { cn } from '../../lib/utils'
 
 export default function ConnectionCard({ person, onClick }) {
   const [hovered, setHovered] = useState(false)
 
   return (
-    <AnimContainer
+    <motion.div
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       onClick={onClick}
+      className={cn(
+        "relative p-2.5 cursor-pointer w-full",
+        "bp2:w-[180px]"
+      )}
     >
       {hovered && (
-        <AnimHovered
+        <motion.span
           layoutId="connectionHover"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          className={cn(
+            "absolute top-0 left-0 right-0 bottom-0",
+            "bg-hover rounded-md -z-10"
+          )}
         />
       )}
-      <Card>
-        <Body>
-          <Name>{person.name}</Name>
-          <Title>{person.title}</Title>
-          <Company>{person.company}</Company>
-          <Status status={person.status}>
+      <div className={cn(
+        "flex flex-col transition-opacity duration-200 ease-in-out",
+        "border-0 p-2.5 rounded-md no-underline w-full",
+        "hover:opacity-100"
+      )}>
+        <div className="flex-1">
+          <p className={cn(
+            "text-lg font-bold m-0 text-primary"
+          )}>
+            {person.name}
+          </p>
+          <p className={cn(
+            "text-sm text-secondary m-0"
+          )}>
+            {person.title}
+          </p>
+          <p className={cn(
+            "text-[13px] text-cyan m-0"
+          )}>
+            {person.company}
+          </p>
+          <button className={cn(
+            "appearance-none border border-primary rounded",
+            "mt-2 py-1 px-3 text-[13px] font-semibold",
+            "bg-transparent text-primary cursor-pointer",
+            "transition-all duration-200 ease-in-out",
+            "hover:bg-primary hover:text-background"
+          )}>
             {person.status === 'Met' ? 'Met' : 'Want to Meet'}
-          </Status>
-        </Body>
-      </Card>
-    </AnimContainer>
+          </button>
+        </div>
+      </div>
+    </motion.div>
   )
 }
-
-const AnimContainer = styled(motion.div, {
-  position: 'relative',
-  padding: '10px',
-  cursor: 'pointer',
-  width: '100%',
-  '@bp2': { width: 180 },
-})
-
-const AnimHovered = styled(motion.span, {
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  right: '0',
-  bottom: '0',
-  background: '$hover',
-  borderRadius: '$borderRadius',
-  zIndex: -1,
-})
-
-const Card = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  transition: 'opacity $duration ease-in-out',
-  border: '0',
-  padding: '10px',
-  borderRadius: '$borderRadius',
-  textDecoration: 'none',
-  width: '100%',
-  '&:hover': { opacity: 1 },
-})
-
-const Body = styled('div', {
-  flex: '1 1 auto',
-})
-
-const Name = styled('p', {
-  fontSize: '18px',
-  fontWeight: 700,
-  margin: '0',
-  color: '$primary',
-})
-
-const Title = styled('p', {
-  fontSize: '14px',
-  color: '$secondary',
-  margin: '0',
-})
-
-const Company = styled('p', {
-  fontSize: '13px',
-  color: '$cyan',
-  margin: '0',
-})
-
-const Status = styled('button', {
-  appearance: 'none',
-  border: '1px solid $primary',
-  borderRadius: '5px',
-  marginTop: '8px',
-  padding: '4px 12px',
-  fontSize: '13px',
-  fontWeight: 600,
-  background: 'transparent',
-  color: '$primary',
-  cursor: 'pointer',
-  transition: 'all $duration ease-in-out',
-  '&:hover': {
-    background: '$primary',
-    color: '$background',
-  },
-})

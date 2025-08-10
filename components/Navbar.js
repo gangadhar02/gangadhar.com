@@ -3,14 +3,14 @@ import { useKBar } from 'kbar'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 import MobileHamburgerNav from './MobileHamburgerNav'
 
 export default function Navbar() {
   const router = useRouter()
   const pages = [
     'About',
-    'Articles',
+    'Articles', 
     'Projects',
     'Work',
     'Clicks',
@@ -21,185 +21,87 @@ export default function Navbar() {
 
   return (
     <AnimateSharedLayout>
-      <Header>
+      <header className={cn(
+        "flex items-center justify-between text-primary text-xs min-h-[59px] w-full",
+        "absolute top-0 z-10 mt-[13px] bp2:mt-0",
+        "px-3"
+      )}>
         <Link href="/" passHref>
-          <ButtonLogo as="a">G</ButtonLogo>
+          <a className={cn(
+            "appearance-none bg-transparent border-none rounded-lg text-primary cursor-pointer",
+            "h-[34px] px-[10px] transition-colors duration-200 ease-in-out hover:bg-hover",
+            "font-bold text-[32px] no-underline font-heading flex items-center"
+          )}>
+            G
+          </a>
         </Link>
 
-        <Nav>
-          <List>
+        <nav className={cn(
+          "absolute left-1/2 transform -translate-x-1/2 hidden",
+          "bp2:block",
+          "bp3:overflow-x-scroll bp3:overflow-y-hidden"
+        )}>
+          <ul className={cn(
+            "m-0 p-0 list-none inline-flex relative top-[5px]",
+            "bp1:justify-around"
+          )}>
             {pages.map(page => {
               const path = `/${page.toLowerCase()}`
               const isHovered = hovered === page
+              const isActive = router.pathname === path
+              
               return (
-                <li key={page}>
+                <li key={page} className="relative">
                   <Link href={path} passHref>
-                    <DesktopAnchor>
-                      <NavContainer
+                    <a className="border-0 relative block hover:opacity-100 focus:opacity-100">
+                      {isHovered && (
+                        <motion.span
+                          className="absolute inset-0 bg-hover rounded-lg"
+                          layoutId="nav"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                        />
+                      )}
+                      <motion.span
+                        className={cn(
+                          "cursor-pointer inline-block text-xs font-medium tracking-[1.2px]",
+                          "px-5 py-[10px] no-underline uppercase transition-colors duration-200 ease-in-out",
+                          "relative z-10",
+                          isActive ? "text-primary" : "text-secondary hover:text-primary",
+                          "after:content-[''] after:absolute after:mx-auto after:bottom-[8px]",
+                          "after:left-0 after:right-0 after:h-px after:w-5 after:bg-primary",
+                          isActive ? "after:opacity-100" : "after:opacity-0 after:transition-opacity after:duration-200 after:ease-in-out"
+                        )}
                         onHoverStart={() => setHovered(page)}
                         onHoverEnd={() => setHovered('')}
-                        css={
-                          router.pathname === path
-                            ? {
-                                color: '$primary',
-                                '&::after': { opacity: 1 },
-                              }
-                            : ''
-                        }
                       >
-                        {isHovered && (
-                          <NavHovered
-                            layoutId="nav"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                          />
-                        )}
                         {page}
-                      </NavContainer>
-                    </DesktopAnchor>
+                      </motion.span>
+                    </a>
                   </Link>
                 </li>
               )
             })}
-          </List>
-        </Nav>
+          </ul>
+        </nav>
 
-        <Aside>
+        <div className="flex items-center">
           <MobileHamburgerNav />
-          <ButtonHeader
-            as="button"
+          <button
             type="button"
             aria-label="Command"
             onClick={query.toggle}
-            css={{ 
-              padding: '0 8px',
-              '@bp3': { display: 'none' }
-            }}
+            className={cn(
+              "appearance-none bg-transparent border-none rounded-lg text-primary cursor-pointer",
+              "h-[34px] px-2 transition-colors duration-200 ease-in-out hover:bg-hover",
+              "bp3:hidden"
+            )}
           >
-            <Icon className="ri-command-line" />
-          </ButtonHeader>
-        </Aside>
-      </Header>
+            <i className="ri-command-line text-2xl leading-8" />
+          </button>
+        </div>
+      </header>
     </AnimateSharedLayout>
   )
 }
-
-const Header = styled('header', {
-  display: 'flex',
-  alignItems: 'center',
-  color: '$primary',
-  fontSize: '12px',
-  minHeight: '59px',
-  width: '100%',
-  flexWrap: 'wrap',
-  position: 'absolute',
-  top: '0',
-  zIndex: 10,
-  marginTop: '13px',
-  '@bp2': { marginTop: '0' },
-})
-
-const List = styled('ul', {
-  margin: '0',
-  padding: '0',
-  listStyle: 'none',
-  display: 'inline-flex',
-  position: 'relative',
-  top: '5px',
-  '@bp1': { justifyContent: 'space-around' },
-})
-
-const ButtonHeader = styled('div', {
-  appearance: 'none',
-  background: 'transparent',
-  border: 'none',
-  borderRadius: '$borderRadius',
-  color: '$primary',
-  cursor: 'pointer',
-  height: '34px',
-  padding: '0 10px',
-  transition: 'background $duration ease-in-out',
-  '&:hover': { background: '$hover' },
-})
-
-const Icon = styled('i', {
-  fontSize: '24px',
-  lineHeight: '32px',
-})
-
-const ButtonLogo = styled(ButtonHeader, {
-  fontWeight: 700,
-  fontSize: '32px',
-  textDecoration: 'none',
-  marginTop: '5px',
-  marginLeft: '12px',
-  fontFamily: '$heading',
-})
-
-const Nav = styled('nav', {
-  textAlign: 'center',
-  flex: 1,
-  order: 2,
-  flexBasis: '100%',
-  display: 'none',
-  '@bp2': {
-    display: 'block',
-    order: 0,
-    flexBasis: 'initial',
-  },
-  '@bp3': { overflowX: 'scroll', overflowY: 'hidden' },
-})
-
-const Aside = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  paddingRight: '12px',
-  marginLeft: 'auto',
-})
-
-const DesktopAnchor = styled('a', {
-  border: 0,
-  position: 'relative',
-  '&:hover, &:focus': { opacity: 1 },
-})
-
-const NavContainer = styled(motion.span, {
-  color: '$secondary',
-  cursor: 'pointer',
-  display: 'inline-block',
-  fontSize: '12px',
-  fontWeight: 500,
-  letterSpacing: '1.2px',
-  padding: '20px',
-  textDecoration: 'none',
-  textTransform: 'uppercase',
-  transition: 'color $duration ease-in-out',
-  '&:hover': {
-    color: '$primary',
-  },
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    margin: '0px auto',
-    top: '18px',
-    left: '0px',
-    right: '0px',
-    height: '1px',
-    width: '20px',
-    background: '$primary',
-    opacity: 0,
-    transition: 'opacity $duration ease-in-out',
-  },
-})
-
-const NavHovered = styled(motion.span, {
-  position: 'absolute',
-  top: '-15px',
-  left: '0',
-  right: '0',
-  background: '$hover',
-  padding: 20,
-  borderRadius: '$borderRadius',
-  zIndex: -1,
-})

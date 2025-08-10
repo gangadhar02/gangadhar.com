@@ -4,7 +4,7 @@ import { Box } from '../components/Box'
 import Toast from '../components/Toast'
 import Base from '../layouts/Base'
 import stripHtml from '../lib/strip-html'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 import { motion } from 'framer-motion'
 
 export async function getStaticProps() {
@@ -156,64 +156,52 @@ function Contact(props) {
   )
 }
 
-const Form = styled('form', {
-  display: 'flex',
-  flexDirection: 'column',
-  maxWidth: '400px',
-})
+const Form = ({ className, ...props }) => (
+  <form className={cn(
+    "flex flex-col max-w-[400px]",
+    className
+  )} {...props} />
+)
 
-const FormGroup = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  marginBottom: '10px',
-})
+const FormGroup = ({ className, ...props }) => (
+  <div className={cn(
+    "flex flex-col mb-[10px]",
+    className
+  )} {...props} />
+)
 
-const Label = styled('label', {
-  color: '$secondary',
-  textTransform: 'uppercase',
-  fontSize: '12px',
-  fontWeight: '500',
-})
+const Label = ({ className, ...props }) => (
+  <label className={cn(
+    "text-secondary uppercase text-xs font-medium",
+    className
+  )} {...props} />
+)
 
-const Input = styled('input', {
-  color: '$primary',
-  background: 'none',
-  border: '1px solid $secondary',
-  borderRadius: '$borderRadius',
-  padding: '10px',
-  '&:focus': { outline: 'none', borderColor: '$cyan' },
-})
+const Input = ({ className, ...props }) => (
+  <input className={cn(
+    "text-primary bg-none border border-secondary rounded-md p-[10px]",
+    "focus:outline-none focus:border-cyan",
+    className
+  )} {...props} />
+)
 
-const Textarea = styled('textarea', {
-  color: '$primary',
-  background: 'none',
-  border: '1px solid $secondary',
-  borderRadius: '$borderRadius',
-  padding: '10px',
-  '&:focus': { outline: 'none', borderColor: '$cyan' },
-})
+const Textarea = ({ className, ...props }) => (
+  <textarea className={cn(
+    "text-primary bg-none border border-secondary rounded-md p-[10px]",
+    "focus:outline-none focus:border-cyan",
+    className
+  )} {...props} />
+)
 
-const Button = styled('button', {
-  color: '$background',
-  background: '#fff',
-  border: '1px solid #fff',
-  borderRadius: '$borderRadius',
-  cursor: 'pointer',
-  padding: '10px',
-  marginTop: '5px',
-  transition: 'all 0.2s ease-in-out',
-  '&:hover': {
-    background: 'transparent',
-    borderColor: '$cyan',
-    color: '$cyan',
-  },
-  '&:focus': {
-    background: 'transparent',
-    borderColor: '$cyan',
-    color: '$cyan',
-    outline: 'none',
-  },
-})
+const Button = ({ className, ...props }) => (
+  <button className={cn(
+    "text-background bg-white border border-white rounded-md cursor-pointer",
+    "p-[10px] mt-[5px] transition-all duration-200 ease-in-out",
+    "hover:bg-transparent hover:border-cyan hover:text-cyan",
+    "focus:bg-transparent focus:border-cyan focus:text-cyan focus:outline-none",
+    className
+  )} {...props} />
+)
 
 Contact.Layout = Base
 

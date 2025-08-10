@@ -10,7 +10,7 @@ import Base from '../layouts/Base'
 import stripHtml from '../lib/strip-html'
 import copyBioIcon from '../public/static/icons/copy-bio.json'
 import downloadIcon from '../public/static/icons/download.json'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
@@ -114,31 +114,37 @@ function About(props) {
             onMouseEnter={() => copyBioRef.current?.play()}
             onMouseLeave={() => copyBioRef.current?.stop()}
           >
-            <Lottie
-              lottieRef={copyBioRef}
-              style={iconStyle}
-              animationData={copyBioIcon}
-              loop={false}
-              autoplay={false}
-            />
+            <div className="dark:invert-0 invert">
+              <Lottie
+                lottieRef={copyBioRef}
+                style={iconStyle}
+                animationData={copyBioIcon}
+                loop={false}
+                autoplay={false}
+              />
+            </div>
             Copy Bio
           </ButtonPrimary>
           <span style={{ margin: '0 20px 0 10px' }}>•</span>
           <ButtonPrimary
             as="a"
-            href="/contact"
+            href="https://drive.google.com/file/d/1_l6dV5NvkmSNBJ8Bmk8CLrTOlRHstcUK/view"
+            target="_blank"
+            rel="noopener noreferrer"
             style={btnStyle}
             onMouseEnter={() => downloadRef.current?.play()}
             onMouseLeave={() => downloadRef.current?.stop()}
           >
-            <Lottie
-              lottieRef={downloadRef}
-              style={iconStyle}
-              animationData={downloadIcon}
-              loop={false}
-              autoplay={false}
-            />
-            Get in Touch
+            <div className="dark:invert-0 invert">
+              <Lottie
+                lottieRef={downloadRef}
+                style={iconStyle}
+                animationData={downloadIcon}
+                loop={false}
+                autoplay={false}
+              />
+            </div>
+            Resume
           </ButtonPrimary>
         </ButtonsContainer>
       </div>
@@ -189,27 +195,35 @@ function About(props) {
   )
 }
 
-const Container = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  '@bp2': { flexDirection: 'row' },
-})
+const Container = ({ className, ...props }) => (
+  <div className={cn(
+    "flex flex-col justify-between",
+    "bp2:flex-row",
+    className
+  )} {...props} />
+)
 
-const Paragraph = styled('p', {
-  '@bp2': { margin: '15px 0' },
-})
+const Paragraph = ({ className, ...props }) => (
+  <p className={cn(
+    "bp2:my-[15px] bp2:mx-0",
+    className
+  )} {...props} />
+)
 
-const ButtonsContainer = styled('p', {
-  display: 'flex',
-  alignItems: 'center',
-})
+const ButtonsContainer = ({ className, ...props }) => (
+  <p className={cn(
+    "flex items-center",
+    className
+  )} {...props} />
+)
 
-const Section = styled('div', {
-  marginTop: '0px',
-  width: 'auto',
-  '@bp2': { width: '48%' },
-})
+const Section = ({ className, ...props }) => (
+  <div className={cn(
+    "mt-0 w-auto",
+    "bp2:w-[48%]",
+    className
+  )} {...props} />
+)
 
 About.Layout = Base
 

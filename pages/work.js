@@ -10,7 +10,7 @@ import stripHtml from '../lib/strip-html'
 
 export async function getStaticProps() {
   const meta = {
-    title: 'Work // Gangadhar Srinivas',
+    title: 'Work // Gangadhar S',
     tagline: 'Create. Strategize. Convert.',
     image: '/static/images/work-bw.jpg',
     primaryColor: 'purple',

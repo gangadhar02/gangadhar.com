@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 import { useTheme } from '../contexts/ThemeContext'
 
 function useMousePosition() {
@@ -244,32 +244,21 @@ const Particles = ({
   }
 
   return (
-    <Container
+    <div
       ref={canvasContainerRef}
-      className={className}
+      className={cn(
+        "pointer-events-none fixed inset-0 w-screen h-screen z-[1]",
+        className
+      )}
       aria-hidden="true"
     >
-      <Canvas ref={canvasRef} />
-    </Container>
+      <canvas 
+        ref={canvasRef}
+        className="w-full h-full [will-change:transform]"
+      />
+    </div>
   )
 }
 
-const Container = styled('div', {
-  pointerEvents: 'none',
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  width: '100vw',
-  height: '100vh',
-  zIndex: 1,
-})
-
-const Canvas = styled('canvas', {
-  width: '100%',
-  height: '100%',
-  willChange: 'transform',
-})
 
 export { Particles }

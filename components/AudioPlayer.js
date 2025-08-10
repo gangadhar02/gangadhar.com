@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 export default function AudioPlayer({ src, label = "Listen to audio" }) {
   const audioRef = useRef()
@@ -20,67 +20,40 @@ export default function AudioPlayer({ src, label = "Listen to audio" }) {
   }
 
   return (
-    <AudioContainer>
-      <AudioButton
+    <div className={cn(
+      "flex items-center gap-2 my-4 py-3 px-4 bg-hover rounded-lg",
+      "border border-transparent transition-all duration-200 ease-in-out",
+      "hover:bg-command hover:border-secondary group"
+    )}>
+      <button
         role="button"
         aria-label={label}
         onClick={toggleAudio}
+        className={cn(
+          "bg-transparent border-none text-primary cursor-pointer p-0",
+          "transition-transform duration-200 ease-in-out",
+          "hover:scale-110 hover:translate-z-0"
+        )}
       >
-        <PlayIcon
-          className={`ri-${isPlaying ? 'pause' : 'play'}-circle-fill`}
+        <i
+          className={cn(
+            "text-[28px] leading-8",
+            `ri-${isPlaying ? 'pause' : 'play'}-circle-fill`
+          )}
         />
-      </AudioButton>
-      <AudioLabel>
+      </button>
+      <span className={cn(
+        "text-secondary text-sm font-medium transition-colors duration-200 ease-in-out",
+        "group-hover:text-primary"
+      )}>
         {isPlaying ? 'Playing...' : 'Listen to a quick intro'}
-      </AudioLabel>
+      </span>
       <audio
         src={src}
         ref={audioRef}
         onEnded={() => setIsPlaying(false)}
       />
-    </AudioContainer>
+    </div>
   )
 }
 
-const AudioContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  margin: '16px 0',
-  padding: '12px 16px',
-  backgroundColor: '$hover',
-  borderRadius: '$borderRadius',
-  border: '1px solid transparent',
-  transition: 'all 0.2s ease-in-out',
-  '&:hover': {
-    backgroundColor: '$command',
-    border: '1px solid $secondary',
-  },
-})
-
-const AudioButton = styled('button', {
-  background: 'transparent',
-  border: 'none',
-  color: '$primary',
-  cursor: 'pointer',
-  padding: '0',
-  transition: 'transform 0.2s ease-in-out',
-  '&:hover': { 
-    transform: 'scale(1.1) translateZ(0)',
-  },
-})
-
-const PlayIcon = styled('i', {
-  fontSize: '28px',
-  lineHeight: '32px',
-})
-
-const AudioLabel = styled('span', {
-  color: '$secondary',
-  fontSize: '14px',
-  fontWeight: 500,
-  transition: 'color 0.2s ease-in-out',
-  '$AudioContainer:hover &': {
-    color: '$primary',
-  },
-})

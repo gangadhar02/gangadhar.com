@@ -1,4 +1,4 @@
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { PostMain, PostContent, PostContainer } from '../components/Post'
@@ -11,19 +11,19 @@ export default function Base({ children }) {
     <Wrapper>
       <Navbar />
       <PostMain
-        css={{
-          '& ::selection': {
-            background: `$${primaryColor}`,
-            color: '#000',
-            WebkitTextFillColor: '#000',
-          },
-        }}
+        className={cn(
+          primaryColor && `[&_::selection]:bg-[var(--${primaryColor})] [&_::selection]:text-black [&_::selection]:[-webkit-text-fill-color:black]`
+        )}
       >
         <PostContent>
           <PostContainer>
-            <GradientTitle>
+            <h1 className={cn(
+              "text-primary text-center mb-10 text-5xl font-semibold",
+              "leading-[1.2] font-heading",
+              "bp3:text-4xl bp1:text-[2rem]"
+            )}>
               {tagline ? tagline : title}
-            </GradientTitle>
+            </h1>
             {children}
           </PostContainer>
         </PostContent>
@@ -32,19 +32,3 @@ export default function Base({ children }) {
     </Wrapper>
   )
 }
-
-const GradientTitle = styled('h1', {
-  color: '$primary',
-  textAlign: 'center',
-  marginBottom: '40px',
-  fontSize: '48px',
-  fontWeight: '600',
-  lineHeight: '1.2',
-  fontFamily: '$heading',
-  '@bp3': {
-    fontSize: '36px',
-  },
-  '@bp1': {
-    fontSize: '32px',
-  },
-})

@@ -8,7 +8,7 @@ import stripHtml from '../lib/strip-html'
 
 export async function getStaticProps() {
   const meta = {
-    title: 'Projects // Gangadhar Srinivas',
+    title: 'Projects // Gangadhar S',
     tagline: 'AI-Powered Marketing Solutions.',
     image: '/static/images/projects-bw.jpg',
     primaryColor: 'cyan',

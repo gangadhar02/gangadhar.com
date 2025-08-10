@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
-import { styled } from '../../stitches.config'
+import { cn } from '../../lib/utils'
 import { parseISO, differenceInMonths } from 'date-fns'
 
 export default function WorkItem({ work, onClick }) {
@@ -21,26 +21,47 @@ export default function WorkItem({ work, onClick }) {
 
 
   return (
-    <WorkContainer
+    <div
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      className={cn(
+        "flex cursor-pointer transition-opacity duration-200 ease-in-out",
+        "border-0 rounded-lg no-underline w-auto hover:opacity-100"
+      )}
     >
-      <AnimContainer>
+      <motion.div
+        className={cn(
+          "relative w-full flex flex-col items-center mt-3 mb-3 p-[5px]",
+          "transition-all duration-[250ms] [transition-timing-function:cubic-bezier(.4,2,.6,1)]",
+          "hover:opacity-100 hover:-translate-y-3 hover:scale-[1.07]",
+          "hover:shadow-[0_20px_48px_0_rgba(31,38,135,0.28)]"
+        )}
+      >
         {isHovered && (
-          <AnimHovered
+          <motion.span
             layoutId="sharedHover"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
             exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-hover rounded-lg z-0"
           />
         )}
 
-        <Logo src={work.companyLogo} alt={`${work.company} logo`} />
-        <Body>
-          <Title>{work.jobTitle}</Title>
-          <Company>
+        <img 
+          src={work.companyLogo} 
+          alt={`${work.company} logo`}
+          className={cn(
+            "w-[60px] h-[60px] mb-[10px] mt-[10px] object-contain",
+            "relative z-[1]"
+          )}
+        />
+        <div className="flex-1 text-center relative z-[1]">
+          <p className="text-primary text-lg m-0 font-bold">
+            {work.jobTitle}
+          </p>
+          <p className="text-secondary text-sm mt-[5px] mb-0 mx-0">
             {work.company}
             {work.startDate && (
               <>
@@ -48,115 +69,29 @@ export default function WorkItem({ work, onClick }) {
                 {getDuration(work.startDate, work.endDate)}
               </>
             )}
-          </Company>
-          <TechList>
+          </p>
+          <div className={cn(
+            "flex flex-wrap justify-center gap-[6px] mt-[10px]"
+          )}>
             {work.technologies?.slice(0, 4).map((tech, index) => (
-              <TechItem key={index}>{tech}</TechItem>
+              <span 
+                key={index}
+                className={cn(
+                  "bg-hover text-primary text-xs py-1 px-2 rounded-full"
+                )}
+              >
+                {tech}
+              </span>
             ))}
             {work.technologies?.length > 4 && (
-              <MoreTech>+{work.technologies.length - 4}</MoreTech>
+              <span className="text-secondary text-xs self-center">
+                +{work.technologies.length - 4}
+              </span>
             )}
-          </TechList>
-        </Body>
-      </AnimContainer>
-    </WorkContainer>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   )
 }
 
-export const WorkContainer = styled('div', {
-  display: 'flex',
-  cursor: 'pointer',
-  transition: 'opacity $duration ease-in-out',
-  border: '0',
-  borderRadius: '$borderRadius',
-  textDecoration: 'none',
-  width: 'auto',
-  '&:hover': { opacity: 1 },
-})
-
-export const Logo = styled('img', {
-  width: '60px',
-  height: '60px',
-  marginBottom: '10px',
-  marginTop: '10px',
-  objectFit: 'contain',
-  position: 'relative',
-  zIndex: 1,
-})
-
-export const Body = styled('div', {
-  flex: '1 1 auto',
-  textAlign: 'center',
-  position: 'relative',
-  zIndex: 1,
-})
-
-export const Title = styled('p', {
-  color: '$primary',
-  fontSize: '18px',
-  margin: '0',
-  fontWeight: 'bold',
-})
-
-export const Company = styled('p', {
-  color: '$secondary',
-  fontSize: '14px',
-  margin: '5px 0 0',
-})
-
-export const RoleType = styled('p', {
-  color: '$highlight',
-  fontSize: '13px',
-  margin: '2px 0 0',
-  fontStyle: 'italic',
-})
-
-export const TechList = styled('div', {
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  gap: '6px',
-  marginTop: '10px',
-})
-
-export const TechItem = styled('span', {
-  background: '$hover',
-  color: '$primary',
-  fontSize: '12px',
-  padding: '4px 8px',
-  borderRadius: '999px',
-})
-
-export const MoreTech = styled('span', {
-  color: '$secondary',
-  fontSize: '12px',
-  alignSelf: 'center',
-})
-
-const AnimContainer = styled(motion.div, {
-  position: 'relative',
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  marginTop: '12px',
-  marginBottom: '12px',
-  padding: '5px',
-  transition: 'transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.2s',
-  '&:hover': {
-    opacity: 1,
-    transform: 'translateY(-12px) scale(1.07)',
-    boxShadow: '0 20px 48px 0 rgba(31,38,135,0.28)',
-  },
-})
-
-const AnimHovered = styled(motion.span, {
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  right: '0',
-  bottom: '0',
-  background: '$hover',
-  borderRadius: '$borderRadius',
-  zIndex: 0,
-})

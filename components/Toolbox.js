@@ -10,7 +10,7 @@ import {
   SiNotion,
 } from 'react-icons/si'
 import { RiVideoLine, RiSearchLine } from 'react-icons/ri'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 const tools = [
   { name: 'Meta Ads', icon: SiMeta, color: '#1877F2' },
@@ -27,66 +27,42 @@ const tools = [
 
 export default function Toolbox() {
   return (
-    <ToolboxContainer>
+    <div className="mt-8">
       <h2>My Tools</h2>
-      <ToolGrid>
+      <div className={cn(
+        "grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-8 mt-8"
+      )}>
         {tools.map((tool, index) => {
           if (!tool.icon) return null
           const IconComponent = tool.icon
           return (
-            <Tool key={index} whileHover={{ scale: 1.1 }}>
-              <IconWrapper style={{ color: tool.color }}>
+            <motion.div 
+              key={index} 
+              whileHover={{ scale: 1.1 }}
+              className={cn(
+                "flex flex-col items-center justify-center p-4 rounded-xl",
+                "bg-hover transition-colors duration-300 ease-in-out",
+                "hover:bg-background"
+              )}
+            >
+              <div 
+                className={cn(
+                  "text-[2.5rem] mb-2 scale-90 transition-transform duration-300 ease-in-out",
+                  "[&_svg]:transition-transform [&_svg]:duration-300 [&_svg]:ease-in-out",
+                  "hover:[&_svg]:rotate-[360deg]"
+                )}
+                style={{ color: tool.color }}
+              >
                 <IconComponent size={40} />
-              </IconWrapper>
-              <ToolName>{tool.name}</ToolName>
-            </Tool>
+              </div>
+              <span className="text-[0.9rem] text-secondary text-center">
+                {tool.name}
+              </span>
+            </motion.div>
           )
         })}
-      </ToolGrid>
-    </ToolboxContainer>
+      </div>
+    </div>
   )
 }
 
-const ToolboxContainer = styled('div', {
-  marginTop: '2rem',
-})
-
-const ToolGrid = styled('div', {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-  gap: '2rem',
-  marginTop: '2rem',
-})
-
-const Tool = styled(motion.div, {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '1rem',
-  borderRadius: '12px',
-  background: '$hover',
-  transition: 'background 0.3s ease',
-  '&:hover': {
-    background: '$background',
-  },
-})
-
-const IconWrapper = styled('div', {
-  fontSize: '2.5rem',
-  marginBottom: '0.5rem',
-  transform: 'scale(0.9)',
-  transition: 'transform 0.3s ease',
-  '& svg': {
-    transition: 'transform 0.3s ease',
-  },
-  '&:hover svg': {
-    transform: 'rotate(360deg)',
-  },
-})
-
-const ToolName = styled('span', {
-  fontSize: '0.9rem',
-  color: '$secondary',
-  textAlign: 'center',
-})

@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 import aboutIcon from '../public/static/icons/about.json'
 import articlesIcon from '../public/static/icons/articles.json'
@@ -25,63 +25,32 @@ export default function MobileNavbar() {
   const router = useRouter()
 
   return (
-    <NavBarContainer>
-      <NavBarInner>
-        {navItems.map(item => (
-          <Link href={item.path} passHref key={item.path}>
-            <NavItem active={router.pathname === item.path}>
-              <Lottie
-                animationData={item.icon}
-                style={{ width: 22, height: 22 }}
-                loop={false}
-                autoplay={router.pathname === item.path}
-              />
-            </NavItem>
-          </Link>
-        ))}
-      </NavBarInner>
-    </NavBarContainer>
+    <nav className={cn(
+      "fixed bottom-5 left-0 right-0 mx-auto w-[92%] max-w-[500px]",
+      "bg-[#101111] rounded-2xl z-[999] p-2 bp2:hidden",
+      "shadow-[0_4px_12px_rgba(0,0,0,0.1)] backdrop-blur-[10px]"
+    )}>
+      <div className="flex justify-between items-center gap-[2px]">
+        {navItems.map(item => {
+          const isActive = router.pathname === item.path
+          return (
+            <Link href={item.path} passHref key={item.path}>
+              <a className={cn(
+                "flex justify-center items-center p-[6px] rounded-[10px]",
+                "border-none no-underline transition-colors duration-200 ease-in-out",
+                isActive ? "bg-[#2a2b2d]" : "bg-transparent"
+              )}>
+                <Lottie
+                  animationData={item.icon}
+                  style={{ width: 22, height: 22 }}
+                  loop={false}
+                  autoplay={isActive}
+                />
+              </a>
+            </Link>
+          )
+        })}
+      </div>
+    </nav>
   )
 }
-
-const NavBarContainer = styled('nav', {
-  position: 'fixed',
-  bottom: '20px',
-  left: 0,
-  right: 0,
-  margin: '0 auto',
-  width: '92%',
-  maxWidth: '500px',
-  background: '#101111',
-  borderRadius: '16px',
-  zIndex: 999,
-  padding: '8px 8px',
-  '@bp2': { display: 'none' },
-  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-  backdropFilter: 'blur(10px)',
-  '-webkit-backdrop-filter': 'blur(10px)',
-})
-
-const NavBarInner = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  gap: '2px',
-})
-
-const NavItem = styled('a', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '6px',
-  borderRadius: '10px',
-  border: 'none',
-  textDecoration: 'none',
-  transition: 'background 0.2s ease-in-out',
-  variants: {
-    active: {
-      true: { backgroundColor: '#2a2b2d' },
-      false: { backgroundColor: 'transparent' },
-    },
-  },
-})

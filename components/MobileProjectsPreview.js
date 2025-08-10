@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 import projectItems from '../data/projects'
 
 export default function MobileProjectsPreview() {
@@ -7,132 +7,63 @@ export default function MobileProjectsPreview() {
   const recentProjects = projectItems[0].projects.slice(0, 2)
 
   return (
-    <PreviewSection>
-      <SectionTitle>Recent Projects</SectionTitle>
-      <ProjectsGrid>
+    <div className={cn(
+      "hidden bp3:flex bp3:flex-col bp3:gap-4 bp3:mt-12 bp3:w-full"
+    )}>
+      <h3 className={cn(
+        "text-2xl font-semibold text-primary m-0 mb-4 text-left"
+      )}>
+        Recent Projects
+      </h3>
+      <div className="flex flex-col gap-3">
         {recentProjects.map((project, index) => (
-          <ProjectCard key={index}>
-            <ProjectIcon className={project.icon} />
-            <ProjectContent>
-              <ProjectTitle>{project.title}</ProjectTitle>
-              <ProjectDescription>{project.description}</ProjectDescription>
-              <ProjectStatus>{project.status}</ProjectStatus>
-            </ProjectContent>
-          </ProjectCard>
+          <div 
+            key={index}
+            className={cn(
+              "bg-background border border-secondary rounded-xl p-4",
+              "flex items-start gap-3 transition-all duration-200",
+              "hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+            )}
+          >
+            <i className={cn(
+              "text-2xl text-primary bg-hover p-3 rounded-lg flex-shrink-0",
+              "w-12 h-12 flex items-center justify-center",
+              project.icon
+            )} />
+            <div className="flex-1 flex flex-col gap-1">
+              <h4 className={cn(
+                "text-base font-semibold text-primary m-0 leading-[1.3]"
+              )}>
+                {project.title}
+              </h4>
+              <p className={cn(
+                "text-[0.8rem] text-secondary my-1 mx-0 leading-[1.4]",
+                "[-webkit-line-clamp:2] [-webkit-box-orient:vertical]",
+                "[display:-webkit-box] overflow-hidden"
+              )}>
+                {project.description}
+              </p>
+              <span className={cn(
+                "text-[0.75rem] text-green-600 font-medium",
+                "bg-green-100 py-0.5 px-2 rounded-xl self-start mt-1"
+              )}>
+                {project.status}
+              </span>
+            </div>
+          </div>
         ))}
-      </ProjectsGrid>
+      </div>
       <Link href="/projects" passHref>
-        <ViewAllButton>View All Projects</ViewAllButton>
+        <a className={cn(
+          "bg-hover text-primary border border-secondary rounded-lg",
+          "py-3 px-6 no-underline font-medium text-center",
+          "transition-all duration-200 cursor-pointer",
+          "hover:bg-primary hover:text-background hover:-translate-y-px"
+        )}>
+          View All Projects
+        </a>
       </Link>
-    </PreviewSection>
+    </div>
   )
 }
 
-const PreviewSection = styled('div', {
-  display: 'none',
-  '@bp3': {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-    marginTop: '3rem',
-    width: '100%',
-  },
-})
-
-const SectionTitle = styled('h3', {
-  fontSize: '1.5rem',
-  fontWeight: '600',
-  color: '$primary',
-  margin: '0 0 16px 0',
-  textAlign: 'left',
-})
-
-const ProjectsGrid = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-})
-
-const ProjectCard = styled('div', {
-  background: '$background',
-  border: '1px solid $secondary',
-  borderRadius: '12px',
-  padding: '16px',
-  display: 'flex',
-  alignItems: 'flex-start',
-  gap: '12px',
-  transition: 'all 0.2s ease',
-  '&:hover': {
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-  },
-})
-
-const ProjectIcon = styled('i', {
-  fontSize: '24px',
-  color: '$primary',
-  background: '$hover',
-  padding: '12px',
-  borderRadius: '8px',
-  flexShrink: 0,
-  width: '48px',
-  height: '48px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-})
-
-const ProjectContent = styled('div', {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-})
-
-const ProjectTitle = styled('h4', {
-  fontSize: '1rem',
-  fontWeight: '600',
-  color: '$primary',
-  margin: 0,
-  lineHeight: 1.3,
-})
-
-const ProjectDescription = styled('p', {
-  fontSize: '0.8rem',
-  color: '$secondary',
-  margin: '4px 0',
-  lineHeight: 1.4,
-  display: '-webkit-box',
-  '-webkit-line-clamp': 2,
-  '-webkit-box-orient': 'vertical',
-  overflow: 'hidden',
-})
-
-const ProjectStatus = styled('span', {
-  fontSize: '0.75rem',
-  color: '$green',
-  fontWeight: '500',
-  background: 'rgba(138, 255, 128, 0.1)',
-  padding: '2px 8px',
-  borderRadius: '12px',
-  alignSelf: 'flex-start',
-  marginTop: '4px',
-})
-
-const ViewAllButton = styled('a', {
-  background: '$hover',
-  color: '$primary',
-  border: '1px solid $secondary',
-  borderRadius: '8px',
-  padding: '12px 24px',
-  textDecoration: 'none',
-  fontWeight: '500',
-  textAlign: 'center',
-  transition: 'all 0.2s ease',
-  cursor: 'pointer',
-  '&:hover': {
-    background: '$primary',
-    color: '$background',
-    transform: 'translateY(-1px)',
-  },
-})

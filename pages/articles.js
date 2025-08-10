@@ -6,7 +6,7 @@ import ListItem from '../components/ListItem'
 import Base from '../layouts/Base'
 import { getAllPosts, getPostBySlug } from '../lib/blog'
 import stripHtml from '../lib/strip-html'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 export async function getStaticProps() {
   const allPosts = getAllPosts(['date', 'skip', 'slug', 'title'])
@@ -110,10 +110,13 @@ function Articles(props) {
   )
 }
 
-const FeaturedArticles = styled('div', {
-  margin: '10px 0 0 -20px',
-  '@bp2': { display: 'flex', justifyContent: 'space-between' },
-})
+const FeaturedArticles = ({ className, ...props }) => (
+  <div className={cn(
+    "m-[10px_0_0_-20px]",
+    "bp2:flex bp2:justify-between",
+    className
+  )} {...props} />
+)
 
 Articles.Layout = Base
 

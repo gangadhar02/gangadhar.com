@@ -5,23 +5,22 @@ import 'remixicon/fonts/remixicon.css'
 import CommandBar from '../components/CommandBar'
 import * as gtag from '../lib/gtag'
 import '../public/static/css/prism.css'
-import '../styles/tailwind.css'
+import '../styles/globals.css'
 import React, { useEffect } from 'react'
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext'
 import { PreloadProvider } from '../contexts/PreloadContext'
-import { lightTheme, styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 import { Particles } from '../components/Particles'
 
 Router.events.on('routeChangeComplete', url => gtag.pageview(url))
 
 const Noop = ({ children }) => children
 
-const AppWrapper = styled('div', {
-  position: 'relative',
-  minHeight: '100vh',
-  width: '100%',
-  background: 'transparent',
-})
+const AppWrapper = ({ children, className, ...props }) => (
+  <div className={cn("relative min-h-screen w-full bg-transparent", className)} {...props}>
+    {children}
+  </div>
+)
 
 function AppContent({ Component, pageProps }) {
   const Layout = Component.Layout || Noop
@@ -29,7 +28,7 @@ function AppContent({ Component, pageProps }) {
 
   useEffect(() => {
     // Apply theme class to document
-    document.documentElement.className = theme === 'light' ? lightTheme : ''
+    document.documentElement.className = theme === 'dark' ? 'dark' : ''
   }, [theme])
 
   return (

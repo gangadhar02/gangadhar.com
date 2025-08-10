@@ -1,7 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import React from 'react'
 import { GA_TRACKING_ID } from '../lib/gtag'
-import { getCssText } from '../stitches.config'
 
 export default class extends Document {
   static async getInitialProps(ctx) {
@@ -21,10 +20,6 @@ export default class extends Document {
           <meta content="summary_large_image" name="twitter:card" />
           <meta name="theme-color" content="#08070b" />
           <meta name="msapplication-TileColor" content="#08070b" />
-          <style
-            id="stitches"
-            dangerouslySetInnerHTML={{ __html: getCssText() }}
-          />
 
           {/* Favicons */}
           <link rel="icon" href="/favicon.ico" sizes="any" />

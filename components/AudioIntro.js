@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 export default function AudioIntro() {
   const audioRef = useRef()
@@ -20,38 +20,29 @@ export default function AudioIntro() {
   }
 
   return (
-    <Button
+    <button
       role="button"
       aria-label="Listen to Gangadhar's audio introduction"
       onClick={toggleAudio}
+      className={cn(
+        "bg-transparent border-none text-primary cursor-pointer",
+        "mx-1 p-0 relative top-[5px] transform-none",
+        "transition-transform duration-200 ease-in-out",
+        "hover:scale-110 hover:translate-z-0"
+      )}
     >
-      <Icon
-        className={`ri-${isPlaying ? 'pause' : 'play'}-circle-fill`}
+      <i
+        className={cn(
+          "text-2xl leading-8",
+          `ri-${isPlaying ? 'pause' : 'play'}-circle-fill`
+        )}
       />
       <audio
         src="/static/audio/Gangadhar.m4a"
         ref={audioRef}
         onEnded={() => setIsPlaying(false)}
       />
-    </Button>
+    </button>
   )
 }
 
-const Button = styled('button', {
-  background: 'transparent',
-  border: 'none',
-  color: '$primary',
-  cursor: 'pointer',
-  margin: '0 4px',
-  padding: '0',
-  position: 'relative',
-  top: '5px',
-  transform: 'none',
-  transition: 'transform 0.2s ease-in-out',
-  '&:hover': { transform: 'scale(1.1) translateZ(0)' },
-})
-
-const Icon = styled('i', {
-  fontSize: '24px',
-  lineHeight: '32px'
-})

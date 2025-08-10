@@ -1,4 +1,4 @@
-import { styled } from '../stitches.config';
+import { cn } from '../lib/utils';
 import Base from '../layouts/Base';
 import { FocusCards } from '../components/FocusCards';
 import stripHtml from '../lib/strip-html';
@@ -14,25 +14,6 @@ export async function getStaticProps() {
   return { props: meta };
 }
 
-const ClicksContainer = styled('div', {
-  marginTop: '40px',
-  marginBottom: '80px',
-});
-
-const Description = styled('p', {
-  fontSize: '18px',
-  color: '$secondary',
-  lineHeight: '1.7',
-  marginBottom: '60px',
-  fontFamily: '$body',
-  maxWidth: '600px',
-  textAlign: 'center',
-  margin: '0 auto 60px auto',
-  
-  '@bp2': {
-    fontSize: '20px',
-  }
-});
 
 function Clicks(props) {
   const { title, tagline } = props;
@@ -80,10 +61,18 @@ function Clicks(props) {
 
   return (
     <>
-      <Description>{description}</Description>
-      <ClicksContainer>
+      <p className={cn(
+        "text-lg text-secondary leading-[1.7] mb-[60px]",
+        "font-body max-w-[600px] text-center m-[0_auto_60px_auto]",
+        "bp2:text-xl"
+      )}>
+        {description}
+      </p>
+      <div className={cn(
+        "mt-10 mb-20"
+      )}>
         <FocusCards cards={cards} />
-      </ClicksContainer>
+      </div>
     </>
   );
 }

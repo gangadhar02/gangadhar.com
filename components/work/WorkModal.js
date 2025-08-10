@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns'
 import React from 'react'
-import { styled } from '../../stitches.config'
+import { cn } from '../../lib/utils'
 import { Modal } from '../modal/Modal'
 
 export default function WorkModal({ work, isOpen, onClose, getDuration }) {
@@ -8,17 +8,40 @@ export default function WorkModal({ work, isOpen, onClose, getDuration }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Header>
-        <Logo src={work.companyLogo} alt={`${work.company} logo`} />
-      </Header>
+      <div className="flex items-start mb-[30px] gap-[25px]">
+        <img 
+          src={work.companyLogo} 
+          alt={`${work.company} logo`}
+          className="w-[50px] h-[50px] object-contain flex-shrink-0 mt-[5px]"
+        />
+      </div>
 
-      <HeaderText>
-        <Title>{work.jobTitle}</Title>
-        <Company>{work.company}</Company>
-        {work.roleType && <RoleType>{work.roleType}</RoleType>}
-      </HeaderText>
+      <div className="flex-1 min-w-0 text-center">
+        <h1 className={cn(
+          "text-2xl font-semibold text-primary m-0 mb-1",
+          "leading-[1.3] break-words"
+        )}>
+          {work.jobTitle}
+        </h1>
+        <h2 className={cn(
+          "text-lg font-normal text-secondary m-0",
+          "leading-[1.4] break-words"
+        )}>
+          {work.company}
+        </h2>
+        {work.roleType && (
+          <p className="text-sm italic text-highlight mt-1">
+            {work.roleType}
+          </p>
+        )}
+      </div>
 
-      <MetaInfo>
+      <div className={cn(
+        "flex flex-col justify-between gap-2 p-[10px]",
+        "border-t border-b border-hover my-5",
+        "text-sm text-secondary leading-[1.5]",
+        "bp1:flex-row"
+      )}>
         <span>
           {format(parseISO(work.startDate), 'MMM yyyy')} -{' '}
           {work.endDate
@@ -28,174 +51,67 @@ export default function WorkModal({ work, isOpen, onClose, getDuration }) {
           {getDuration(work.startDate, work.endDate)}
         </span>
         <span>{work.location}</span>
-      </MetaInfo>
+      </div>
 
       {work.highlights && work.highlights.length > 0 && (
-        <Highlights>
+        <div className="bg-hover p-[15px] rounded-lg mb-5">
           {work.highlights.map((item, index) => (
-            <HighlightItem key={index}>✨ {item}</HighlightItem>
+            <p key={index} className="text-sm m-0 mb-2 text-highlight">
+              ✨ {item}
+            </p>
           ))}
-        </Highlights>
+        </div>
       )}
 
-      <Description>
+      <div className="text-white text-base leading-[1.7]">
         {work.description?.map((item, index) => (
-          <DescriptionItem
+          <p
             key={index}
+            className={cn(
+              "m-0 mb-3 pl-5 relative",
+              "before:content-['•'] before:absolute before:left-0",
+              "before:text-primary before:font-bold"
+            )}
             dangerouslySetInnerHTML={{ __html: item }}
           />
         ))}
-      </Description>
+      </div>
 
       {work.technologies && work.technologies.length > 0 && (
-        <TechStack>
-          <TechTitle>Technologies</TechTitle>
-          <TechList>
+        <div className="mt-[30px]">
+          <h3 className="text-primary text-base mb-[10px]">
+            Technologies
+          </h3>
+          <div className="flex flex-wrap gap-[10px]">
             {work.technologies.map((tech, idx) => (
-              <TechItem key={idx}>{tech}</TechItem>
+              <span 
+                key={idx}
+                className={cn(
+                  "bg-hover text-primary text-[13px]",
+                  "py-[6px] px-3 rounded-full"
+                )}
+              >
+                {tech}
+              </span>
             ))}
-          </TechList>
-        </TechStack>
+          </div>
+        </div>
       )}
 
       {work.companyUrl && (
-        <Link href={work.companyUrl} target="_blank" rel="noopener noreferrer">
+        <a 
+          href={work.companyUrl} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className={cn(
+            "inline-block text-sm text-primary no-underline",
+            "font-medium mt-[10px] hover:underline"
+          )}
+        >
           Visit Company Website →
-        </Link>
+        </a>
       )}
     </Modal>
   )
 }
 
-const Header = styled('div', {
-  display: 'flex',
-  alignItems: 'flex-start',
-  marginBottom: '30px',
-  gap: '25px',
-})
-
-const Logo = styled('img', {
-  width: '50px',
-  height: '50px',
-  objectFit: 'contain',
-  flexShrink: 0,
-  marginTop: '5px',
-})
-
-const HeaderText = styled('div', {
-  flex: 1,
-  minWidth: 0,
-  textAlign: 'center',
-})
-
-const Title = styled('h1', {
-  fontSize: '24px',
-  fontWeight: '600',
-  color: '$primary',
-  margin: '0 0 4px 0',
-  lineHeight: 1.3,
-  wordBreak: 'break-word',
-})
-
-const Company = styled('h2', {
-  fontSize: '18px',
-  fontWeight: '400',
-  color: '$secondary',
-  margin: 0,
-  lineHeight: 1.4,
-  wordBreak: 'break-word',
-})
-
-const RoleType = styled('p', {
-  fontSize: '14px',
-  fontStyle: 'italic',
-  color: '$highlight',
-  marginTop: '4px',
-})
-
-const MetaInfo = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  gap: '8px',
-  padding: '10px',
-  borderTop: '1px solid $hover',
-  borderBottom: '1px solid $hover',
-  marginTop: '20px',
-  marginBottom: '20px',
-  fontSize: '14px',
-  color: '$secondary',
-  lineHeight: 1.5,
-
-  '@bp1': {
-    flexDirection: 'row',
-  },
-})
-
-const Description = styled('div', {
-  color: 'white',
-  fontSize: '16px',
-  lineHeight: 1.7,
-})
-
-const DescriptionItem = styled('p', {
-  margin: '0 0 12px 0',
-  paddingLeft: '20px',
-  position: 'relative',
-  '&::before': {
-    content: '"•"',
-    position: 'absolute',
-    left: '0',
-    color: '$primary',
-    fontWeight: 'bold',
-  },
-})
-
-const Highlights = styled('div', {
-  backgroundColor: '$hover',
-  padding: '15px',
-  borderRadius: '8px',
-  marginBottom: '20px',
-})
-
-const HighlightItem = styled('p', {
-  fontSize: '14px',
-  margin: '0 0 8px 0',
-  color: '$highlight',
-})
-
-const TechStack = styled('div', {
-  marginTop: '30px',
-})
-
-const TechTitle = styled('h3', {
-  color: '$primary',
-  fontSize: '16px',
-  marginBottom: '10px',
-})
-
-const TechList = styled('div', {
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '10px',
-})
-
-const TechItem = styled('span', {
-  backgroundColor: '$hover',
-  color: '$primary',
-  fontSize: '13px',
-  padding: '6px 12px',
-  borderRadius: '999px',
-})
-
-const Link = styled('a', {
-  display: 'inline-block',
-  fontSize: '14px',
-  color: '$primary',
-  textDecoration: 'none',
-  fontWeight: '500',
-  marginTop: '10px',
-  '&:hover': {
-    textDecoration: 'underline',
-  },
-})

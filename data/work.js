@@ -18,6 +18,16 @@ const items = [
       'Driving creative strategy for demand generation',
       'Optimizing performance marketing campaigns',
       'Leading cross-functional marketing initiatives'
+    ],
+    achievements: [
+      'Driving creative strategy for demand generation',
+      'Optimizing performance marketing campaigns',  
+      'Leading cross-functional marketing initiatives'
+    ],
+    responsibilities: [
+      'Leading creative strategy for marketing initiatives and driving performance marketing campaigns.',
+      'Developing data-driven creative strategies to optimize campaign performance and ROI.',
+      'Collaborating with cross-functional teams to scale marketing operations.'
     ]
   },
   {
@@ -41,6 +51,18 @@ const items = [
       'Successfully launched Kairos School of Business',
       'Scaled educational programs across multiple verticals',
       'Led creative strategy and performance marketing initiatives'
+    ],
+    achievements: [
+      'Contributed ₹3.75 crore in revenue through strategic operations',
+      'Successfully launched Kairos School of Business',
+      'Scaled educational programs across multiple verticals',
+      'Led creative strategy and performance marketing initiatives'
+    ],
+    responsibilities: [
+      'Led launch and growth of Kairos School of Business, driving strategic marketing initiatives.',
+      'Managed operations for highest AOV product, contributing ₹3.75 crore in revenue.',
+      'Collaborated with cross-functional teams to create and scale educational programs.',
+      'Developed and executed performance marketing strategies across multiple channels.'
     ]
   },
   {
@@ -62,6 +84,16 @@ const items = [
       'Executed successful campaigns for Spotify and Pepsi',
       'Created engaging UGC and branded filter strategies',
       'Managed multi-platform social media campaigns'
+    ],
+    achievements: [
+      'Executed successful campaigns for Spotify and Pepsi',
+      'Created engaging UGC and branded filter strategies',
+      'Managed multi-platform social media campaigns'
+    ],
+    responsibilities: [
+      'Executed high-impact campaigns for major brands including Spotify and Pepsi.',
+      'Developed and implemented UGC strategies and branded filter campaigns.',
+      'Managed social media campaigns and influencer collaborations.'
     ]
   },
 ]

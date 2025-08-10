@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 const navItems = [
   { path: '/about', label: 'About' },
@@ -22,138 +22,83 @@ export default function MobileHamburgerNav() {
 
   return (
     <>
-      <HamburgerButton onClick={toggleMenu} type="button" aria-label="Menu">
-        <Icon className="ri-menu-line" />
-      </HamburgerButton>
+      <button 
+        onClick={toggleMenu} 
+        type="button" 
+        aria-label="Menu"
+        className={cn(
+          "appearance-none bg-transparent border-none rounded-lg text-primary cursor-pointer",
+          "h-[34px] px-2 transition-colors duration-200 ease-in-out",
+          "block bp2:hidden hover:bg-hover"
+        )}
+      >
+        <i className="ri-menu-line text-2xl leading-8" />
+      </button>
 
       <AnimatePresence>
         {isOpen && (
-          <MenuOverlay
+          <motion.div
+            className={cn(
+              "fixed inset-0 bg-black/80 z-[1000]",
+              "backdrop-blur-[10px]"
+            )}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeMenu}
           >
-            <MenuContent
+            <motion.div
+              className={cn(
+                "relative bg-background rounded-b-2xl w-full p-5",
+                "shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+              )}
               initial={{ y: -50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -50, opacity: 0 }}
               transition={{ type: 'spring', damping: 20, stiffness: 200 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <MenuHeader>
-                <CloseButton onClick={closeMenu} type="button" aria-label="Close menu">
-                  <Icon className="ri-close-line" />
-                </CloseButton>
-              </MenuHeader>
+              <div className="flex justify-end mb-5">
+                <button 
+                  onClick={closeMenu} 
+                  type="button" 
+                  aria-label="Close menu"
+                  className={cn(
+                    "appearance-none bg-transparent border-none rounded-lg text-secondary cursor-pointer",
+                    "h-[34px] px-2 transition-all duration-200 ease-in-out",
+                    "hover:bg-hover hover:text-primary"
+                  )}
+                >
+                  <i className="ri-close-line text-2xl leading-8" />
+                </button>
+              </div>
 
-              <MenuList>
-                {navItems.map((item) => (
-                  <MenuItem key={item.path}>
-                    <Link href={item.path} passHref>
-                      <MenuLink
-                        onClick={closeMenu}
-                        css={router.pathname === item.path ? { color: '$primary' } : {}}
-                      >
-                        {item.label}
-                      </MenuLink>
-                    </Link>
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </MenuContent>
-          </MenuOverlay>
+              <ul className="m-0 p-0 list-none">
+                {navItems.map((item) => {
+                  const isActive = router.pathname === item.path
+                  return (
+                    <li key={item.path} className="m-0">
+                      <Link href={item.path} passHref>
+                        <a 
+                          onClick={closeMenu}
+                          className={cn(
+                            "block no-underline text-lg font-medium tracking-[1.2px]",
+                            "py-4 px-3 uppercase transition-all duration-200 ease-in-out",
+                            "rounded-lg hover:bg-hover",
+                            isActive ? "text-primary" : "text-secondary hover:text-primary"
+                          )}
+                        >
+                          {item.label}
+                        </a>
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
   )
 }
-
-const HamburgerButton = styled('button', {
-  appearance: 'none',
-  background: 'transparent',
-  border: 'none',
-  borderRadius: '$borderRadius',
-  color: '$primary',
-  cursor: 'pointer',
-  height: '34px',
-  padding: '0 8px',
-  transition: 'background $duration ease-in-out',
-  display: 'block',
-  '@bp2': { display: 'none' },
-  '&:hover': { background: '$hover' },
-})
-
-const Icon = styled('i', {
-  fontSize: '24px',
-  lineHeight: '32px',
-})
-
-const MenuOverlay = styled(motion.div, {
-  position: 'fixed',
-  inset: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.8)',
-  zIndex: 1000,
-  backdropFilter: 'blur(10px)',
-  '-webkit-backdrop-filter': 'blur(10px)',
-})
-
-const MenuContent = styled(motion.div, {
-  position: 'relative',
-  background: '$background',
-  borderRadius: '0 0 16px 16px',
-  width: '100%',
-  padding: '20px',
-  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-})
-
-const MenuHeader = styled('div', {
-  display: 'flex',
-  justifyContent: 'flex-end',
-  marginBottom: '20px',
-})
-
-const CloseButton = styled('button', {
-  appearance: 'none',
-  background: 'transparent',
-  border: 'none',
-  borderRadius: '$borderRadius',
-  color: '$secondary',
-  cursor: 'pointer',
-  height: '34px',
-  padding: '0 8px',
-  transition: 'background $duration ease-in-out, color $duration ease-in-out',
-  '&:hover': { 
-    background: '$hover',
-    color: '$primary',
-  },
-})
-
-const MenuList = styled('ul', {
-  margin: '0',
-  padding: '0',
-  listStyle: 'none',
-})
-
-const MenuItem = styled('li', {
-  margin: '0',
-})
-
-const MenuLink = styled('a', {
-  display: 'block',
-  color: '$secondary',
-  textDecoration: 'none',
-  fontSize: '18px',
-  fontWeight: 500,
-  letterSpacing: '1.2px',
-  padding: '16px 0',
-  textTransform: 'uppercase',
-  transition: 'color $duration ease-in-out, background $duration ease-in-out',
-  borderRadius: '$borderRadius',
-  paddingLeft: '12px',
-  paddingRight: '12px',
-  '&:hover': {
-    color: '$primary',
-    background: '$hover',
-  },
-})

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 const words = [
   'Hello',        // English
@@ -32,50 +32,6 @@ const slideUp = {
   },
 }
 
-const PreloaderContainer = styled(motion.div, {
-  position: 'fixed',
-  inset: 0,
-  width: '100vw',
-  height: '100vh',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: '#000',
-  zIndex: 99999999999,
-})
-
-const PreloaderText = styled(motion.p, {
-  display: 'flex',
-  alignItems: 'center',
-  color: 'white',
-  fontSize: '2.25rem',
-  position: 'absolute',
-  zIndex: 10,
-  fontWeight: 500,
-  fontFamily: '$heading',
-  '@bp1': {
-    fontSize: '3rem',
-  },
-  '@bp2': {
-    fontSize: '3.75rem',
-  },
-})
-
-const Dot = styled('span', {
-  display: 'block',
-  width: '10px',
-  height: '10px',
-  backgroundColor: 'white',
-  borderRadius: '50%',
-  marginRight: '10px',
-})
-
-const SVGContainer = styled('svg', {
-  position: 'absolute',
-  top: 0,
-  width: '100%',
-  height: 'calc(100% + 300px)',
-})
 
 export default function Preloader({ onComplete }) {
   const [index, setIndex] = useState(0)
@@ -122,31 +78,40 @@ export default function Preloader({ onComplete }) {
   }
 
   return (
-    <PreloaderContainer
+    <motion.div
       variants={slideUp}
       initial="initial"
       animate={isExiting ? 'exit' : 'initial'}
+      className={cn(
+        "fixed inset-0 w-screen h-screen flex items-center justify-center",
+        "bg-black z-[99999999999]"
+      )}
     >
       {dimension.width > 0 && (
         <>
-          <PreloaderText
+          <motion.p
             variants={opacity}
             initial="initial"
             animate="enter"
+            className={cn(
+              "flex items-center text-white text-4xl absolute z-10",
+              "font-medium font-heading",
+              "bp1:text-5xl bp2:text-6xl"
+            )}
           >
-            <Dot />
+            <span className="block w-[10px] h-[10px] bg-white rounded-full mr-[10px]" />
             {words[index]}
-          </PreloaderText>
-          <SVGContainer>
+          </motion.p>
+          <svg className="absolute top-0 w-full h-[calc(100%+300px)]">
             <motion.path 
               variants={curve} 
               initial="initial" 
               animate={isExiting ? 'exit' : 'initial'} 
               fill="#08070b" 
             />
-          </SVGContainer>
+          </svg>
         </>
       )}
-    </PreloaderContainer>
+    </motion.div>
   )
 }

@@ -18,8 +18,7 @@ import homeIcon from '../public/static/icons/home.json'
 import projectsIcon from '../public/static/icons/projects.json'
 import sourceIcon from '../public/static/icons/source.json'
 import workIcon from '../public/static/icons/work.json'
-import { styled } from '../stitches.config'
-import { Box } from './Box'
+import { cn } from '../lib/utils'
 import Toast from './Toast'
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
@@ -187,12 +186,25 @@ export default function CommandBar(props) {
     <>
       <KBarProvider actions={actions}>
         <KBarPortal>
-          <Positioner>
-            <Animator>
-              <Search placeholder="Type a command or search…" />
+          <KBarPositioner className={cn(
+            "fixed flex items-start justify-center w-full inset-0",
+            "pt-[14vh] px-4 pb-4 bg-black/80 box-border z-[9999]"
+          )}>
+            <KBarAnimator className={cn(
+              "bg-[#1a1c1e] max-w-[600px] w-full text-primary rounded-lg overflow-hidden",
+              "supports-[backdrop-filter]:bg-command supports-[backdrop-filter]:backdrop-blur-[25px] supports-[backdrop-filter]:backdrop-saturate-[300%]",
+              "[&>div>div::-webkit-scrollbar]:hidden [&>div>div]:[-ms-overflow-style:none] [&>div>div]:[scrollbar-width:none]"
+            )}>
+              <KBarSearch 
+                placeholder="Type a command or search…"
+                className={cn(
+                  "p-3 text-base w-full box-border outline-none border-none",
+                  "m-0 bg-command text-primary"
+                )}
+              />
               <RenderResults />
-            </Animator>
-          </Positioner>
+            </KBarAnimator>
+          </KBarPositioner>
         </KBarPortal>
 
         {props.children}
@@ -217,7 +229,11 @@ function RenderResults() {
       items={results}
       onRender={({ item, active }) =>
         typeof item === 'string' ? (
-          <GroupName>{item}</GroupName>
+          <div className={cn(
+            "p-2 px-4 text-[10px] uppercase tracking-wide bg-command"
+          )}>
+            {item}
+          </div>
         ) : (
           <ResultItem action={item} active={active} />
         )
@@ -234,122 +250,40 @@ const ResultItem = forwardRef(({ action, active }, ref) => {
   }
 
   return (
-    <Box
+    <div
       ref={ref}
-      css={getResultStyle(active)}
+      className={cn(
+        "p-3 px-4 flex items-center justify-between m-0 cursor-pointer",
+        active 
+          ? "bg-white/10 text-primary" 
+          : "bg-command text-secondary"
+      )}
       onMouseEnter={() => action.icon.props.lottieRef.current?.play()}
       onMouseLeave={() => action.icon.props.lottieRef.current?.stop()}
     >
-      <Action>
+      <div className="flex gap-2 items-center">
         {action.icon && action.icon}
-        <ActionRow>
+        <div className="flex flex-col">
           <span>{action.name}</span>
-        </ActionRow>
-      </Action>
+        </div>
+      </div>
       {action.shortcut?.length ? (
-        <Shortcut aria-hidden>
+        <div className="grid grid-flow-col gap-1" aria-hidden>
           {action.shortcut.map(shortcut => (
-            <Kbd key={shortcut}>{shortcut}</Kbd>
+            <kbd 
+              key={shortcut}
+              className={cn(
+                "bg-white/10 text-secondary px-2 py-1 uppercase"
+              )}
+            >
+              {shortcut}
+            </kbd>
           ))}
-        </Shortcut>
+        </div>
       ) : null}
-    </Box>
+    </div>
   )
 })
 
 ResultItem.displayName = 'ResultItem'
 
-const Positioner = styled(KBarPositioner, {
-  position: 'fixed',
-  display: 'flex',
-  alignItems: 'flex-start',
-  justifyContent: 'center',
-  width: '100%',
-  inset: '0px',
-  padding: '14vh 16px 16px',
-  background: 'rgba(0, 0, 0, .8)',
-  boxSizing: 'border-box',
-  zIndex: 9999,
-})
-
-const Search = styled(KBarSearch, {
-  padding: '12px 16px',
-  fontSize: '16px',
-  width: '100%',
-  boxSizing: 'border-box',
-  outline: 'none',
-  border: 'none',
-  margin: 0,
-  background: '$command',
-  color: '$primary',
-})
-
-const GroupName = styled('div', {
-  padding: '8px 16px',
-  fontSize: '10px',
-  textTransform: 'uppercase',
-  letterSpacing: '1px',
-  background: '$command',
-})
-
-const Kbd = styled('kbd', {
-  background: 'rgba(255, 255, 255, .1)',
-  color: '$secondary',
-  padding: '4px 8px',
-  textTransform: 'uppercase',
-})
-
-const Shortcut = styled('div', {
-  display: 'grid',
-  gridAutoFlow: 'column',
-  gap: '4px',
-})
-
-const Action = styled('div', {
-  display: 'flex',
-  gap: '8px',
-  alignItems: 'center',
-})
-
-const ActionRow = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-})
-
-const Animator = styled(KBarAnimator, {
-  backgroundColor: '#1a1c1e',
-  maxWidth: '600px',
-  width: '100%',
-  color: '$primary',
-  borderRadius: '8px',
-  overflow: 'hidden',
-  '@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))': {
-    backgroundColor: '$command',
-    WebkitBackdropFilter: 'saturate(300%) blur(25px)',
-    backdropFilter: 'saturate(300%) blur(25px)',
-  },
-
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  '& > div > div::-webkit-scrollbar': {
-    display: 'none',
-  },
-
-  /* Hide scrollbar for IE, Edge and Firefox */
-  '& > div > div': {
-    '-ms-overflow-style': 'none',
-    'scrollbar-width': 'none',
-  },
-})
-
-const getResultStyle = active => {
-  return {
-    padding: '12px 16px',
-    background: active ? 'rgba(255, 255, 255, 0.1)' : '$command',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: 0,
-    cursor: 'pointer',
-    color: active ? '$primary' : '$secondary',
-  }
-}

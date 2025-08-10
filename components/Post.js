@@ -1,91 +1,64 @@
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
-export const PostMain = styled('main', {
-  padding: '$navHeightDesktop 0',
-  overflow: 'hidden',
-  flex: '1 1',
-})
+export const PostMain = ({ className, ...props }) => (
+  <main 
+    className={cn(
+      "pt-[120px] bp2:pt-[100px] overflow-hidden flex-1",
+      className
+    )}
+    {...props}
+  />
+)
 
-export const Post = styled('main', {
-  overflow: 'hidden',
-  flex: '1 1',
-})
+export const Post = ({ className, ...props }) => (
+  <main 
+    className={cn(
+      "overflow-hidden flex-1",
+      className
+    )}
+    {...props}
+  />
+)
 
-export const PostContainer = styled('div', {
-  margin: '0 auto',
-  maxWidth: '760px',
-  padding: '0 20px',
-})
+export const PostContainer = ({ className, ...props }) => (
+  <div 
+    className={cn(
+      "mx-auto max-w-[760px] px-5",
+      className
+    )}
+    {...props}
+  />
+)
 
-export const PostContent = styled('div', {
-  fontSize: '16px',
-  lineHeight: '32px',
-  color: '$secondary',
-  background: '$background',
-  position: 'relative',
-  zIndex: 1,
-  height: '100%',
-  padding: '60px 0 20px 0',
-  '& .iframe-wrap': {
-    height: '0',
-    marginBottom: '20px',
-    overflow: 'hidden',
-    paddingBottom: '56.25%',
-    paddingTop: '30px',
-    position: 'relative',
-  },
-  '& .iframe-wrap iframe': {
-    border: '0',
-    height: '100%',
-    left: '0',
-    position: 'absolute',
-    top: '0',
-    width: '100%',
-  },
-  '& .post-image-caption': {
-    color: '$secondary',
-    textAlign: 'center',
-    fontStyle: 'italic',
-    fontSize: '14px',
-  },
-  '& .post-image-full': {
-    margin: '20px 0 0',
-    maxWidth: 'initial',
-    width: '70vw',
-    '@bp2': {
-      marginLeft: 'calc(-1 * (70vw - 760px) / 2)',
-    },
-    '@bp4': {
-      marginLeft: 0,
-    },
-  },
-  '& .side-by-side': {
-    display: 'flex',
-    width: '90vw',
-    margin: '40px 0',
-    flexDirection: 'row',
-    '@bp2': {
-      marginLeft: 'calc(-1 * (90vw - 760px) / 2)',
-    },
-    '@bp4': {
-      marginLeft: 0,
-      flexDirection: 'column',
-    },
-  },
-  '& .side-by-side-img': {
-    minWidth: '50%',
-    '@bp2': {
-      minWidth: '100%',
-    },
-    '@bp4': {
-      // marginLeft: 0,
-    },
-  },
-  '& .side-by-side-caption': {
-    color: '$secondary',
-    textAlign: 'center',
-    fontStyle: 'italic',
-    fontSize: '14px',
-    marginTop: -30,
-  },
-})
+export const PostContent = ({ className, ...props }) => (
+  <div 
+    className={cn(
+      "text-base leading-8 text-secondary bg-background relative z-10 h-full py-[60px_0_20px_0]",
+      // iframe-wrap
+      "[&_.iframe-wrap]:h-0 [&_.iframe-wrap]:mb-5 [&_.iframe-wrap]:overflow-hidden",
+      "[&_.iframe-wrap]:pb-[56.25%] [&_.iframe-wrap]:pt-[30px] [&_.iframe-wrap]:relative",
+      // iframe-wrap iframe
+      "[&_.iframe-wrap_iframe]:border-0 [&_.iframe-wrap_iframe]:h-full [&_.iframe-wrap_iframe]:left-0",
+      "[&_.iframe-wrap_iframe]:absolute [&_.iframe-wrap_iframe]:top-0 [&_.iframe-wrap_iframe]:w-full",
+      // post-image-caption
+      "[&_.post-image-caption]:text-secondary [&_.post-image-caption]:text-center",
+      "[&_.post-image-caption]:italic [&_.post-image-caption]:text-sm",
+      // post-image-full
+      "[&_.post-image-full]:mt-5 [&_.post-image-full]:mb-0 [&_.post-image-full]:mx-0",
+      "[&_.post-image-full]:max-w-none [&_.post-image-full]:w-[70vw]",
+      "bp2:[&_.post-image-full]:ml-[calc(-1*(70vw-760px)/2)]",
+      "bp4:[&_.post-image-full]:ml-0",
+      // side-by-side
+      "[&_.side-by-side]:flex [&_.side-by-side]:w-[90vw] [&_.side-by-side]:my-10 [&_.side-by-side]:mx-0",
+      "[&_.side-by-side]:flex-row bp2:[&_.side-by-side]:ml-[calc(-1*(90vw-760px)/2)]",
+      "bp4:[&_.side-by-side]:ml-0 bp4:[&_.side-by-side]:flex-col",
+      // side-by-side-img
+      "[&_.side-by-side-img]:min-w-[50%] bp2:[&_.side-by-side-img]:min-w-full",
+      // side-by-side-caption
+      "[&_.side-by-side-caption]:text-secondary [&_.side-by-side-caption]:text-center",
+      "[&_.side-by-side-caption]:italic [&_.side-by-side-caption]:text-sm [&_.side-by-side-caption]:-mt-[30px]",
+      className
+    )}
+    {...props}
+  />
+)

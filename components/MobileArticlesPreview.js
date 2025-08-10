@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 export default function MobileArticlesPreview() {
   // Featured articles data - using the most recent/important ones
@@ -19,130 +19,61 @@ export default function MobileArticlesPreview() {
   ]
 
   return (
-    <PreviewSection>
-      <SectionTitle>Recent Articles</SectionTitle>
-      <ArticlesGrid>
+    <div className={cn(
+      "hidden bp3:flex bp3:flex-col bp3:gap-4 bp3:mt-12 bp3:w-full"
+    )}>
+      <h3 className={cn(
+        "text-2xl font-semibold text-primary m-0 mb-4 text-left"
+      )}>
+        Recent Articles
+      </h3>
+      <div className="flex flex-col gap-3">
         {featuredArticles.map((article, index) => (
           <Link href={`/articles/${article.slug}`} key={index} passHref>
-            <ArticleCard>
-              <ArticleContent>
-                <ArticleTitle>{article.title}</ArticleTitle>
-                <ArticleDescription>{article.description}</ArticleDescription>
-                <ArticleDate>{article.date}</ArticleDate>
-              </ArticleContent>
-              <ArticleIcon className="ri-arrow-right-line" />
-            </ArticleCard>
+            <a className={cn(
+              "bg-background border border-secondary rounded-xl p-4",
+              "flex items-center gap-3 no-underline transition-all duration-200",
+              "cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
+              "hover:border-primary"
+            )}>
+              <div className="flex-1 flex flex-col gap-1">
+                <h4 className={cn(
+                  "text-base font-semibold text-primary m-0 leading-[1.3]"
+                )}>
+                  {article.title}
+                </h4>
+                <p className={cn(
+                  "text-[0.8rem] text-secondary my-1 mx-0 leading-[1.4]",
+                  "[-webkit-line-clamp:2] [-webkit-box-orient:vertical]",
+                  "[display:-webkit-box] overflow-hidden"
+                )}>
+                  {article.description}
+                </p>
+                <span className={cn(
+                  "text-[0.75rem] text-secondary font-normal mt-1"
+                )}>
+                  {article.date}
+                </span>
+              </div>
+              <i className={cn(
+                "ri-arrow-right-line text-xl text-secondary flex-shrink-0",
+                "transition-all duration-200 hover:text-primary hover:translate-x-1"
+              )} />
+            </a>
           </Link>
         ))}
-      </ArticlesGrid>
+      </div>
       <Link href="/articles" passHref>
-        <ViewAllButton>View All Articles</ViewAllButton>
+        <a className={cn(
+          "bg-hover text-primary border border-secondary rounded-lg",
+          "py-3 px-6 no-underline font-medium text-center",
+          "transition-all duration-200 cursor-pointer",
+          "hover:bg-primary hover:text-background hover:-translate-y-px"
+        )}>
+          View All Articles
+        </a>
       </Link>
-    </PreviewSection>
+    </div>
   )
 }
 
-const PreviewSection = styled('div', {
-  display: 'none',
-  '@bp3': {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-    marginTop: '3rem',
-    width: '100%',
-  },
-})
-
-const SectionTitle = styled('h3', {
-  fontSize: '1.5rem',
-  fontWeight: '600',
-  color: '$primary',
-  margin: '0 0 16px 0',
-  textAlign: 'left',
-})
-
-const ArticlesGrid = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-})
-
-const ArticleCard = styled('a', {
-  background: '$background',
-  border: '1px solid $secondary',
-  borderRadius: '12px',
-  padding: '16px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '12px',
-  textDecoration: 'none',
-  transition: 'all 0.2s ease',
-  cursor: 'pointer',
-  '&:hover': {
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-    borderColor: '$primary',
-  },
-})
-
-const ArticleContent = styled('div', {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-})
-
-const ArticleTitle = styled('h4', {
-  fontSize: '1rem',
-  fontWeight: '600',
-  color: '$primary',
-  margin: 0,
-  lineHeight: 1.3,
-})
-
-const ArticleDescription = styled('p', {
-  fontSize: '0.8rem',
-  color: '$secondary',
-  margin: '4px 0',
-  lineHeight: 1.4,
-  display: '-webkit-box',
-  '-webkit-line-clamp': 2,
-  '-webkit-box-orient': 'vertical',
-  overflow: 'hidden',
-})
-
-const ArticleDate = styled('span', {
-  fontSize: '0.75rem',
-  color: '$secondary',
-  fontWeight: '400',
-  marginTop: '4px',
-})
-
-const ArticleIcon = styled('i', {
-  fontSize: '20px',
-  color: '$secondary',
-  flexShrink: 0,
-  transition: 'all 0.2s ease',
-  '&:hover': {
-    color: '$primary',
-    transform: 'translateX(4px)',
-  },
-})
-
-const ViewAllButton = styled('a', {
-  background: '$hover',
-  color: '$primary',
-  border: '1px solid $secondary',
-  borderRadius: '8px',
-  padding: '12px 24px',
-  textDecoration: 'none',
-  fontWeight: '500',
-  textAlign: 'center',
-  transition: 'all 0.2s ease',
-  cursor: 'pointer',
-  '&:hover': {
-    background: '$primary',
-    color: '$background',
-    transform: 'translateY(-1px)',
-  },
-})

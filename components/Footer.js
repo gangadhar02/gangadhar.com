@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 import { useTheme } from '../contexts/ThemeContext'
 
 export default function Footer() {
@@ -40,96 +40,66 @@ export default function Footer() {
   const renderAnchor = (link, index) => {
     if (link.url.startsWith('http')) {
       return (
-        <Anchor key={index} href={link.url} target="_blank">
-          <Title>{link.title}</Title>
-          <Icon className={link.icon} />
-        </Anchor>
+        <a 
+          key={index}
+          href={link.url} 
+          target="_blank"
+          className={cn(
+            "text-secondary flex items-center text-[15px] border-0 ml-5 no-underline lowercase",
+            "transition-colors duration-200 ease-in-out first:ml-0",
+            "hover:text-primary focus:text-primary",
+            "group"
+          )}
+        >
+          <span className="hidden bp2:inline">{link.title}</span>
+          <i className={cn(
+            "text-primary ml-[5px] text-2xl transition-opacity duration-200",
+            "bp2:opacity-0 bp2:text-base bp2:group-hover:opacity-100",
+            link.icon
+          )} />
+        </a>
       )
     }
 
     return (
       <Link key={index} href={link.url} passHref>
-        <Anchor>
-          <Title>{link.title}</Title>
-          <Icon className={link.icon} />
-        </Anchor>
+        <a className={cn(
+          "text-secondary flex items-center text-[15px] border-0 ml-5 no-underline lowercase",
+          "transition-colors duration-200 ease-in-out first:ml-0",
+          "hover:text-primary focus:text-primary",
+          "group"
+        )}>
+          <span className="hidden bp2:inline">{link.title}</span>
+          <i className={cn(
+            "text-primary ml-[5px] text-2xl transition-opacity duration-200",
+            "bp2:opacity-0 bp2:text-base bp2:group-hover:opacity-100",
+            link.icon
+          )} />
+        </a>
       </Link>
     )
   }
 
   return (
-    <Container>
-      <ThemeToggle onClick={toggleTheme}>
-        <Title>{theme === 'dark' ? 'Light' : 'Dark'}</Title>
-        <Icon className={theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line'} />
-      </ThemeToggle>
+    <footer className="bg-background flex items-center justify-center py-5">
+      <button
+        onClick={toggleTheme}
+        className={cn(
+          "text-secondary flex items-center text-[15px] border-0 bg-none cursor-pointer",
+          "px-2 py-1 rounded-lg no-underline lowercase transition-all duration-200 ease-in-out",
+          "hover:text-primary hover:bg-hover",
+          "focus:text-primary focus:bg-hover",
+          "group"
+        )}
+      >
+        <span className="hidden bp2:inline">{theme === 'dark' ? 'light' : 'dark'}</span>
+        <i className={cn(
+          "text-primary ml-[5px] text-2xl transition-opacity duration-200",
+          "bp2:opacity-0 bp2:text-base bp2:group-hover:opacity-100",
+          theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line'
+        )} />
+      </button>
       {links.map(renderAnchor)}
-    </Container>
+    </footer>
   )
 }
-
-const Container = styled('footer', {
-  background: '$background',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '20px 0',
-})
-
-const Icon = styled('i', {
-  color: '$primary',
-  opacity: 1,
-  marginLeft: '5px',
-  marginTop: '1px',
-  fontSize: '24px',
-  '@bp2': { opacity: 0, fontSize: '16px' },
-})
-
-const Anchor = styled('a', {
-  color: '$secondary',
-  display: 'flex',
-  fontSize: '15px',
-  border: 0,
-  marginLeft: '20px',
-  textDecoration: 'none',
-  textTransform: 'lowercase',
-  transition: 'color $duration ease-in-out',
-  '&:hover, &:focus': {
-    color: '$primary',
-    opacity: 1,
-  },
-  [`&:hover ${Icon}`]: {
-    transition: 'opacity $duration ease-in-out',
-    opacity: 1,
-  },
-  '&:first-child': { margin: '0' },
-})
-
-const Title = styled('span', {
-  display: 'none',
-  '@bp2': { display: 'block' },
-})
-
-const ThemeToggle = styled('button', {
-  color: '$secondary',
-  display: 'flex',
-  alignItems: 'center',
-  fontSize: '15px',
-  border: 0,
-  background: 'none',
-  cursor: 'pointer',
-  padding: '4px 8px',
-  borderRadius: '$borderRadius',
-  textDecoration: 'none',
-  textTransform: 'lowercase',
-  transition: 'all $duration ease-in-out',
-  '&:hover, &:focus': {
-    color: '$primary',
-    background: '$hover',
-    opacity: 1,
-  },
-  [`&:hover ${Icon}`]: {
-    transition: 'opacity $duration ease-in-out',
-    opacity: 1,
-  },
-})

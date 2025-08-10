@@ -1,24 +1,26 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 import BlogDate from './BlogDate'
 
 export default function ListItem(props) {
   if (props.href.charAt(0) === '/') {
     return (
-      <ArticleItem>
+      <li className="border-b border-hover last:border-0">
         <Link href={props.href} passHref>
-          <Anchor>
-            <Animation index={props.index}>
-              <Title>{props.title}</Title>
-              <Date>
+          <a className="no-underline">
+            <Animation index={props.index} isArticle={true}>
+              <span className="block max-w-[500px] font-bold text-lg leading-10 text-left">
+                {props.title}
+              </span>
+              <span className="text-secondary block font-medium text-sm min-w-[100px] text-left bp2:text-right">
                 <BlogDate dateString={props.date} />
-              </Date>
+              </span>
             </Animation>
-          </Anchor>
+          </a>
         </Link>
-      </ArticleItem>
+      </li>
     )
   }
 
@@ -34,104 +36,47 @@ export default function ListItem(props) {
       }}
       style={{ listStyle: 'none' }}
     >
-      <Item>
-        <Anchor href={props.href} target="_blank">
+      <li className="border-b border-hover last:border-0">
+        <a href={props.href} target="_blank" className="no-underline">
           <Animation index={props.index}>
-            <Title>{props.title}</Title>
-            <IconContainer>
+            <span className="block max-w-[500px] font-bold text-lg leading-10 text-left">
+              {props.title}
+            </span>
+            <span className="text-2xl">
               <i className="ri-arrow-right-up-line"></i>
-            </IconContainer>
+            </span>
           </Animation>
-        </Anchor>
-      </Item>
+        </a>
+      </li>
     </motion.li>
   )
 }
 
-function Animation(props) {
+function Animation({ index, children, isArticle = false }) {
   const [hovered, setHovered] = useState('')
-  const isHovered = hovered === props.index
+  const isHovered = hovered === index
 
   return (
-    <AnimContainer
-      onHoverStart={() => setHovered(props.index)}
+    <motion.span
+      className={cn(
+        "border-0 text-secondary cursor-pointer flex justify-between py-5 w-full",
+        "opacity-100 transition-all duration-200 ease-in-out no-underline relative",
+        "hover:text-primary",
+        isArticle && "flex-col bp2:flex-row"
+      )}
+      onHoverStart={() => setHovered(index)}
       onHoverEnd={() => setHovered('')}
     >
       {isHovered && (
-        <AnimHovered
+        <motion.span
+          className="absolute -top-px -left-5 -right-5 -bottom-px bg-hover rounded-lg -z-10"
           layoutId="listItem"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         />
       )}
-
-      {props.children}
-    </AnimContainer>
+      {children}
+    </motion.span>
   )
 }
-
-const Item = styled('li', {
-  borderBottom: '1px solid $hover',
-  '&:last-child': { border: 0 },
-})
-
-const Anchor = styled('a', {
-  textDecoration: 'none',
-})
-
-const Title = styled('span', {
-  display: 'block',
-  maxWidth: '500px',
-  fontWeight: 700,
-  fontSize: '18px',
-  lineHeight: '40px',
-  textAlign: 'left',
-})
-
-const Date = styled('span', {
-  color: '$secondary',
-  display: 'block',
-  fontWeight: 500,
-  fontSize: '14px',
-  minWidth: '100px',
-  textAlign: 'left',
-  '@bp2': { textAlign: 'right' },
-})
-
-const IconContainer = styled('span', {
-  fontSize: '24px',
-})
-
-const AnimContainer = styled(motion.span, {
-  border: '0',
-  color: '$secondary',
-  cursor: 'pointer',
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: '20px 0',
-  width: '100%',
-  opacity: 1,
-  transition: 'all $duration ease-in-out',
-  textDecoration: 'none',
-  position: 'relative',
-  '&:hover': { color: '$primary' },
-})
-
-const AnimHovered = styled(motion.span, {
-  position: 'absolute',
-  top: '-1px',
-  left: '-20px',
-  right: '-20px',
-  bottom: '-1px',
-  background: '$hover',
-  borderRadius: '$borderRadius',
-  zIndex: -1,
-})
-
-const ArticleItem = styled(Item, {
-  [`& ${AnimContainer}`]: {
-    flexDirection: 'column',
-    '@bp2': { flexDirection: 'row' },
-  },
-})

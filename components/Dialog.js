@@ -1,58 +1,8 @@
-import { styled } from '../stitches.config'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { cn } from '../lib/utils'
 
-const StyledOverlay = styled(motion.div, {
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  position: 'fixed',
-  inset: 0,
-  zIndex: 100,
-})
-
-const StyledContent = styled(motion.div, {
-  backgroundColor: '#1a1a1a',
-  borderRadius: '8px',
-  boxShadow: '0px 4px 32px rgba(0, 0, 0, 0.1)',
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '90vw',
-  maxWidth: '600px',
-  maxHeight: '85vh',
-  padding: '24px',
-  zIndex: 101,
-  overflowY: 'auto',
-})
-
-const Title = styled('h2', {
-  margin: 0,
-  fontWeight: 500,
-  fontSize: '20px',
-  marginBottom: '8px',
-  color: '#fff',
-})
-
-const Description = styled('p', {
-  fontSize: '16px',
-  color: '#888',
-  marginBottom: '16px',
-})
-
-const CloseButton = styled('button', {
-  position: 'absolute',
-  top: '16px',
-  right: '16px',
-  background: 'none',
-  border: 'none',
-  cursor: 'pointer',
-  padding: '4px',
-  color: '#888',
-  '&:hover': {
-    opacity: 0.7,
-  },
-})
 
 const Dialog = ({ trigger, title, subtitle, children }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -82,25 +32,39 @@ const Dialog = ({ trigger, title, subtitle, children }) => {
           {isOpen && (
             <>
               <DialogPrimitive.Overlay asChild>
-                <StyledOverlay
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
+                  className="bg-black/50 fixed inset-0 z-[100]"
                 />
               </DialogPrimitive.Overlay>
               <DialogPrimitive.Content asChild>
-                <StyledContent
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}
+                  className={cn(
+                    "bg-[#1a1a1a] rounded-lg shadow-[0px_4px_32px_rgba(0,0,0,0.1)]",
+                    "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+                    "w-[90vw] max-w-[600px] max-h-[85vh] p-6 z-[101] overflow-y-auto"
+                  )}
                 >
-                  <Title>{title}</Title>
-                  <Description>{subtitle}</Description>
+                  <h2 className="m-0 font-medium text-xl mb-2 text-white">{title}</h2>
+                  <p className="text-base text-[#888] mb-4">{subtitle}</p>
                   {children}
                   <DialogPrimitive.Close asChild>
-                    <CloseButton aria-label="Close">✕</CloseButton>
+                    <button 
+                      aria-label="Close"
+                      className={cn(
+                        "absolute top-4 right-4 bg-none border-none cursor-pointer",
+                        "p-1 text-[#888] hover:opacity-70"
+                      )}
+                    >
+                      ✕
+                    </button>
                   </DialogPrimitive.Close>
-                </StyledContent>
+                </motion.div>
               </DialogPrimitive.Content>
             </>
           )}

@@ -1,215 +1,132 @@
 import React from 'react'
-import { styled } from '../../stitches.config'
+import { cn } from '../../lib/utils'
 import { Modal } from '../modal/Modal'
-import { Icon } from '../Icon'
 
 export default function ProjectModal({ project, isOpen, onClose }) {
   if (!project) return null
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Header>
-        <ModalIcon className={project.icon || 'ri-folder-line'} />
-      </Header>
+      <div className="flex items-start mb-[30px] gap-[25px] justify-center">
+        <i className={cn(
+          "text-[64px] text-center mt-[5px] text-primary",
+          project.icon || 'ri-folder-line'
+        )} />
+      </div>
 
-      <HeaderText>
-        <Title>{project.title}</Title>
-        <Year>{project.year}</Year>
-        {project.category && <Category>{project.category}</Category>}
-      </HeaderText>
+      <div className="flex-1 min-w-0 text-center">
+        <h1 className={cn(
+          "text-2xl font-semibold text-primary m-0 mb-1",
+          "leading-[1.3] break-words"
+        )}>
+          {project.title}
+        </h1>
+        <h2 className={cn(
+          "text-lg font-normal text-secondary m-0",
+          "leading-[1.4] break-words"
+        )}>
+          {project.year}
+        </h2>
+        {project.category && (
+          <p className="text-sm italic text-highlight mt-1">
+            {project.category}
+          </p>
+        )}
+      </div>
 
-      <MetaInfo>
+      <div className={cn(
+        "flex flex-col justify-between gap-2 p-[10px]",
+        "border-t border-b border-hover my-5",
+        "text-sm text-secondary leading-[1.5]",
+        "bp1:flex-row"
+      )}>
         <span>{project.status}</span>
         {project.stats && <span>{project.stats}</span>}
-      </MetaInfo>
+      </div>
 
       {project.highlights && project.highlights.length > 0 && (
-        <Highlights>
+        <div className="bg-hover p-[15px] rounded-lg mb-5">
           {project.highlights.map((item, index) => (
-            <HighlightItem key={index}>✨ {item}</HighlightItem>
+            <p key={index} className="text-sm m-0 mb-2 text-highlight">
+              ✨ {item}
+            </p>
           ))}
-        </Highlights>
+        </div>
       )}
 
-      <Description>
+      <div className="text-white text-base leading-[1.7]">
         {project.detailedDescription?.map((item, index) => (
-          <DescriptionItem
+          <p
             key={index}
+            className={cn(
+              "m-0 mb-3 pl-5 relative",
+              "before:content-['•'] before:absolute before:left-0",
+              "before:text-primary before:font-bold"
+            )}
             dangerouslySetInnerHTML={{ __html: item }}
           />
         )) || (
-          <DescriptionItem>{project.description}</DescriptionItem>
+          <p className={cn(
+            "m-0 mb-3 pl-5 relative",
+            "before:content-['•'] before:absolute before:left-0",
+            "before:text-primary before:font-bold"
+          )}>
+            {project.description}
+          </p>
         )}
-      </Description>
+      </div>
 
       {project.technologies && project.technologies.length > 0 && (
-        <TechStack>
-          <TechTitle>Technologies</TechTitle>
-          <TechList>
+        <div className="mt-[30px]">
+          <h3 className="text-primary text-base mb-[10px]">
+            Technologies
+          </h3>
+          <div className="flex flex-wrap gap-[10px]">
             {project.technologies.map((tech, idx) => (
-              <TechItem key={idx}>{tech}</TechItem>
+              <span 
+                key={idx}
+                className={cn(
+                  "bg-hover text-primary text-[13px]",
+                  "py-[6px] px-3 rounded-full"
+                )}
+              >
+                {tech}
+              </span>
             ))}
-          </TechList>
-        </TechStack>
+          </div>
+        </div>
       )}
 
-      <ButtonGroup>
+      <div className="flex gap-[15px] mt-5 flex-wrap">
         {project.url && (
-          <Link href={project.url} target="_blank" rel="noopener noreferrer">
+          <a 
+            href={project.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className={cn(
+              "inline-block text-sm text-primary no-underline font-medium",
+              "py-2 px-4 border border-primary rounded transition-all duration-200",
+              "hover:bg-primary hover:text-background hover:no-underline"
+            )}
+          >
             View Project →
-          </Link>
+          </a>
         )}
         {project.githubUrl && (
-          <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+          <a 
+            href={project.githubUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className={cn(
+              "inline-block text-sm text-primary no-underline font-medium",
+              "py-2 px-4 border border-primary rounded transition-all duration-200",
+              "hover:bg-primary hover:text-background hover:no-underline"
+            )}
+          >
             View Code →
-          </Link>
+          </a>
         )}
-      </ButtonGroup>
+      </div>
     </Modal>
   )
 }
-
-const Header = styled('div', {
-  display: 'flex',
-  alignItems: 'flex-start',
-  marginBottom: '30px',
-  gap: '25px',
-  justifyContent: 'center',
-})
-
-const ModalIcon = styled(Icon, {
-  fontSize: '64px',
-  textAlign: 'center',
-  marginTop: '5px',
-  color: '$primary',
-})
-
-const HeaderText = styled('div', {
-  flex: 1,
-  minWidth: 0,
-  textAlign: 'center',
-})
-
-const Title = styled('h1', {
-  fontSize: '24px',
-  fontWeight: '600',
-  color: '$primary',
-  margin: '0 0 4px 0',
-  lineHeight: 1.3,
-  wordBreak: 'break-word',
-})
-
-const Year = styled('h2', {
-  fontSize: '18px',
-  fontWeight: '400',
-  color: '$secondary',
-  margin: 0,
-  lineHeight: 1.4,
-  wordBreak: 'break-word',
-})
-
-const Category = styled('p', {
-  fontSize: '14px',
-  fontStyle: 'italic',
-  color: '$highlight',
-  marginTop: '4px',
-})
-
-const MetaInfo = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  gap: '8px',
-  padding: '10px',
-  borderTop: '1px solid $hover',
-  borderBottom: '1px solid $hover',
-  marginTop: '20px',
-  marginBottom: '20px',
-  fontSize: '14px',
-  color: '$secondary',
-  lineHeight: 1.5,
-
-  '@bp1': {
-    flexDirection: 'row',
-  },
-})
-
-const Description = styled('div', {
-  color: 'white',
-  fontSize: '16px',
-  lineHeight: 1.7,
-})
-
-const DescriptionItem = styled('p', {
-  margin: '0 0 12px 0',
-  paddingLeft: '20px',
-  position: 'relative',
-  '&::before': {
-    content: '"•"',
-    position: 'absolute',
-    left: '0',
-    color: '$primary',
-    fontWeight: 'bold',
-  },
-})
-
-const Highlights = styled('div', {
-  backgroundColor: '$hover',
-  padding: '15px',
-  borderRadius: '8px',
-  marginBottom: '20px',
-})
-
-const HighlightItem = styled('p', {
-  fontSize: '14px',
-  margin: '0 0 8px 0',
-  color: '$highlight',
-})
-
-const TechStack = styled('div', {
-  marginTop: '30px',
-})
-
-const TechTitle = styled('h3', {
-  color: '$primary',
-  fontSize: '16px',
-  marginBottom: '10px',
-})
-
-const TechList = styled('div', {
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '10px',
-})
-
-const TechItem = styled('span', {
-  backgroundColor: '$hover',
-  color: '$primary',
-  fontSize: '13px',
-  padding: '6px 12px',
-  borderRadius: '999px',
-})
-
-const ButtonGroup = styled('div', {
-  display: 'flex',
-  gap: '15px',
-  marginTop: '20px',
-  flexWrap: 'wrap',
-})
-
-const Link = styled('a', {
-  display: 'inline-block',
-  fontSize: '14px',
-  color: '$primary',
-  textDecoration: 'none',
-  fontWeight: '500',
-  padding: '8px 16px',
-  border: '1px solid $primary',
-  borderRadius: '4px',
-  transition: 'all 0.2s ease',
-  '&:hover': {
-    backgroundColor: '$primary',
-    color: '$background',
-    textDecoration: 'none',
-  },
-})

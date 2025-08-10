@@ -1,21 +1,23 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { styled } from '../stitches.config'
+import { cn } from '../lib/utils'
 
 export default function FeaturedWork(props) {
   const { work } = props
 
   return (
-    <Work>
+    <div className={cn(
+      "mt-5 border-0 no-underline first:ml-0"
+    )}>
       <Animation index={props.index}>
-        <Content>
+        <div className="flex flex-col h-auto">
           <div>
-            <Title css={{ margin: 0 }}>{work.jobTitle}</Title>
-            <Paragraph>{work.company}</Paragraph>
+            <h3 className="text-primary text-lg m-0">{work.jobTitle}</h3>
+            <p className="text-secondary m-0">{work.company}</p>
           </div>
-        </Content>
+        </div>
       </Animation>
-    </Work>
+    </div>
   )
 }
 
@@ -24,61 +26,23 @@ function Animation(props) {
   const isHovered = hovered === props.index
 
   return (
-    <AnimContainer
+    <motion.div
       onHoverStart={() => setHovered(props.index)}
       onHoverEnd={() => setHovered('')}
+      className="p-5 relative w-full"
     >
       {isHovered && (
-        <AnimHovered
+        <motion.div
           layoutId="featuredwork"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-hover rounded-lg -z-10"
         />
       )}
 
       {props.children}
-    </AnimContainer>
+    </motion.div>
   )
 }
 
-const Work = styled('a', {
-  marginTop: 20,
-  border: 0,
-  textDecoration: 'none',
-  '&:first-child': { marginLeft: 0 },
-})
-
-const Content = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  height: 'auto',
-})
-
-const Title = styled('h3', {
-  color: '$primary',
-  fontSize: '18px',
-  margin: '0',
-})
-
-const Paragraph = styled('p', {
-  color: '$secondary',
-  margin: '0',
-})
-
-const AnimContainer = styled(motion.div, {
-  padding: '20px',
-  position: 'relative',
-  width: '100%',
-})
-
-const AnimHovered = styled(motion.div, {
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  right: '0',
-  bottom: '0',
-  background: '$hover',
-  borderRadius: '$borderRadius',
-  zIndex: -1,
-})

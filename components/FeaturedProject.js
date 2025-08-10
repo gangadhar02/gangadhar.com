@@ -1,7 +1,7 @@
-import { styled } from '../stitches.config'
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import { cn } from '../lib/utils'
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
@@ -12,11 +12,16 @@ export default function FeaturedProject(props) {
   const iconRef = useRef()
 
   return (
-    <Project
+    <a
       href={project.url}
       target="_blank"
       onMouseEnter={() => iconRef.current?.play()}
       onMouseLeave={() => iconRef.current?.stop()}
+      className={cn(
+        "flex transition-opacity duration-200 ease-in-out",
+        "border-0 rounded-lg no-underline w-auto hover:opacity-100",
+        "bp2:w-[180px]"
+      )}
     >
       <Animation index={props.index}>
         <Lottie
@@ -26,13 +31,20 @@ export default function FeaturedProject(props) {
           loop={false}
           autoplay={false}
         />
-        <Body>
-          <Title>{project.title}</Title>
-          <Description>{project.description}</Description>
-          {project.stats && <Stats>{project.stats}</Stats>}
-        </Body>
+        <div className="flex-1">
+          <p className="text-primary m-0 text-lg">{project.title}</p>
+          <p className="m-0 text-secondary leading-6">{project.description}</p>
+          {project.stats && (
+            <p className={cn(
+              "mt-[5px] mb-0 mx-0 text-primary uppercase inline-block",
+              "font-medium tracking-[1.2px] text-xs"
+            )}>
+              {project.stats}
+            </p>
+          )}
+        </div>
       </Animation>
-    </Project>
+    </a>
   )
 }
 
@@ -41,74 +53,23 @@ function Animation(props) {
   const isHovered = hovered === props.index
 
   return (
-    <AnimContainer
+    <motion.span
       onHoverStart={() => setHovered(props.index)}
       onHoverEnd={() => setHovered('')}
+      className="relative w-full p-5"
     >
       {isHovered && (
-        <AnimHovered
+        <motion.span
           layoutId="featuredProjects"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-hover rounded-lg -z-10"
         />
       )}
 
       {props.children}
-    </AnimContainer>
+    </motion.span>
   )
 }
 
-const Project = styled('a', {
-  display: 'flex',
-  transition: 'opacity $duration ease-in-out',
-  border: '0',
-  borderRadius: '$borderRadius',
-  textDecoration: 'none',
-  width: 'auto',
-  '&:hover': { opacity: 1 },
-  '@bp2': { width: 180 },
-})
-
-const Body = styled('div', {
-  flex: '1 1 auto',
-})
-
-const Title = styled('p', {
-  color: '$primary',
-  margin: '0',
-  fontSize: '18px',
-})
-
-const Description = styled('p', {
-  margin: '0',
-  color: '$secondary',
-  lineHeight: '24px',
-})
-
-const Stats = styled('p', {
-  margin: '5px 0 0',
-  color: '$primary',
-  textTransform: 'uppercase',
-  display: 'inline-block',
-  fontWeight: 500,
-  letterSpacing: '1.2px',
-  fontSize: '12px',
-})
-
-const AnimContainer = styled(motion.span, {
-  position: 'relative',
-  width: '100%',
-  padding: '20px',
-})
-
-const AnimHovered = styled(motion.span, {
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  right: '0',
-  bottom: '0',
-  background: '$hover',
-  borderRadius: '$borderRadius',
-  zIndex: -1,
-})
