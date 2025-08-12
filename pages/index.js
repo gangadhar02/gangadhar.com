@@ -2,7 +2,8 @@ import { motion } from 'framer-motion'
 import Head from 'next/head'
 import React, { useState, useEffect } from 'react'
 import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
+import { SidebarNav } from '../components/SidebarNav'
+import { IconMapPin } from '@tabler/icons-react'
 import { PostContainer, PostContent, PostMain } from '../components/Post'
 import ShortcutHome from '../components/ShortcutHome'
 import { Wrapper } from '../components/Wrapper'
@@ -331,15 +332,15 @@ export default function Index(props) {
             key="person-jsonld"
           />
         </Head>
-        <Navbar />
-        <div className={cn(
-          "flex flex-col justify-center items-center flex-1 w-full",
-          "px-5 box-border relative z-[1]",
-          "pt-[120px] bp2:pt-[100px]"
-        )}>
-          <div className={cn(
-            "max-w-[760px] w-full text-center"
-          )}>
+        <SidebarNav>
+          <div className="flex flex-col min-h-screen">
+            <div className={cn(
+              "flex flex-col justify-center items-center flex-1 w-full",
+              "px-5 box-border relative z-[1]"
+            )}>
+              <div className={cn(
+                "max-w-[760px] w-full text-center"
+              )}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -362,9 +363,7 @@ export default function Index(props) {
                 "flex items-center justify-center gap-2",
                 "text-secondary text-[0.9rem] mt-4"
               )}>
-                <i className={cn(
-                  "text-base text-secondary ri-map-pin-fill"
-                )} />
+                <IconMapPin className="h-6 w-6 text-secondary [&>path]:fill-none [&>path]:stroke-current" />
                 <span>Bangalore, India</span>
               </div>
             </motion.div>
@@ -449,9 +448,11 @@ export default function Index(props) {
             <MobileWorkPreview />
             <MobileProjectsPreview />
             <MobileArticlesPreview />
+              </div>
+            </div>
+            <Footer />
           </div>
-        </div>
-        <Footer />
+        </SidebarNav>
         
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           {modalContent}

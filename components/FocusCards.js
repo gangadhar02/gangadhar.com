@@ -15,21 +15,32 @@ const Card = memo(({ card, index, hovered, setHovered }) => {
       onMouseLeave={() => setHovered(null)}
       className={cn(
         "rounded-xl relative bg-[#0a0a0a] overflow-hidden w-full",
-        "pb-[100%] h-0 transition-all duration-300 ease-out cursor-pointer",
-        isBlurred && "blur-[2px] scale-[0.98] opacity-70"
+        "pb-[100%] h-0 cursor-pointer transform-gpu will-change-transform",
+        "transition-opacity duration-200 ease-out",
+        isBlurred && "opacity-60"
       )}
+      style={{
+        transform: isBlurred ? 'scale(0.98)' : 'scale(1)',
+        filter: isBlurred ? 'blur(1px)' : 'none',
+        transition: 'transform 0.2s ease-out, filter 0.2s ease-out, opacity 0.2s ease-out'
+      }}
     >
       <img
         src={card.src}
         alt={card.title}
         loading="lazy"
-        className="object-cover absolute inset-0 w-full h-full"
+        className="object-cover absolute inset-0 w-full h-full transform-gpu"
       />
-      <div className={cn(
-        "absolute inset-0 bg-gradient-to-b from-transparent via-transparent",
-        "to-black/70 flex items-end p-6 transition-opacity duration-300",
-        isHovered ? "opacity-100" : "opacity-0"
-      )}>
+      <div 
+        className={cn(
+          "absolute inset-0 bg-gradient-to-b from-transparent via-transparent",
+          "to-black/70 flex items-end p-6 transform-gpu"
+        )}
+        style={{
+          opacity: isHovered ? 1 : 0,
+          transition: 'opacity 0.2s ease-out'
+        }}
+      >
         <div className={cn(
           "text-lg font-semibold text-white font-heading tracking-tight",
           "bp2:text-xl"
