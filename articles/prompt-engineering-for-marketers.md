@@ -1,7 +1,6 @@
 ---
 title: "Prompt Engineering for Marketers: Getting the Best from Generative AI"
 description: "A comprehensive guide to prompt engineering specifically for marketing professionals, covering techniques and strategies to maximize AI effectiveness."
-image: /static/images/blog/prompt-engineering.jpg
 date: "2024-10-15"
 ---
 

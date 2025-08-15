@@ -1,16 +1,22 @@
 import Head from 'next/head'
-import React from 'react'
-import { Box } from '../components/Box'
-import Toast from '../components/Toast'
+import React, { useEffect } from 'react'
 import Base from '../layouts/Base'
 import stripHtml from '../lib/strip-html'
 import { cn } from '../lib/utils'
 import { motion } from 'framer-motion'
+import ClientOnly from '../components/ClientOnly'
+import { IconBrandInstagram, IconBrandLinkedin, IconBrandTwitter, IconMail } from '@tabler/icons-react'
+import dynamic from 'next/dynamic'
+import { getCalApi } from "@calcom/embed-react"
+
+const Cal = dynamic(() => import("@calcom/embed-react").then(mod => mod.default), { 
+  ssr: false 
+})
 
 export async function getStaticProps() {
   const meta = {
     title: 'Contact // Gangadhar S',
-    tagline: 'Let\'s connect! Email, call, or reach out on social.',
+    tagline: 'Get in Touch',
     image: '/static/images/avatar.jpg',
     primaryColor: 'cyan',
     secondaryColor: 'green',
@@ -19,39 +25,51 @@ export async function getStaticProps() {
   return { props: meta }
 }
 
+// Cal.com Embed Component using React
+function CalEmbed() {
+  const [mounted, setMounted] = React.useState(false)
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (mounted) {
+      (async function () {
+        const cal = await getCalApi();
+        cal("ui", {
+          "theme":"dark",
+          "styles":{"branding":{"brandColor":"#000000"}},
+          "hideEventTypeDetails":false
+        });
+      })();
+    }
+  }, [mounted])
+  
+  if (!mounted) {
+    return (
+      <div style={{width:'1050px', margin:'0 auto', maxWidth:'100%', height:'680px', backgroundColor:'#1a1a1a', borderRadius:'8px'}}>
+        {/* Loading state */}
+      </div>
+    )
+  }
+  
+  return (
+    <div style={{width:'1050px', margin:'0 auto', maxWidth:'100%', height:'680px', backgroundColor:'#1a1a1a', borderRadius:'8px'}}>
+      <Cal 
+        calLink="gangadhar.s/15min"
+        style={{width:"100%", height:"100%"}}
+        config={{
+          "theme":"dark"
+        }}
+      />
+    </div>
+  )
+}
+
 function Contact(props) {
   const { title, image } = props
-  const description = `<strong>I love chatting</strong> with software engineers, tech founders, students, and geeks. I promise that I'll try to reply to your email in a timely manner.`
-  const [isEmailSent, setIsEmailSent] = React.useState(undefined)
-  const [showToast, setShowToast] = React.useState(false)
-
-  const onSendEmail = async e => {
-    e.preventDefault()
-
-    try {
-      const isProd = process.env.NODE_ENV === 'production'
-      const base = isProd
-        ? 'https://www.parthdesai.site'
-        : 'http://localhost:3000'
-
-      await fetch(`${base}/api/email`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: e.target.name.value,
-          email: e.target.email.value,
-          message: e.target.message.value,
-        }),
-      })
-
-      setIsEmailSent(true)
-      setShowToast(true)
-    } catch (e) {
-      console.error(e)
-      setIsEmailSent(false)
-      setShowToast(true)
-    }
-  }
+  const description = `Let's connect and start something great, tailored just for you. Select a date and scroll down`
 
   return (
     <>
@@ -60,148 +78,82 @@ function Contact(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://parthdesai.site/contact" property="og:url" />
-        <meta content={`https://parthdesai.site${image}`} property="og:image" />
+        <meta content="https://gangadhar.com/contact" property="og:url" />
+        <meta content={`https://gangadhar.com${image}`} property="og:image" />
       </Head>
 
-      <Box>
-        <p>Rajajinagar, Bengaluru<br />
-        <a href="mailto:sgangadhar.exe@gmail.com">sgangadhar.exe@gmail.com</a><br />
-        <a href="tel:6302966383">6302966383</a><br />
-        <a href="https://www.linkedin.com/in/gangadhar02/" target="_blank">LinkedIn</a> | 
-        <a href="https://x.com/gangadhar__s" target="_blank">X</a> | 
-        <a href="https://www.instagram.com/gangadhar__s/" target="_blank">Instagram</a> | 
-        <a href="https://sgangadhar.carrd.co/" target="_blank">Personal Site</a>
+      {/* Header */}
+      <div className="text-center py-8">
+        <p className="text-secondary text-base mb-4">
+          {description}
         </p>
-        <h2>Send me an email</h2>
-        <Form onSubmit={onSendEmail}>
-          {[
-            {
-              label: 'Name',
-              id: 'name',
-              type: 'text',
-              placeholder: 'James Bond',
-              component: Input,
-              required: true,
-            },
-            {
-              label: 'Email',
-              id: 'email',
-              type: 'email',
-              placeholder: 'james@bond.com',
-              component: Input,
-              required: true,
-            },
-            {
-              label: 'Message',
-              id: 'message',
-              placeholder: 'How can I help you?',
-              component: Textarea,
-              rows: 4,
-              required: true,
-            },
-          ].map((field, idx) => (
-            <motion.div
-              key={field.id}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: idx * 0.08,
-                duration: 0.5,
-                type: 'spring',
-                stiffness: 60,
-              }}
-            >
-              <FormGroup>
-                <Label htmlFor={field.id}>{field.label}</Label>
-                <field.component
-                  id={field.id}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  rows={field.rows}
-                  required={field.required}
-                />
-              </FormGroup>
-            </motion.div>
-          ))}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: 3 * 0.08,
-              duration: 0.5,
-              type: 'spring',
-              stiffness: 60,
-            }}
-          >
-            <FormGroup>
-              <Button type="submit">Send</Button>
-            </FormGroup>
-          </motion.div>
-        </Form>
+      </div>
 
-        <Toast
-          title={isEmailSent ? 'Email sent :D' : 'Error :('}
-          description={
-            isEmailSent
-              ? 'Thanks for taking the time to write it.'
-              : 'Something wrong happened. Try again later.'
-          }
-          isSuccess={isEmailSent}
-          showToast={showToast}
-          setShowToast={setShowToast}
-        />
-      </Box>
+      {/* Calendar Embed - Break out of container */}
+      <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen mb-12">
+        <ClientOnly fallback={<div className="h-[680px] max-w-[1050px] mx-auto bg-gray-100 dark:bg-gray-800 animate-pulse rounded-lg"></div>}>
+          <CalEmbed />
+        </ClientOnly>
+      </div>
+
+      {/* Contact Info Section */}
+      <div className="px-8 py-8">
+        <div className="mb-8 max-w-7xl mx-auto">
+          <h3 className="text-lg font-medium text-primary mb-6">Contact Info</h3>
+          
+          {/* Email */}
+          <a 
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=sgangadhar.exe@gmail.com&su=Let's%20Connect%20-%20From%20Portfolio%20Site" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 mb-4 text-secondary hover:text-primary transition-colors no-underline"
+          >
+            <IconMail className="w-5 h-5 [&>path]:fill-none [&>path]:stroke-current stroke-[1.5]" />
+            <span>Email</span>
+            <span className="ml-auto text-primary">sgangadhar.exe@gmail.com</span>
+          </a>
+
+          {/* Twitter */}
+          <a 
+            href="https://twitter.com/gangadhar02" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 mb-4 text-secondary hover:text-primary transition-colors no-underline"
+          >
+            <IconBrandTwitter className="w-5 h-5 [&>path]:fill-none [&>path]:stroke-current stroke-[1.5]" />
+            <span>Twitter</span>
+            <span className="ml-auto text-primary">@gangadhar02</span>
+          </a>
+
+          {/* Instagram */}
+          <a 
+            href="https://www.instagram.com/gangadhar__s/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 mb-4 text-secondary hover:text-primary transition-colors no-underline"
+          >
+            <IconBrandInstagram className="w-5 h-5 [&>path]:fill-none [&>path]:stroke-current stroke-[1.5]" />
+            <span>Instagram</span>
+            <span className="ml-auto text-primary">@gangadhar__s</span>
+          </a>
+
+          {/* LinkedIn */}
+          <a 
+            href="https://linkedin.com/in/gangadhar02" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 mb-6 text-secondary hover:text-primary transition-colors no-underline"
+          >
+            <IconBrandLinkedin className="w-5 h-5 [&>path]:fill-none [&>path]:stroke-current stroke-[1.5]" />
+            <span>LinkedIn</span>
+            <span className="ml-auto text-primary">@gangadhar02</span>
+          </a>
+        </div>
+      </div>
     </>
   )
 }
 
-const Form = ({ className, ...props }) => (
-  <form className={cn(
-    "flex flex-col max-w-[400px]",
-    className
-  )} {...props} />
-)
-
-const FormGroup = ({ className, ...props }) => (
-  <div className={cn(
-    "flex flex-col mb-[10px]",
-    className
-  )} {...props} />
-)
-
-const Label = ({ className, ...props }) => (
-  <label className={cn(
-    "text-secondary uppercase text-xs font-medium",
-    className
-  )} {...props} />
-)
-
-const Input = ({ className, ...props }) => (
-  <input className={cn(
-    "text-primary bg-none border border-secondary rounded-md p-[10px]",
-    "focus:outline-none focus:border-cyan",
-    className
-  )} {...props} />
-)
-
-const Textarea = ({ className, ...props }) => (
-  <textarea className={cn(
-    "text-primary bg-none border border-secondary rounded-md p-[10px]",
-    "focus:outline-none focus:border-cyan",
-    className
-  )} {...props} />
-)
-
-const Button = ({ className, ...props }) => (
-  <button className={cn(
-    "text-background bg-white border border-white rounded-md cursor-pointer",
-    "p-[10px] mt-[5px] transition-all duration-200 ease-in-out",
-    "hover:bg-transparent hover:border-cyan hover:text-cyan",
-    "focus:bg-transparent focus:border-cyan focus:text-cyan focus:outline-none",
-    className
-  )} {...props} />
-)
 
 Contact.Layout = Base
 

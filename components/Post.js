@@ -33,7 +33,7 @@ export const PostContainer = ({ className, ...props }) => (
 export const PostContent = ({ className, ...props }) => (
   <div 
     className={cn(
-      "text-base leading-8 text-secondary relative z-10 h-full py-[60px_0_20px_0]",
+      "text-base leading-8 text-secondary relative z-10 h-full py-[0_0_20px_0]",
       // iframe-wrap
       "[&_.iframe-wrap]:h-0 [&_.iframe-wrap]:mb-5 [&_.iframe-wrap]:overflow-hidden",
       "[&_.iframe-wrap]:pb-[56.25%] [&_.iframe-wrap]:pt-[30px] [&_.iframe-wrap]:relative",

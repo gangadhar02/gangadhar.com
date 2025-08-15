@@ -39,7 +39,9 @@ export default function Preloader({ onComplete }) {
   const [isExiting, setIsExiting] = useState(false)
 
   useEffect(() => {
-    setDimension({ width: window.innerWidth, height: window.innerHeight })
+    if (typeof window !== 'undefined') {
+      setDimension({ width: window.innerWidth, height: window.innerHeight })
+    }
   }, [])
 
   useEffect(() => {

@@ -4,14 +4,16 @@ import Footer from '../components/Footer'
 import BlogDate from '../components/BlogDate'
 import { Post, PostMain, PostContent, PostContainer } from '../components/Post'
 import { Wrapper } from '../components/Wrapper'
+import ClientOnly from '../components/ClientOnly'
 
 export default function Blogpost({ children }) {
   const { title, image, date, views } = children.props
 
   return (
-    <SidebarNav>
-      <div className="flex flex-col min-h-screen">
-        <div className="pt-24">
+    <ClientOnly fallback={<div>Loading...</div>}>
+      <SidebarNav>
+        <div className="flex flex-col min-h-screen">
+        <div>
           <Main image={image}>
           {image && (
             <div className={cn(
@@ -54,14 +56,14 @@ export default function Blogpost({ children }) {
               {!image && (
                 <div>
                   <h1 className={cn(
-                    "text-primary mt-8 mx-auto max-w-none",
-                    "text-5xl leading-[60px] text-center",
-                    "bp2:mt-8 bp2:text-[72px] bp2:leading-[90px] bp2:max-w-[60%]"
+                    "text-primary mx-auto max-w-none mt-8",
+                    "text-4xl leading-[48px] text-center",
+                    "bp2:text-5xl bp2:leading-[60px] bp2:max-w-[70%]"
                   )}>
                     {title}
                   </h1>
                   <h2 className={cn(
-                    "text-secondary text-base m-[0_0_60px] text-center font-medium"
+                    "text-secondary text-base mb-8 text-center font-medium"
                   )}>
                     <BlogDate dateString={date} />
                   </h2>
@@ -75,7 +77,8 @@ export default function Blogpost({ children }) {
         </div>
         <Footer />
       </div>
-    </SidebarNav>
+      </SidebarNav>
+    </ClientOnly>
   )
 }
 

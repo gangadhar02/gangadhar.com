@@ -1,5 +1,5 @@
-"use client";
 import React, { useState, useEffect } from "react";
+import { useHasMounted } from "./ClientOnly";
 import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
 import {
   IconHome,
@@ -23,12 +23,8 @@ import { motion } from "framer-motion";
 
 export function SidebarNav({ children }) {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [open, setOpen] = useState(true);
+  const mounted = useHasMounted();
 
   const links = [
     {
@@ -42,9 +38,9 @@ export function SidebarNav({ children }) {
       icon: IconUser,
     },
     {
-      label: "Articles",
-      href: "/articles",
-      icon: IconBlockquote,
+      label: "Work",
+      href: "/work",
+      icon: IconBriefcase,
     },
     {
       label: "Projects",
@@ -52,9 +48,9 @@ export function SidebarNav({ children }) {
       icon: IconFlask,
     },
     {
-      label: "Work",
-      href: "/work",
-      icon: IconBriefcase,
+      label: "Articles",
+      href: "/articles",
+      icon: IconBlockquote,
     },
     {
       label: "Clicks",
@@ -138,12 +134,7 @@ export function SidebarNav({ children }) {
             <div className="flex flex-col gap-1 mt-4">
               <div className="border-t border-neutral-300 dark:border-neutral-600 pt-3">
                 <div 
-                  className="px-2 mb-2"
-                  style={{
-                    opacity: mounted && open ? 1 : 0,
-                    visibility: mounted && open ? 'visible' : 'hidden',
-                    transition: mounted ? 'opacity 0.15s, visibility 0.15s' : 'none'
-                  }}
+                  className="px-2 mb-2 opacity-100 visible"
                 >
                   <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                     Connect

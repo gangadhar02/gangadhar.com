@@ -9,7 +9,7 @@ import stripHtml from '../lib/strip-html'
 export async function getStaticProps() {
   const meta = {
     title: 'Projects // Gangadhar S',
-    tagline: 'AI-Powered Marketing Solutions.',
+    tagline: 'From Idea to Internet: Side Projects',
     image: '/static/images/projects-bw.jpg',
     primaryColor: 'cyan',
     secondaryColor: 'green',
@@ -27,20 +27,12 @@ function Projects(props) {
     return total
   }
 
-  const getFeaturedProjects = () => {
-    const featured = ['Email Subject Line Checker', 'UTM Generator Pro']
-    return items
-      .map(item => item.projects.filter(project => featured.includes(project.title)))
-      .filter(item => item.length > 0)
-      .flat()
-  }
-
   const getAllProjects = () => {
     return items.flatMap(item => item.projects)
   }
 
   const { title, image } = props
-  const description = `I specialize in creating <strong>AI-powered marketing solutions</strong> using modern AI platforms. Here you can explore all <strong>${getTotalProjects()} marketing tools</strong> that demonstrate my expertise in leveraging AI for performance marketing and campaign optimization.`
+  const description = `I'm obsessed with <strong>turning ideas into things people love</strong>. Here you can explore <strong>${getTotalProjects()} projects</strong> I've built using <strong>AI Assisted Coding [Vibe Coding]</strong>. Some genuinely useful, others are just fun experiments.`
 
   return (
     <>
@@ -56,10 +48,7 @@ function Projects(props) {
       <AnimateSharedLayout>
         <p dangerouslySetInnerHTML={{ __html: description }} />
 
-        <h2>Featured Projects</h2>
-        <ExpandableProjectCard projects={getFeaturedProjects()} />
-
-        <h2>All Projects</h2>
+        <h2 className="mb-8">All Projects</h2>
         <ExpandableProjectCard projects={getAllProjects()} />
       </AnimateSharedLayout>
     </>

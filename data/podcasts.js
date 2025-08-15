@@ -110,12 +110,6 @@ const appearances = [
     lang: 'pt-BR',
   },
   {
-    date: '2021-02-09',
-    title: 'Parth Desai em Os Programadores',
-    url: 'https://anchor.fm/osprogramadores/episodes/E27---Parth-Desai---Chief-Product-Officer-na-Liferay-Cloud-eqbe14',
-    lang: 'pt-BR',
-  },
-  {
     date: '2020-09-09',
     title: 'Open Source and the Joy of Missing Out on DZone',
     url: 'https://www.automator.show/14',
@@ -147,11 +141,6 @@ const appearances = [
     lang: 'pt-BR',
   },
   {
-    date: '2020-04-22',
-    title: 'Parth Desai on The Mike Dominick Show',
-    url: 'https://www.automator.show/14',
-  },
-  {
     date: '2020-03-06',
     title: 'Creating Dracula PRO with Blood, Sweat, and Tears on Sustain OSS',
     url: 'https://podcast.sustainoss.org/27',
@@ -171,12 +160,6 @@ const appearances = [
     date: '2016-08-23',
     title: 'Web Components no Hipsters.tech',
     url: 'https://hipsters.tech/web-components-hipsters-06/',
-    lang: 'pt-BR',
-  },
-  {
-    date: '2016-07-22',
-    title: 'Parth Desai no Dev Na Estrada',
-    url: 'https://devnaestrada.com.br/2016/07/22/entrevista-zeno-rocha.html',
     lang: 'pt-BR',
   },
 ]

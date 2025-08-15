@@ -8,7 +8,7 @@ import stripHtml from '../lib/strip-html'
 
 export async function getStaticProps() {
   const meta = {
-    title: 'Investing // Parth Desai',
+    title: 'Investing // Gangadhar S',
     description:
       "<strong>Angel investing</strong> is how I help other startups to create amazing developer experiences. I'm excited to enable teams to grow and <strong>build world-class products</strong>.",
     tagline: 'DevTools. B2B. SaaS.',
@@ -36,8 +36,8 @@ function Investing(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://parthdesai.site/investing" property="og:url" />
-        <meta content={`https://parthdesai.site${image}`} property="og:image" />
+        <meta content="https://gangadhar.com/investing" property="og:url" />
+        <meta content={`https://gangadhar.com${image}`} property="og:image" />
       </Head>
 
       <p dangerouslySetInnerHTML={{ __html: description }} />

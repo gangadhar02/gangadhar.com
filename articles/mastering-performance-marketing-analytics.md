@@ -1,7 +1,6 @@
 ---
 title: "Mastering Metrics: A Deep Dive into Performance Marketing Analytics"
 description: "A comprehensive guide to performance marketing analytics, covering attribution models, KPI selection, and optimization strategies."
-image: https://cdn.midjourney.com/d890f35d-2b15-4c83-898f-263bbbc9acca/0_1.png
 date: "2024-09-20"
 ---
 

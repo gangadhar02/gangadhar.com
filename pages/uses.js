@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 
 export async function getStaticProps() {
   const meta = {
-    title: 'Uses // Parth Desai',
+    title: 'Uses // Gangadhar S',
     description:
       "This is a comprehensive list of all the <strong>software or hardware</strong> that I use daily along with my dotfiles configurations.",
     tagline: 'Tools. Apps. Gear.',
@@ -68,8 +68,8 @@ function Uses(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://parthdesai.site/uses" property="og:url" />
-        <meta content={`https://parthdesai.site${image}`} property="og:image" />
+        <meta content="https://gangadhar.com/uses" property="og:url" />
+        <meta content={`https://gangadhar.com${image}`} property="og:image" />
       </Head>
 
       <p dangerouslySetInnerHTML={{ __html: description }} />

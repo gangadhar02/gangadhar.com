@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import { cn } from '../lib/utils'
 import { useTheme } from '../contexts/ThemeContext'
+import { useHasMounted } from '../components/ClientOnly'
 
 export default function Footer() {
   const { theme, toggleTheme } = useTheme()
+  const mounted = useHasMounted()
   const links = [
     {
       title: 'Email',
@@ -92,12 +94,14 @@ export default function Footer() {
           "group"
         )}
       >
-        <span className="hidden bp2:inline">{theme === 'dark' ? 'light' : 'dark'}</span>
-        <i className={cn(
-          "text-primary ml-[5px] text-2xl transition-opacity duration-200",
-          "bp2:opacity-0 bp2:text-base bp2:group-hover:opacity-100",
-          theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line'
-        )} />
+        <span className="hidden bp2:inline" suppressHydrationWarning>{mounted ? (theme === 'dark' ? 'light' : 'dark') : 'theme'}</span>
+        <i 
+          suppressHydrationWarning
+          className={cn(
+            "text-primary ml-[5px] text-2xl transition-opacity duration-200",
+            "bp2:opacity-0 bp2:text-base bp2:group-hover:opacity-100",
+            mounted ? (theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line') : 'ri-contrast-2-line'
+          )} />
       </button>
       {links.map(renderAnchor)}
     </footer>

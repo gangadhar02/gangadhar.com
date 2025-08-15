@@ -9,13 +9,13 @@ function Post(props) {
     return <ErrorMessage code={props.errorCode} />
   }
 
-  const title = `${props.title} // Parth Desai`
+  const title = `${props.title} // Gangadhar S`
   const description = props.description || ''
-  const url = `https://parthdesai.site/${props.slug}`
+  const url = `https://gangadhar.com/${props.slug}`
   const date = new Date(props.date).toISOString()
   const image = props.image
-    ? `https://parthdesai.site${props.image}`
-    : 'https://parthdesai.site/static/images/home-opt.jpg'
+    ? `https://gangadhar.com${props.image}`
+    : 'https://gangadhar.com/static/images/home-opt.jpg'
 
   return (
     <>
@@ -33,7 +33,7 @@ function Post(props) {
       </Head>
 
       <ArticleJsonLd
-        authorName="Parth Desai"
+        authorName="Gangadhar S"
         type="Blog"
         url={url}
         title={title}
@@ -65,7 +65,7 @@ export async function getStaticProps({ params }) {
 
     const isProd = process.env.NODE_ENV === 'production'
     const base = isProd
-      ? 'https://www.parthdesai.site'
+      ? 'https://www.gangadhar.com'
       : 'http://localhost:3000'
 
     return {

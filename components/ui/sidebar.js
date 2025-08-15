@@ -1,4 +1,3 @@
-"use client";
 import { cn } from "../../lib/utils";
 import React, { useState, createContext, useContext, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -73,13 +72,11 @@ export const DesktopSidebar = ({
           "h-screen px-4 py-4 hidden md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 shrink-0 sticky top-0",
           className
         )}
-        initial={{ width: "60px" }}
+        initial={{ width: "165px" }}
         animate={{
-          width: mounted && animate ? (open ? "165px" : "60px") : "60px",
+          width: "165px",
         }}
-        transition={{ duration: mounted ? 0.2 : 0 }}
-        onMouseEnter={() => mounted && setOpen(true)}
-        onMouseLeave={() => mounted && setOpen(false)}
+        transition={{ duration: 0 }}
         {...props}>
         {children}
       </motion.div>

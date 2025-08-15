@@ -1,7 +1,6 @@
 ---
 title: "From GPT to Ads: Generative AI Revolutionizing Marketing Creativity"
 description: "How generative AI tools are transforming the creative process in marketing, enabling faster iteration and personalization at scale."
-image: https://cdn.midjourney.com/42f03202-8bee-40d5-b4eb-9d85abf0fe06/0_0.png
 date: "2024-11-08"
 ---
 

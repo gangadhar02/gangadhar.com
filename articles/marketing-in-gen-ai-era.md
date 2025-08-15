@@ -1,7 +1,6 @@
 ---
 title: "Marketing in the Gen AI Era: What Every Strategist Must Know"
 description: "A strategic guide for marketing leaders navigating the generative AI revolution, covering implications and essential strategies."
-image: /static/images/blog/gen-ai-marketing.jpg
 date: "2024-08-25"
 ---
 

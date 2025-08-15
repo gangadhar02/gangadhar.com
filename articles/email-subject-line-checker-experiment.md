@@ -1,7 +1,6 @@
 ---
 title: "Made a Email Subject Line Checker"
 description: "Building an AI-powered tool to optimize email subject lines and improve open rates through data-driven insights and A/B testing."
-image: /static/images/blog/email-subject-checker.jpg
 date: "2024-11-15"
 ---
 

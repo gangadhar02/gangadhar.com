@@ -1,16 +1,16 @@
 import Router from 'next/router'
 import AnimatedCursor from 'react-animated-cursor'
-import { isMobile } from 'react-device-detect'
 import 'remixicon/fonts/remixicon.css'
 import CommandBar from '../components/CommandBar'
 import * as gtag from '../lib/gtag'
 import '../public/static/css/prism.css'
 import '../styles/globals.css'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext'
 import { PreloadProvider } from '../contexts/PreloadContext'
 import { cn } from '../lib/utils'
 import { Particles } from '../components/Particles'
+import ClientOnly from '../components/ClientOnly'
 
 Router.events.on('routeChangeComplete', url => gtag.pageview(url))
 
@@ -24,58 +24,13 @@ const AppWrapper = ({ children, className, ...props }) => (
 
 function AppContent({ Component, pageProps }) {
   const Layout = Component.Layout || Noop
-  const { theme } = useTheme()
-
-  useEffect(() => {
-    // Apply theme class to document
-    document.documentElement.className = theme === 'dark' ? 'dark' : ''
-  }, [theme])
 
   return (
     <>
-      {!isMobile && (
-        <Particles 
-          quantity={60}
-          staticity={50}
-          ease={50}
-          size={0.4}
-        />
-      )}
       <AppWrapper>
-        <CommandBar>
-          {!isMobile && (
-            <AnimatedCursor
-              key={theme}
-              innerSize={13}
-              outerSize={25}
-              color={theme === 'light' ? "0, 0, 0" : "255, 255, 255"}
-              outerAlpha={0.2}
-              innerScale={1.2}
-              outerScale={1.8}
-              trailingSpeed={4}
-              outerStyle={{
-                zIndex: 10000,
-                mixBlendMode: theme === 'light' ? 'normal' : 'normal'
-              }}
-              innerStyle={{
-                zIndex: 10001,
-                backgroundColor: theme === 'light' ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)'
-              }}
-              clickables={[
-                'a',
-                'button',
-                '.link',
-                '.link-button',
-                '.cursor-pointer',
-                '.cursor-text',
-                '[tabindex]',
-              ]}
-            />
-          )}
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </CommandBar>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </AppWrapper>
     </>
   )

@@ -1,7 +1,6 @@
 ---
 title: "Built a UTM Generator with Cursor/Claude 3.7"
 description: "How I used AI-powered coding with Cursor and Claude 3.7 to build a comprehensive UTM parameter generator for better marketing attribution."
-image: /static/images/blog/utm-generator.jpg
 date: "2024-10-28"
 ---
 

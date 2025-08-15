@@ -57,7 +57,13 @@ const Particles = ({
   const mousePosition = useMousePosition()
   const mouse = useRef({ x: 0, y: 0 })
   const canvasSize = useRef({ w: 0, h: 0 })
-  const dpr = typeof window !== 'undefined' ? window.devicePixelRatio : 1
+  const [dpr, setDpr] = useState(1)
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setDpr(window.devicePixelRatio || 1)
+    }
+  }, [])
   
   const { theme } = useTheme()
   const color = theme === 'dark' ? '#ffffff' : '#000000'

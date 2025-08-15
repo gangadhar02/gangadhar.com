@@ -5,7 +5,7 @@ import credits from '../data/credits'
 
 export async function getStaticProps() {
   const meta = {
-    title: 'Credits // Parth Desai',
+    title: 'Credits // Gangadhar S',
     description:
       "It's important to recognize those who volunteer their time and resources to create amazing content and make it available for free.",
     tagline: 'Credits.',
@@ -38,8 +38,8 @@ function Credits(props) {
         <meta content={title} property="og:title" />
         <meta content={description} name="description" />
         <meta content={description} property="og:description" />
-        <meta content="https://parthdesai.site/credits" property="og:url" />
-        <meta content={`https://parthdesai.site${image}`} property="og:image" />
+        <meta content="https://gangadhar.com/credits" property="og:url" />
+        <meta content={`https://gangadhar.com${image}`} property="og:image" />
       </Head>
       <p dangerouslySetInnerHTML={{ __html: description }} />
       <hr style={{ border: '0.5px solid white', margin: '20px 0' }} />

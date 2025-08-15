@@ -1,9 +1,12 @@
-"use client";
-
 import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "../../hooks/use-outside-click";
 import { cn } from '../../lib/utils';
+import { IconExternalLink } from "@tabler/icons-react";
+import { Github } from "lucide-react";
+
+// Utility function to check if project has a valid URL
+const hasValidUrl = (project) => !!project.url && project.url.startsWith("http");
 
 export function ExpandableProjectCard({ projects }) {
   const [active, setActive] = useState(null);
@@ -64,16 +67,21 @@ export function ExpandableProjectCard({ projects }) {
                 </svg>
               </button>
 
-              {/* Project Image/Icon Section */}
-              <div className="h-80 bg-gray-100 dark:bg-neutral-800 flex items-center justify-center">
-                {active.image ? (
+              {/* Project Preview Section */}
+              <div className="h-80 bg-gray-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden">
+                {hasValidUrl(active) ? (
+                  <img
+                    src={`https://api.microlink.io/?url=${encodeURIComponent(active.url)}&screenshot=true&meta=false&embed=screenshot.url&colorScheme=light&viewport.isMobile=false&viewport.deviceScaleFactor=2&viewport.width=1200&viewport.height=800`}
+                    alt={`Preview of ${active.title}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                ) : active.image ? (
                   <img
                     src={active.image}
                     alt={active.title}
                     className="w-full h-full object-cover"
                   />
-                ) : active.icon ? (
-                  <i className={cn("text-8xl text-primary", active.icon)} />
                 ) : (
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
                     <span className="text-2xl font-bold text-white">
@@ -83,52 +91,49 @@ export function ExpandableProjectCard({ projects }) {
                 )}
               </div>
 
-              {/* Content */}
-              <div className="flex flex-col h-[calc(90vh-20rem)] md:h-auto md:max-h-96">
-                {/* Header */}
-                <div className="flex justify-between items-start p-4 flex-shrink-0">
-                  <div className="flex-1">
-                    <h3 className="font-medium text-neutral-700 dark:text-neutral-200 text-lg">
-                      {active.title}
-                    </h3>
-                    <p className="text-neutral-600 dark:text-neutral-400 text-base mt-2">
-                      {active.description}
-                    </p>
-                  </div>
+              {/* Content - Entire modal content is scrollable */}
+              <div className="flex-1 overflow-y-auto max-h-[calc(90vh-20rem)] md:max-h-96">
+                <div className="p-4">
+                  <h3 className="font-medium text-neutral-700 dark:text-neutral-200 text-lg">
+                    {active.title}
+                  </h3>
+                  <p className="text-neutral-600 dark:text-neutral-400 text-base mt-2 mb-4">
+                    {active.description}
+                  </p>
                   
-                  <div className="flex gap-2 ml-4">
-                    {active.website && (
+                  <div className="flex gap-2 mb-6">
+                    {active.url && (
                       <a
-                        href={active.website}
+                        href={active.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 text-sm rounded-full font-bold bg-green-500 hover:bg-green-600 text-white"
+                        className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-10 px-4 py-2 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 gap-2 no-underline"
                       >
-                        Visit Site
+                        <span>Visit Site</span>
+                        <IconExternalLink className="h-4 w-4 [&>path]:fill-none [&>path]:stroke-current stroke-[1.5]" />
                       </a>
                     )}
-                    {active.github && (
+                    {active.githubUrl && (
                       <a
-                        href={active.github}
+                        href={active.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 text-sm rounded-full font-bold bg-gray-800 hover:bg-gray-900 text-white"
+                        className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-10 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-black text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 gap-2 no-underline"
                       >
-                        GitHub
+                        <Github className="h-4 w-4" />
+                        <span>GitHub</span>
                       </a>
                     )}
                   </div>
-                </div>
 
-                {/* Scrollable Content */}
-                <div className="flex-1 overflow-y-auto px-4 pb-6">
-                  {active.longDescription && (
+                {/* All Content Sections */}
+                  {active.detailedDescription && (
                     <div className="mb-6">
                       <h4 className="font-semibold text-neutral-800 dark:text-neutral-200 mb-3">
                         About This Project
                       </h4>
                       <div className="space-y-3">
-                        {active.longDescription.map((desc, index) => (
+                        {active.detailedDescription.map((desc, index) => (
                           <p key={index} className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                             {desc}
                           </p>
@@ -137,13 +142,13 @@ export function ExpandableProjectCard({ projects }) {
                     </div>
                   )}
 
-                  {active.features && (
+                  {active.highlights && (
                     <div className="mb-6">
                       <h4 className="font-semibold text-neutral-800 dark:text-neutral-200 mb-3">
                         Key Features
                       </h4>
                       <div className="space-y-2">
-                        {active.features.map((feature, index) => (
+                        {active.highlights.map((feature, index) => (
                           <p key={index} className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                             • {feature}
                           </p>
@@ -201,22 +206,28 @@ export function ExpandableProjectCard({ projects }) {
         "w-full gap-6",
         "grid grid-cols-1 md:grid-cols-2"
       )}>
-        {projects.map((project, index) => (
-          <div
-            key={`card-${project.title}-${id}`}
-            onClick={() => setActive(project)}
-            className={cn(
-              "cursor-pointer relative group",
-              "border border-border rounded-lg overflow-hidden",
-              "bg-background hover:shadow-lg transition-all duration-300",
-              "hover:-translate-y-1 hover:border-neutral-400 dark:hover:border-neutral-500"
-            )}
-          >
+        {projects.map((project, index) => {
+          // Pattern B: Whole card with LinkPreview (current implementation)
+          const CardContent = (
+            <div
+              onClick={() => setActive(project)}
+              className={cn(
+                "cursor-pointer relative group",
+                "border border-border rounded-lg overflow-hidden",
+                "bg-background hover:shadow-lg transition-all duration-300",
+                "hover:-translate-y-1 hover:border-neutral-400 dark:hover:border-neutral-500"
+              )}
+            >
             <div className="flex flex-col h-full">
-              {/* Icon/Logo Section */}
-              <div className="h-48 bg-muted flex items-center justify-center">
-                {project.icon ? (
-                  <i className={cn("text-6xl text-primary", project.icon)} />
+              {/* Website Preview Section */}
+              <div className="h-48 bg-muted flex items-center justify-center overflow-hidden">
+                {hasValidUrl(project) ? (
+                  <img
+                    src={`https://api.microlink.io/?url=${encodeURIComponent(project.url)}&screenshot=true&meta=false&embed=screenshot.url&colorScheme=light&viewport.isMobile=false&viewport.deviceScaleFactor=2&viewport.width=1200&viewport.height=800`}
+                    alt={`Preview of ${project.title}`}
+                    className="object-cover w-full h-full"
+                    loading="lazy"
+                  />
                 ) : project.image ? (
                   <img
                     src={project.image}
@@ -265,8 +276,16 @@ export function ExpandableProjectCard({ projects }) {
                 )}
               </div>
             </div>
-          </div>
-        ))}
+            </div>
+          );
+          
+          // Static preview implementation - no hover needed
+          return (
+            <div key={`card-${project.title}-${id}`}>
+              {CardContent}
+            </div>
+          );
+        })}
       </div>
     </>
   );

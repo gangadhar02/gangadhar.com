@@ -7,7 +7,7 @@ import Base from '../layouts/Base'
 
 export async function getStaticProps() {
   const meta = {
-    title: 'Tweets // Parth Desai',
+    title: 'Tweets // Gangadhar S',
     description: 'A collection of my tweets.',
     tagline: 'Tweets. Thoughts. Insights.',
     image: '/static/images/tweets-bw.jpg',
@@ -44,8 +44,8 @@ function TweetsPage(props) {
         <meta content={title} property="og:title" />
         <meta content={description} name="description" />
         <meta content={description} property="og:description" />
-        <meta content="https://parthdesai.site/tweets" property="og:url" />
-        <meta content={`https://parthdesai.site${image}`} property="og:image" />
+        <meta content="https://gangadhar.com/tweets" property="og:url" />
+        <meta content={`https://gangadhar.com${image}`} property="og:image" />
       </Head>
 
       {/* {loading && (
@@ -96,7 +96,7 @@ function TweetsPage(props) {
       </div>
       <h2>Let's chat</h2>
       <p>
-        <a href="https://www.parthdesai.site/contact" target="_blank">
+        <a href="https://www.gangadhar.com/contact" target="_blank">
           Hit me up
         </a>{' '}
         if what you read here resonates with you.
