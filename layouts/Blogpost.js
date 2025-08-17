@@ -1,9 +1,8 @@
 import { cn } from '../lib/utils'
-import { SidebarNav } from '../components/SidebarNav'
+import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import BlogDate from '../components/BlogDate'
 import { Post, PostMain, PostContent, PostContainer } from '../components/Post'
-import { Wrapper } from '../components/Wrapper'
 import ClientOnly from '../components/ClientOnly'
 
 export default function Blogpost({ children }) {
@@ -11,8 +10,8 @@ export default function Blogpost({ children }) {
 
   return (
     <ClientOnly fallback={<div>Loading...</div>}>
-      <SidebarNav>
-        <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex flex-col min-h-screen pt-20">
         <div>
           <Main image={image}>
           {image && (
@@ -77,7 +76,6 @@ export default function Blogpost({ children }) {
         </div>
         <Footer />
       </div>
-      </SidebarNav>
     </ClientOnly>
   )
 }

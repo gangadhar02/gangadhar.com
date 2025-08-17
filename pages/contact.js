@@ -8,6 +8,7 @@ import ClientOnly from '../components/ClientOnly'
 import { IconBrandInstagram, IconBrandLinkedin, IconBrandTwitter, IconMail } from '@tabler/icons-react'
 import dynamic from 'next/dynamic'
 import { getCalApi } from "@calcom/embed-react"
+import { useTheme } from '../contexts/ThemeContext'
 
 const Cal = dynamic(() => import("@calcom/embed-react").then(mod => mod.default), { 
   ssr: false 
@@ -28,6 +29,7 @@ export async function getStaticProps() {
 // Cal.com Embed Component using React
 function CalEmbed() {
   const [mounted, setMounted] = React.useState(false)
+  const { theme } = useTheme()
   
   useEffect(() => {
     setMounted(true)
@@ -38,29 +40,29 @@ function CalEmbed() {
       (async function () {
         const cal = await getCalApi();
         cal("ui", {
-          "theme":"dark",
-          "styles":{"branding":{"brandColor":"#000000"}},
+          "theme": theme,
+          "styles":{"branding":{"brandColor": theme === 'dark' ? "#ffffff" : "#000000"}},
           "hideEventTypeDetails":false
         });
       })();
     }
-  }, [mounted])
+  }, [mounted, theme])
   
   if (!mounted) {
     return (
-      <div style={{width:'1050px', margin:'0 auto', maxWidth:'100%', height:'680px', backgroundColor:'#1a1a1a', borderRadius:'8px'}}>
+      <div style={{width:'1050px', margin:'0 auto', maxWidth:'100%', height:'680px', backgroundColor: theme === 'dark' ? '#1a1a1a' : '#f5f5f5', borderRadius:'8px'}}>
         {/* Loading state */}
       </div>
     )
   }
   
   return (
-    <div style={{width:'1050px', margin:'0 auto', maxWidth:'100%', height:'680px', backgroundColor:'#1a1a1a', borderRadius:'8px'}}>
+    <div style={{width:'1050px', margin:'0 auto', maxWidth:'100%', height:'680px', backgroundColor: theme === 'dark' ? '#1a1a1a' : '#f5f5f5', borderRadius:'8px'}}>
       <Cal 
         calLink="gangadhar.s/15min"
         style={{width:"100%", height:"100%"}}
         config={{
-          "theme":"dark"
+          "theme": theme
         }}
       />
     </div>

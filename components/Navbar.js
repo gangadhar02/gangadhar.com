@@ -1,107 +1,107 @@
-import { AnimateSharedLayout, motion } from 'framer-motion'
-import { useKBar } from 'kbar'
+'use client'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { Menu, X } from 'lucide-react'
+import { Button } from './ui/button'
+import React, { useState, useEffect } from 'react'
 import { cn } from '../lib/utils'
-import MobileHamburgerNav from './MobileHamburgerNav'
+import { IconCircleLetterGFilled } from '@tabler/icons-react'
+
+const menuItems = [
+  { name: 'About', href: '/about' },
+  { name: 'Work', href: '/work' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Articles', href: '/articles' },
+  { name: 'Clicks', href: '/clicks' },
+]
 
 export default function Navbar() {
-  const router = useRouter()
-  const pages = [
-    'About',
-    'Articles', 
-    'Projects',
-    'Work',
-    'Clicks',
-    'Contact',
-  ]
-  const [hovered, setHovered] = useState('')
-  const { query } = useKBar()
+  const [menuState, setMenuState] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <AnimateSharedLayout>
-      <header className={cn(
-        "flex items-center justify-between text-primary text-xs min-h-[59px] w-full",
-        "absolute top-0 z-10 mt-[13px] bp2:mt-0",
-        "px-3"
-      )}>
-        <Link href="/" passHref>
-          <a className={cn(
-            "appearance-none bg-transparent border-none rounded-lg text-primary cursor-pointer",
-            "h-[34px] px-[10px] transition-colors duration-200 ease-in-out hover:bg-hover",
-            "font-bold text-[32px] no-underline font-heading flex items-center"
+    <header>
+      <nav
+        data-state={menuState && 'active'}
+        className="fixed z-20 w-full px-2">
+        <div
+          className={cn(
+            'mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12',
+            mounted && isScrolled &&
+              'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5'
           )}>
-            G
-          </a>
-        </Link>
+          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+            {/* Logo & Menu Toggle */}
+            <div className="flex w-full justify-between lg:w-auto">
+              <Link
+                href="/"
+                aria-label="home"
+                className="flex items-center space-x-2">
+                <IconCircleLetterGFilled className="h-8 w-8 text-foreground flex-shrink-0" />
+              </Link>
 
-        <nav className={cn(
-          "absolute left-1/2 transform -translate-x-1/2 hidden",
-          "bp2:block",
-          "bp3:overflow-x-scroll bp3:overflow-y-hidden"
-        )}>
-          <ul className={cn(
-            "m-0 p-0 list-none inline-flex relative top-[5px]",
-            "bp1:justify-around"
-          )}>
-            {pages.map(page => {
-              const path = `/${page.toLowerCase()}`
-              const isHovered = hovered === page
-              const isActive = router.pathname === path
-              
-              return (
-                <li key={page} className="relative">
-                  <Link href={path} passHref>
-                    <a className="border-0 relative block hover:opacity-100 focus:opacity-100">
-                      {isHovered && (
-                        <motion.span
-                          className="absolute inset-0 bg-hover rounded-lg"
-                          layoutId="nav"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                        />
-                      )}
-                      <motion.span
-                        className={cn(
-                          "cursor-pointer inline-block text-xs font-medium tracking-[1.2px]",
-                          "px-5 py-[10px] no-underline uppercase transition-colors duration-200 ease-in-out",
-                          "relative z-10",
-                          isActive ? "text-primary" : "text-secondary hover:text-primary",
-                          "after:content-[''] after:absolute after:mx-auto after:bottom-[8px]",
-                          "after:left-0 after:right-0 after:h-px after:w-5 after:bg-primary",
-                          isActive ? "after:opacity-100" : "after:opacity-0 after:transition-opacity after:duration-200 after:ease-in-out"
-                        )}
-                        onHoverStart={() => setHovered(page)}
-                        onHoverEnd={() => setHovered('')}
-                      >
-                        {page}
-                      </motion.span>
-                    </a>
+              <button
+                onClick={() => setMenuState(!menuState)}
+                aria-label={menuState ? 'Close Menu' : 'Open Menu'}
+                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden">
+                <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
+                <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
+              </button>
+            </div>
+
+            {/* Desktop Nav */}
+            <div className="absolute inset-0 m-auto hidden size-fit lg:block">
+              <ul className="flex gap-8 text-sm">
+                {menuItems.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      href={item.href}
+                      className="text-muted-foreground hover:text-accent-foreground block duration-150 cursor-pointer">
+                      <span>{item.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Mobile + Buttons */}
+            <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+              <div className="lg:hidden">
+                <ul className="space-y-6 text-base">
+                  {menuItems.map((item, index) => (
+                    <li key={index}>
+                      <Link
+                        href={item.href}
+                        className="text-muted-foreground hover:text-accent-foreground block duration-150 cursor-pointer">
+                        <span>{item.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+                <Button
+                  asChild
+                  size="sm"
+                  className={cn(mounted && isScrolled ? 'lg:inline-flex' : 'hidden')}>
+                  <Link href="/contact">
+                    <span>Contact</span>
                   </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
-
-        <div className="flex items-center">
-          <MobileHamburgerNav />
-          <button
-            type="button"
-            aria-label="Command"
-            onClick={query.toggle}
-            className={cn(
-              "appearance-none bg-transparent border-none rounded-lg text-primary cursor-pointer",
-              "h-[34px] px-2 transition-colors duration-200 ease-in-out hover:bg-hover",
-              "bp3:hidden"
-            )}
-          >
-            <i className="ri-command-line text-2xl leading-8" />
-          </button>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-      </header>
-    </AnimateSharedLayout>
+      </nav>
+    </header>
   )
 }

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import React, { useState, useEffect } from 'react'
 import Footer from '../components/Footer'
-import { SidebarNav } from '../components/SidebarNav'
+import Navbar from '../components/Navbar'
 import { IconMapPin } from '@tabler/icons-react'
 import ShortcutHome from '../components/ShortcutHome'
 import { cn } from '../lib/utils'
@@ -305,18 +305,17 @@ export default function IndexContent({ title, description }) {
       {shouldShowPreloader && !isPreloaderComplete && (
         <Preloader onComplete={handlePreloaderComplete} />
       )}
+      <Navbar />
       <div className={cn(
-        "flex flex-col min-h-screen overflow-hidden"
+        "flex flex-col min-h-screen overflow-hidden pt-20"
       )}>
-        <SidebarNav>
-          <div className="flex flex-col min-h-screen">
-            <div className={cn(
-              "flex flex-col justify-center items-center flex-1 w-full",
-              "px-5 box-border relative z-[1]"
-            )}>
-              <div className={cn(
-                "max-w-[760px] w-full text-center"
-              )}>
+        <div className={cn(
+          "flex flex-col justify-center items-center flex-1 w-full",
+          "px-5 box-border relative z-[1]"
+        )}>
+          <div className={cn(
+            "max-w-[760px] w-full text-center"
+          )}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -424,16 +423,14 @@ export default function IndexContent({ title, description }) {
             <MobileWorkPreview />
             <MobileProjectsPreview />
             <MobileArticlesPreview />
-              </div>
-            </div>
-            <Footer />
           </div>
-        </SidebarNav>
-        
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          {modalContent}
-        </Modal>
+        </div>
+        <Footer />
       </div>
+      
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {modalContent}
+      </Modal>
     </>
   )
 }
