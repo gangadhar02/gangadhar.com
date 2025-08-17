@@ -212,6 +212,84 @@
     opacity: 0.8;
   }
 
+  /* Navbar link overrides */
+  .navbar-link {
+    cursor: pointer !important;
+    border-bottom: none !important;
+    transition: color 0.15s ease-in-out !important;
+    opacity: 1 !important;
+  }
+
+  .navbar-link:hover,
+  .navbar-link:focus {
+    opacity: 1 !important;
+    cursor: pointer !important;
+  }
+
+  /* Force navbar link styling with higher specificity */
+  nav .navbar-link,
+  header nav .navbar-link {
+    cursor: pointer !important;
+    border-bottom: none !important;
+    text-decoration: none !important;
+  }
+
+  nav .navbar-link:hover,
+  nav .navbar-link:focus,
+  header nav .navbar-link:hover,
+  header nav .navbar-link:focus {
+    cursor: pointer !important;
+    opacity: 1 !important;
+  }
+
+  /* Force Tailwind hover states */
+  .navbar-link:hover span,
+  nav .navbar-link:hover span,
+  header nav .navbar-link:hover span {
+    color: rgb(var(--accent-foreground)) !important;
+  }
+
+  .navbar-link span {
+    color: rgb(var(--muted-foreground)) !important;
+    transition: color 0.15s ease-in-out !important;
+  }
+
+  /* Universal navbar link cursor fix */
+  .navbar-link,
+  .navbar-link *,
+  .navbar-link:hover,
+  .navbar-link:hover * {
+    cursor: pointer !important;
+  }
+
+  /* Additional Tailwind class overrides */
+  a.navbar-link.text-muted-foreground {
+    color: rgb(var(--muted-foreground)) !important;
+    cursor: pointer !important;
+    border-bottom: none !important;
+  }
+
+  a.navbar-link.text-muted-foreground:hover,
+  a.navbar-link:hover {
+    color: rgb(var(--accent-foreground)) !important;
+    cursor: pointer !important;
+  }
+
+  /* Ensure Tailwind hover classes work */
+  .navbar-link.hover\:text-accent-foreground:hover {
+    color: rgb(var(--accent-foreground)) !important;
+  }
+
+  /* Button component overrides */
+  .navbar-button {
+    border-bottom: none !important;
+  }
+
+  .navbar-button:hover,
+  .navbar-button:focus {
+    opacity: 1 !important;
+  }
+
   a,
   button {
     outline: none;

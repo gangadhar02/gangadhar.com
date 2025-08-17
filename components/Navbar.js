@@ -9,11 +9,11 @@ import { useTheme } from '../contexts/ThemeContext'
 import { useHasMounted } from '../components/ClientOnly'
 
 const menuItems = [
-  { name: 'About', href: '/about' },
-  { name: 'Work', href: '/work' },
+  { name: 'Home', href: '/' },
   { name: 'Projects', href: '/projects' },
   { name: 'Articles', href: '/articles' },
   { name: 'Clicks', href: '/clicks' },
+  { name: 'Resume', href: 'https://drive.google.com/file/d/1_l6dV5NvkmSNBJ8Bmk8CLrTOlRHstcUK/view', external: true },
 ]
 
 export default function Navbar() {
@@ -65,12 +65,23 @@ export default function Navbar() {
               <ul className="flex gap-8 text-sm">
                 {menuItems.map((item, index) => (
                   <li key={index}>
-                    <Link
-                      href={item.href}
-                      className="navbar-link block duration-150 cursor-pointer transition-colors"
-                      style={{ cursor: 'pointer' }}>
-                      <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
-                    </Link>
+                    {item.external ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="navbar-link block duration-150 cursor-pointer transition-colors"
+                        style={{ cursor: 'pointer' }}>
+                        <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="navbar-link block duration-150 cursor-pointer transition-colors"
+                        style={{ cursor: 'pointer' }}>
+                        <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -82,12 +93,23 @@ export default function Navbar() {
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item, index) => (
                     <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="navbar-link block duration-150 cursor-pointer transition-colors"
-                        style={{ cursor: 'pointer' }}>
-                        <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
-                      </Link>
+                      {item.external ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="navbar-link block duration-150 cursor-pointer transition-colors"
+                          style={{ cursor: 'pointer' }}>
+                          <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
+                        </a>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          className="navbar-link block duration-150 cursor-pointer transition-colors"
+                          style={{ cursor: 'pointer' }}>
+                          <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
