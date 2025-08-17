@@ -1,16 +1,6 @@
 import Head from 'next/head'
-import dynamic from 'next/dynamic'
 import { getPersonJsonLd } from '../lib/json-ld'
-
-// Load the entire page content with SSR disabled to avoid hydration errors
-const IndexContent = dynamic(() => import('./index-content'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex items-center justify-center h-screen bg-background">
-      <div className="text-primary">Loading...</div>
-    </div>
-  )
-})
+import IndexContent from './index-content'
 
 export async function getStaticProps() {
   return {
