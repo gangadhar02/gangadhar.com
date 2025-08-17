@@ -5,6 +5,8 @@ import { Button } from './ui/button'
 import React, { useState, useEffect } from 'react'
 import { cn } from '../lib/utils'
 import { IconCircleLetterGFilled } from '@tabler/icons-react'
+import { useTheme } from '../contexts/ThemeContext'
+import { useHasMounted } from '../components/ClientOnly'
 
 const menuItems = [
   { name: 'About', href: '/about' },
@@ -17,6 +19,8 @@ const menuItems = [
 export default function Navbar() {
   const [menuState, setMenuState] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const { theme, toggleTheme } = useTheme()
+  const mounted = useHasMounted()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,7 +77,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile + Buttons */}
-            <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+            <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent lg:overflow-visible">
               <div className="lg:hidden">
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item, index) => (
@@ -87,8 +91,45 @@ export default function Navbar() {
                     </li>
                   ))}
                 </ul>
+                <button
+                  onClick={toggleTheme}
+                  className={cn(
+                    "navbar-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors mt-6",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                    "disabled:pointer-events-none disabled:opacity-50 h-9 px-3 cursor-pointer w-full",
+                    "border border-gray-300 dark:border-gray-600 bg-white dark:bg-black",
+                    "text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                  )}
+                >
+                  <i 
+                    suppressHydrationWarning
+                    className={cn(
+                      "text-base mr-2",
+                      mounted ? (theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line') : 'ri-contrast-2-line'
+                    )} 
+                  />
+                  <span suppressHydrationWarning>
+                    {mounted ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : 'Toggle Theme'}
+                  </span>
+                </button>
               </div>
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit items-center">
+                <button
+                  onClick={toggleTheme}
+                  className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-100 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
+                >
+                  <i 
+                    suppressHydrationWarning
+                    className={cn(
+                      "w-4 h-4 flex-shrink-0",
+                      mounted ? (theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line') : 'ri-contrast-2-line'
+                    )} 
+                    style={{ fontSize: '16px', lineHeight: '1' }}
+                  />
+                  <span suppressHydrationWarning>
+                    {mounted ? (theme === 'dark' ? 'Light' : 'Dark') : 'Theme'}
+                  </span>
+                </button>
                 <Link href="/contact">
                   <button className="navbar-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-9 rounded-md px-3 cursor-pointer">
                     Contact

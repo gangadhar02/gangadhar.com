@@ -1,11 +1,7 @@
 import Link from 'next/link'
 import { cn } from '../lib/utils'
-import { useTheme } from '../contexts/ThemeContext'
-import { useHasMounted } from '../components/ClientOnly'
 
 export default function Footer() {
-  const { theme, toggleTheme } = useTheme()
-  const mounted = useHasMounted()
   const links = [
     {
       title: 'Email',
@@ -84,25 +80,6 @@ export default function Footer() {
 
   return (
     <footer className="bg-background flex items-center justify-center py-5">
-      <button
-        onClick={toggleTheme}
-        className={cn(
-          "text-secondary flex items-center text-[15px] border-0 bg-none cursor-pointer",
-          "px-2 py-1 rounded-lg no-underline lowercase transition-all duration-200 ease-in-out",
-          "hover:text-primary hover:bg-hover",
-          "focus:text-primary focus:bg-hover",
-          "group"
-        )}
-      >
-        <span className="hidden bp2:inline" suppressHydrationWarning>{mounted ? (theme === 'dark' ? 'light' : 'dark') : 'theme'}</span>
-        <i 
-          suppressHydrationWarning
-          className={cn(
-            "text-primary ml-[5px] text-2xl transition-opacity duration-200",
-            "bp2:opacity-0 bp2:text-base bp2:group-hover:opacity-100",
-            mounted ? (theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line') : 'ri-contrast-2-line'
-          )} />
-      </button>
       {links.map(renderAnchor)}
     </footer>
   )

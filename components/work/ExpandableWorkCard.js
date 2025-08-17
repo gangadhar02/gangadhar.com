@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { differenceInMonths, format, parseISO } from 'date-fns';
 import { useOutsideClick } from "../../hooks/use-outside-click";
 import { cn } from '../../lib/utils';
+import { Stagger } from '../motion/Stagger';
 
 export function ExpandableWorkCard({ workItems }) {
   const [active, setActive] = useState(null);
@@ -183,7 +184,12 @@ export function ExpandableWorkCard({ workItems }) {
       </AnimatePresence>
 
       {/* Grid Cards */}
-      <ul className="max-w-2xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4">
+      <Stagger 
+        className="max-w-2xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4"
+        delayChildren={0.2}
+        stagger={0.1}
+        childProps={{ y: 24, duration: 1.2, blur: 8 }}
+      >
         {workItems.map((work, index) => (
           <div
             key={`${work.jobTitle}-${work.company}`}
@@ -221,7 +227,7 @@ export function ExpandableWorkCard({ workItems }) {
             </div>
           </div>
         ))}
-      </ul>
+      </Stagger>
     </>
   );
 }

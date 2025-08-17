@@ -5,6 +5,8 @@ import { ExpandableProjectCard } from '../components/projects/ExpandableProjectC
 import items from '../data/projects'
 import Base from '../layouts/Base'
 import stripHtml from '../lib/strip-html'
+import Reveal from '../components/motion/Reveal'
+import TextReveal from '../components/motion/TextReveal'
 
 export async function getStaticProps() {
   const meta = {
@@ -46,10 +48,22 @@ function Projects(props) {
       </Head>
 
       <AnimateSharedLayout>
-        <p dangerouslySetInnerHTML={{ __html: description }} />
+        <Reveal delay={0.1} y={20} duration={1.2}>
+          <p dangerouslySetInnerHTML={{ __html: description }} />
+        </Reveal>
 
-        <h2 className="mb-8">All Projects</h2>
-        <ExpandableProjectCard projects={getAllProjects()} />
+        <TextReveal
+          as="h2"
+          text="All Projects"
+          per="word"
+          delay={0.3}
+          speed={0.1}
+          duration={1.0}
+          className="mb-8"
+        />
+        <Reveal delay={0.5} y={24} duration={1.3}>
+          <ExpandableProjectCard projects={getAllProjects()} />
+        </Reveal>
       </AnimateSharedLayout>
     </>
   )

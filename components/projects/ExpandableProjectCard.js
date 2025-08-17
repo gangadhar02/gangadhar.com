@@ -4,6 +4,7 @@ import { useOutsideClick } from "../../hooks/use-outside-click";
 import { cn } from '../../lib/utils';
 import { IconExternalLink } from "@tabler/icons-react";
 import { Github } from "lucide-react";
+import { Stagger } from '../motion/Stagger';
 
 // Utility function to check if project has a valid URL
 const hasValidUrl = (project) => !!project.url && project.url.startsWith("http");
@@ -202,10 +203,15 @@ export function ExpandableProjectCard({ projects }) {
       </AnimatePresence>
 
       {/* Grid Cards */}
-      <div className={cn(
-        "w-full gap-6",
-        "grid grid-cols-1 md:grid-cols-2"
-      )}>
+      <Stagger 
+        className={cn(
+          "w-full gap-6",
+          "grid grid-cols-1 md:grid-cols-2"
+        )}
+        delayChildren={0.2}
+        stagger={0.1}
+        childProps={{ y: 24, duration: 1.2, blur: 8 }}
+      >
         {projects.map((project, index) => {
           // Pattern B: Whole card with LinkPreview (current implementation)
           const CardContent = (
@@ -286,7 +292,7 @@ export function ExpandableProjectCard({ projects }) {
             </div>
           );
         })}
-      </div>
+      </Stagger>
     </>
   );
 }

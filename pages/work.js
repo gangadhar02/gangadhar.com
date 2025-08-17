@@ -7,6 +7,9 @@ import awards from '../data/awards'
 import items from '../data/work'
 import Base from '../layouts/Base'
 import stripHtml from '../lib/strip-html'
+import Reveal from '../components/motion/Reveal'
+import TextReveal from '../components/motion/TextReveal'
+import { Stagger } from '../components/motion/Stagger'
 
 export async function getStaticProps() {
   const meta = {
@@ -49,13 +52,38 @@ function Work(props) {
       </Head>
 
       <AnimateSharedLayout>
-        <p dangerouslySetInnerHTML={{ __html: description }} />
+        <Reveal delay={0.1} y={20} duration={1.2}>
+          <p dangerouslySetInnerHTML={{ __html: description }} />
+        </Reveal>
 
-        <h2>Work Experience</h2>
-        <ExpandableWorkCard workItems={items} />
+        <TextReveal
+          as="h2"
+          text="Work Experience"
+          per="word"
+          delay={0.3}
+          speed={0.05}
+          duration={1.0}
+          className="mb-8"
+        />
+        <Reveal delay={0.5} y={24} duration={1.3}>
+          <ExpandableWorkCard workItems={items} />
+        </Reveal>
 
-        <h2>Awards</h2>
-        {renderAwards()}
+        <TextReveal
+          as="h2"
+          text="Awards"
+          per="word"
+          delay={0.7}
+          speed={0.05}
+          duration={1.0}
+        />
+        <Stagger
+          delayChildren={0.9}
+          stagger={0.1}
+          childProps={{ y: 20, duration: 1.1 }}
+        >
+          {renderAwards()}
+        </Stagger>
       </AnimateSharedLayout>
     </>
   )

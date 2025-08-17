@@ -10,6 +10,9 @@ import Preloader from '../components/Preloader'
 import MobileWorkPreview from '../components/MobileWorkPreview'
 import MobileProjectsPreview from '../components/MobileProjectsPreview'
 import MobileArticlesPreview from '../components/MobileArticlesPreview'
+import Reveal from '../components/motion/Reveal'
+import { Stagger } from '../components/motion/Stagger'
+import TextReveal from '../components/motion/TextReveal'
 
 export default function IndexContent({ title, description }) {
   const [modalContent, setModalContent] = useState(null)
@@ -316,37 +319,47 @@ export default function IndexContent({ title, description }) {
           <div className={cn(
             "max-w-[760px] w-full text-center"
           )}>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className={cn(
-                "flex flex-col items-center w-full"
-              )}
-            >
-              <motion.h1 className={cn(
-                "text-[2.5rem] font-medium mb-0 text-primary"
-              )}>
-                {title}
-              </motion.h1>
-              <h2 className={cn(
-                "text-2xl font-normal my-6 mx-0 text-secondary leading-[1.4]"
-              )}>
-                Curious, Tinkerer, Nerd and a Marketer
-              </h2>
-              <div className={cn(
-                "flex items-center justify-center gap-2",
-                "text-secondary text-[0.9rem] mt-4"
-              )}>
-                <IconMapPin className="h-6 w-6 text-secondary [&>path]:fill-none [&>path]:stroke-current" />
-                <span>Bangalore, India</span>
-              </div>
-            </motion.div>
-
             <div className={cn(
-              "grid grid-cols-1 gap-4 mt-8 mb-8",
-              "bp2:grid-cols-3 bp2:gap-6"
+              "flex flex-col items-center w-full"
             )}>
+              <TextReveal
+                as="h1"
+                text="Gangadhar S"
+                per="word"
+                delay={0.1}
+                speed={0.1}
+                duration={1.2}
+                className={cn(
+                  "text-[2.5rem] font-medium mb-0 text-primary"
+                )}
+              />
+              <Reveal delay={0.6} y={20} duration={1.2}>
+                <h2 className={cn(
+                  "text-2xl font-normal my-6 mx-0 text-secondary leading-[1.4]"
+                )}>
+                  Curious, Tinkerer, Nerd and a Marketer
+                </h2>
+              </Reveal>
+              <Reveal delay={0.8} y={16} duration={1.0}>
+                <div className={cn(
+                  "flex items-center justify-center gap-2",
+                  "text-secondary text-[0.9rem] mt-4"
+                )}>
+                  <IconMapPin className="h-6 w-6 text-secondary [&>path]:fill-none [&>path]:stroke-current" />
+                  <span>Bangalore, India</span>
+                </div>
+              </Reveal>
+            </div>
+
+            <Stagger 
+              className={cn(
+                "grid grid-cols-1 gap-4 mt-8 mb-8",
+                "bp2:grid-cols-3 bp2:gap-6"
+              )}
+              delayChildren={1.0}
+              stagger={0.08}
+              childProps={{ y: 20, duration: 1.2, blur: 8 }}
+            >
               <button 
                 className={cn(
                   "bg-none border border-secondary rounded-lg p-6",
@@ -415,14 +428,22 @@ export default function IndexContent({ title, description }) {
                   Long-term focus
                 </p>
               </button>
-            </div>
+            </Stagger>
 
-            <ShortcutHome />
+            <Reveal delay={1.3} y={16} duration={1.0}>
+              <ShortcutHome />
+            </Reveal>
 
             {/* Mobile-only content preview sections */}
-            <MobileWorkPreview />
-            <MobileProjectsPreview />
-            <MobileArticlesPreview />
+            <Reveal delay={1.5} y={20} duration={1.1}>
+              <MobileWorkPreview />
+            </Reveal>
+            <Reveal delay={1.6} y={20} duration={1.1}>
+              <MobileProjectsPreview />
+            </Reveal>
+            <Reveal delay={1.7} y={20} duration={1.1}>
+              <MobileArticlesPreview />
+            </Reveal>
           </div>
         </div>
         <Footer />
