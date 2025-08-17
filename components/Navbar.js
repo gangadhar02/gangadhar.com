@@ -55,8 +55,14 @@ export default function Navbar() {
                 onClick={() => setMenuState(!menuState)}
                 aria-label={menuState ? 'Close Menu' : 'Open Menu'}
                 className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden">
-                <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
-                <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
+                <Menu className={cn(
+                  "m-auto size-6 duration-200 transition-all",
+                  menuState ? "rotate-180 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
+                )} />
+                <X className={cn(
+                  "absolute inset-0 m-auto size-6 duration-200 transition-all",
+                  menuState ? "rotate-0 scale-100 opacity-100" : "-rotate-180 scale-0 opacity-0"
+                )} />
               </button>
             </div>
 
@@ -88,7 +94,10 @@ export default function Navbar() {
             </div>
 
             {/* Mobile + Buttons */}
-            <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent lg:overflow-visible">
+            <div className={cn(
+              "bg-background mb-6 w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent lg:overflow-visible",
+              menuState ? "block lg:flex" : "hidden lg:flex"
+            )}>
               <div className="lg:hidden">
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item, index) => (
@@ -113,27 +122,6 @@ export default function Navbar() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={toggleTheme}
-                  className={cn(
-                    "navbar-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors mt-6",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-                    "disabled:pointer-events-none disabled:opacity-50 h-9 px-3 cursor-pointer w-full",
-                    "border border-gray-300 dark:border-gray-600 bg-white dark:bg-black",
-                    "text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-                  )}
-                >
-                  <i 
-                    suppressHydrationWarning
-                    className={cn(
-                      "text-base mr-2",
-                      mounted ? (theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line') : 'ri-contrast-2-line'
-                    )} 
-                  />
-                  <span suppressHydrationWarning>
-                    {mounted ? (theme === 'dark' ? 'Light Mode' : 'Dark Mode') : 'Toggle Theme'}
-                  </span>
-                </button>
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit items-center">
                 <button
