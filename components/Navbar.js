@@ -17,10 +17,8 @@ const menuItems = [
 export default function Navbar() {
   const [menuState, setMenuState] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
     }
@@ -36,7 +34,7 @@ export default function Navbar() {
         <div
           className={cn(
             'mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12',
-            mounted && isScrolled &&
+            isScrolled &&
               'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5'
           )}>
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
@@ -65,8 +63,9 @@ export default function Navbar() {
                   <li key={index}>
                     <Link
                       href={item.href}
-                      className="text-muted-foreground hover:text-accent-foreground block duration-150 cursor-pointer">
-                      <span>{item.name}</span>
+                      className="navbar-link block duration-150 cursor-pointer transition-colors"
+                      style={{ cursor: 'pointer' }}>
+                      <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
                     </Link>
                   </li>
                 ))}
@@ -81,22 +80,20 @@ export default function Navbar() {
                     <li key={index}>
                       <Link
                         href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150 cursor-pointer">
-                        <span>{item.name}</span>
+                        className="navbar-link block duration-150 cursor-pointer transition-colors"
+                        style={{ cursor: 'pointer' }}>
+                        <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Button
-                  asChild
-                  size="sm"
-                  className={cn(mounted && isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                  <Link href="/contact">
-                    <span>Contact</span>
-                  </Link>
-                </Button>
+                <Link href="/contact">
+                  <button className="navbar-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-9 rounded-md px-3 cursor-pointer">
+                    Contact
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
