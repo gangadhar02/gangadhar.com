@@ -11,7 +11,7 @@ import { useHasMounted } from '../components/ClientOnly'
 const menuItems = [
   { name: 'Home', href: '/' },
   { name: 'Projects', href: '/projects' },
-  { name: 'Articles', href: '/articles' },
+  { name: 'Writings', href: '/articles' },
   { name: 'Clicks', href: '/clicks' },
   { name: 'Resume', href: 'https://drive.google.com/file/d/1_l6dV5NvkmSNBJ8Bmk8CLrTOlRHstcUK/view', external: true },
 ]

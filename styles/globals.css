@@ -201,14 +201,14 @@
     padding-left: 20px;
   }
 
-  a {
+  a:not(.navbar-link) {
     @apply text-primary no-underline;
     border-bottom: 0.5px solid rgb(var(--secondary) / 0.5);
     transition: opacity 0.2s ease-in-out;
   }
 
-  a:hover,
-  a:focus {
+  a:not(.navbar-link):hover,
+  a:not(.navbar-link):focus {
     opacity: 0.8;
   }
 
@@ -252,6 +252,20 @@
   .navbar-link span {
     color: rgb(var(--muted-foreground)) !important;
     transition: color 0.15s ease-in-out !important;
+  }
+  
+  /* Ensure external navbar links (like Resume) have the same color */
+  a.navbar-link,
+  a.navbar-link span,
+  .navbar-link a,
+  .navbar-link a span {
+    color: rgb(var(--muted-foreground)) !important;
+  }
+  
+  /* Override global a tag styling specifically for navbar */
+  nav a.navbar-link,
+  header a.navbar-link {
+    color: rgb(var(--muted-foreground)) !important;
   }
 
   /* Universal navbar link cursor fix */

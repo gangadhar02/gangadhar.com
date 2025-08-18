@@ -80,7 +80,7 @@ export default function ComprehensiveHomepage() {
 
         {/* Current Role */}
         <Reveal delay={0.3} y={20} duration={1.2}>
-          <div className="border border-black/[0.08] dark:border-white/[0.08] rounded p-6 bg-card transition-colors duration-150">
+          <div className="border border-black/[0.08] dark:border-white/[0.08] rounded p-3 bg-card transition-colors duration-150">
             <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-4">
               <div className="flex-1">
                 <h3 className="text-xl font-semibold text-primary">{currentRole.jobTitle}</h3>
@@ -141,7 +141,7 @@ export default function ComprehensiveHomepage() {
                         delay: index * 0.05,
                         ease: "easeOut" 
                       }}
-                      className="border border-black/[0.08] dark:border-white/[0.08] rounded p-6 bg-card transition-colors duration-150"
+                      className="border border-black/[0.08] dark:border-white/[0.08] rounded p-3 bg-card transition-colors duration-150"
                     >
                       <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-4">
                         <div className="flex-1">
@@ -180,9 +180,9 @@ export default function ComprehensiveHomepage() {
         </div>
 
         <Reveal delay={0.3} y={20} duration={1.2}>
-          <div className="border border-black/[0.08] dark:border-white/[0.08] rounded p-6 bg-card transition-colors duration-150">
+          <div className="border border-black/[0.08] dark:border-white/[0.08] rounded p-3 bg-card transition-colors duration-150">
             <p className="text-lg text-primary leading-relaxed">
-              Started out as a growth guy trying to figure things out at my first startup job (flykyk). That chaos gave me exposure to a lot — and somewhere along the way I realized I actually liked marketing. So I leaned in, became a creative strategist, played around with AI tools, taught myself to code, and discovered I could build way beyond basic marketing. These days, I'm building stuff on the internet and gearing up to launch something of my own soon — while documenting the journey in my writing.
+              I started out as a growth guy just trying to figure things out at my first startup job (IFYKYK). That chaos gave me exposure to a lot of things, and somewhere along the way I realized I actually liked marketing. So I leaned in, became a creative strategist, experimented with AI tools, taught myself AI Assisted Coding (Vibe Coding), and discovered I could do much more than basic marketing. These days, I'm building random things on the internet and gearing up to launch something of my own soon :)
             </p>
           </div>
         </Reveal>

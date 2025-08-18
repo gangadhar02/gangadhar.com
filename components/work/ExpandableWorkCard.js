@@ -69,7 +69,7 @@ export function ExpandableWorkCard({ workItems }) {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="relative w-full max-w-[500px] max-h-[90vh] bg-white dark:bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl"
+              className="relative w-full max-w-[450px] max-h-[90vh] bg-white dark:bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -83,7 +83,7 @@ export function ExpandableWorkCard({ workItems }) {
               </button>
 
               {/* Company Logo Section */}
-              <div className="h-80 bg-gray-100 dark:bg-neutral-800 flex items-center justify-center">
+              <div className="h-64 bg-gray-100 dark:bg-neutral-800 flex items-center justify-center">
                 {active.companyLogo ? (
                   <img
                     src={active.companyLogo}
@@ -100,14 +100,14 @@ export function ExpandableWorkCard({ workItems }) {
               </div>
 
               {/* Content */}
-              <div className="flex flex-col h-[calc(90vh-20rem)] md:h-auto md:max-h-96">
+              <div className="flex flex-col h-[calc(90vh-16rem)] md:h-auto md:max-h-80">
                 {/* Header */}
-                <div className="flex justify-between items-start p-4 flex-shrink-0">
+                <div className="flex justify-between items-start p-3 flex-shrink-0">
                   <div className="flex-1">
-                    <h3 className="font-medium text-neutral-700 dark:text-neutral-200 text-lg">
+                    <h3 className="font-medium text-neutral-700 dark:text-neutral-200 text-base">
                       {active.jobTitle}
                     </h3>
-                    <p className="text-neutral-600 dark:text-neutral-400 text-base">
+                    <p className="text-neutral-600 dark:text-neutral-400 text-sm">
                       {active.company}
                     </p>
                     <p className="text-neutral-500 dark:text-neutral-500 text-sm mt-1">
@@ -128,7 +128,7 @@ export function ExpandableWorkCard({ workItems }) {
                 </div>
 
                 {/* Scrollable Content */}
-                <div className="flex-1 overflow-y-auto px-4 pb-6">
+                <div className="flex-1 overflow-y-auto px-3 pb-4">
                   {active.achievements && (
                     <div className="mb-6">
                       <h4 className="font-semibold text-neutral-800 dark:text-neutral-200 mb-3">
