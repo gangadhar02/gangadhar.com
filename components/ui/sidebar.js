@@ -138,23 +138,34 @@ export const SidebarLink = ({
   const { open, animate, mounted } = useSidebar();
   
   return (
-    <a
-      href={link.href}
-      className={cn("flex items-center gap-2 group/sidebar py-2 px-2 transition-colors duration-200 hover:bg-neutral-300/50 dark:hover:bg-neutral-700/50 rounded-lg", className)}
-      {...props}>
-      <div className="flex items-center justify-center w-5 h-5 flex-shrink-0">
-        {link.icon}
-      </div>
-      <motion.span
-        initial={{ display: "none", opacity: 0 }}
-        animate={{
-          display: mounted && animate ? (open ? "inline-block" : "none") : "none",
-          opacity: mounted && animate ? (open ? 1 : 0) : 0,
-        }}
-        transition={{ duration: mounted ? 0.15 : 0 }}
-        className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre !p-0 !m-0">
-        {link.label}
-      </motion.span>
-    </a>
+    <div className="relative group">
+      <a
+        href={link.href}
+        className={cn("flex items-center gap-2 group/sidebar py-2 px-2 transition-colors duration-200 hover:bg-neutral-300/50 dark:hover:bg-neutral-700/50 rounded-lg", className)}
+        {...props}>
+        <div className="flex items-center justify-center w-5 h-5 flex-shrink-0">
+          {link.icon}
+        </div>
+        <motion.span
+          initial={{ display: "none", opacity: 0 }}
+          animate={{
+            display: mounted && animate ? (open ? "inline-block" : "none") : "none",
+            opacity: mounted && animate ? (open ? 1 : 0) : 0,
+          }}
+          transition={{ duration: mounted ? 0.15 : 0 }}
+          className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre !p-0 !m-0">
+          {link.label}
+        </motion.span>
+      </a>
+      
+      {/* Tooltip - only show when sidebar is collapsed */}
+      {mounted && !open && (
+        <div className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+          <span>{link.label}</span>
+          {/* Tooltip arrow pointing left */}
+          <div className="absolute right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-r-gray-900 dark:border-r-gray-700"></div>
+        </div>
+      )}
+    </div>
   );
 };

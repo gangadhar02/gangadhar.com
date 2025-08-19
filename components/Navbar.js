@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Home, FolderOpen, PenTool, Camera, FileText } from 'lucide-react'
 import { Button } from './ui/button'
 import React, { useState, useEffect } from 'react'
 import { cn } from '../lib/utils'
@@ -10,11 +10,11 @@ import { useHasMounted } from '../components/ClientOnly'
 import { FunnyGhost } from '@mynaui/icons-react'
 
 const menuItems = [
-  { name: 'Home', href: '/' },
-  { name: 'Projects', href: '/projects' },
-  { name: 'Writings', href: '/writings' },
-  { name: 'Clicks', href: '/clicks' },
-  { name: 'Resume', href: 'https://drive.google.com/file/d/1_l6dV5NvkmSNBJ8Bmk8CLrTOlRHstcUK/view', external: true },
+  { name: 'Home', href: '/', tooltip: 'Back to base', icon: Home },
+  { name: 'Projects', href: '/projects', tooltip: 'Things I built', icon: FolderOpen },
+  { name: 'Writings', href: '/writings', tooltip: 'My thoughts', icon: PenTool },
+  { name: 'Clicks', href: '/clicks', tooltip: 'Photo gallery', icon: Camera },
+  { name: 'Resume', href: 'https://drive.google.com/file/d/1_l6dV5NvkmSNBJ8Bmk8CLrTOlRHstcUK/view', external: true, tooltip: 'Download CV', icon: FileText },
 ]
 
 export default function Navbar() {
@@ -70,27 +70,40 @@ export default function Navbar() {
             {/* Desktop Nav */}
             <div className="absolute inset-0 m-auto hidden size-fit lg:block">
               <ul className="flex gap-8 text-sm">
-                {menuItems.map((item, index) => (
-                  <li key={index}>
-                    {item.external ? (
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="navbar-link block duration-150 cursor-pointer transition-colors"
-                        style={{ cursor: 'pointer' }}>
-                        <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
-                      </a>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        className="navbar-link block duration-150 cursor-pointer transition-colors"
-                        style={{ cursor: 'pointer' }}>
-                        <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
-                      </Link>
-                    )}
-                  </li>
-                ))}
+                {menuItems.map((item, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={index} className="relative group">
+                      {item.external ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="navbar-link block duration-150 cursor-pointer transition-colors"
+                          style={{ cursor: 'pointer' }}>
+                          <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
+                        </a>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          className="navbar-link block duration-150 cursor-pointer transition-colors"
+                          style={{ cursor: 'pointer' }}>
+                          <span className="text-muted-foreground hover:text-accent-foreground transition-colors duration-150 cursor-pointer" style={{ cursor: 'pointer' }}>{item.name}</span>
+                        </Link>
+                      )}
+                      
+                      {/* Tooltip */}
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+                        <div className="flex items-center gap-1.5">
+                          <Icon className="w-3 h-3 [&>path]:fill-none [&>path]:stroke-current" />
+                          <span>{item.tooltip}</span>
+                        </div>
+                        {/* Tooltip arrow */}
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-b-gray-900 dark:border-b-gray-700"></div>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 

@@ -212,7 +212,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
           </div>
 
           <Reveal delay={0.3} y={20} duration={1.2}>
-            <div className="border border-black/[0.08] dark:border-white/[0.145] rounded-2xl p-8 bg-card/50 backdrop-blur-sm">
+            <div className="border border-black/[0.08] dark:border-white/[0.145] rounded p-8 bg-card/50 backdrop-blur-sm">
               <div className="space-y-6">
                 <div className="flex justify-between items-baseline">
                   <h3 className="text-2xl font-semibold text-primary">

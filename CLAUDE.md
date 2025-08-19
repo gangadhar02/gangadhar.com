@@ -22,10 +22,14 @@ This is a Next.js 12 portfolio website using the pages router with a hybrid styl
 - Dark theme with CSS variables in `styles/globals.css`
 
 ### Navigation System
-- **SidebarNav**: Aceternity-style sidebar navigation (replaces traditional navbar)
-  - Collapsible sidebar (60px collapsed, 165px expanded)
-  - Icons from `@tabler/icons-react` with outline style (`[&>path]:fill-none [&>path]:stroke-current`)
-  - Social links in "Connect" section at bottom
+- **Navbar**: Modern floating navbar with glassmorphism effect
+  - Fixed position at top with blur backdrop when scrolled
+  - Responsive design with hamburger menu for mobile
+  - Desktop: Centered navigation links, right-aligned action buttons
+  - Mobile: Full-screen overlay menu with smooth animations
+  - Theme toggle button with tooltip showing current mode
+  - Contact button with "Say Hello" tooltip including ghost icon
+  - External resume link opens in new tab
 
 ### Content Management
 - **Blog Articles**: Markdown files in `/articles/` with frontmatter metadata
@@ -43,7 +47,8 @@ This is a Next.js 12 portfolio website using the pages router with a hybrid styl
 ### Component Architecture
 ```
 components/
-├── ui/ - Tailwind-based UI components (sidebar, shimmer-button)
+├── Navbar.js - Main navigation component with theme toggle
+├── ui/ - Tailwind-based UI components (buttons, shimmer effects)
 ├── magicui/ - Magic UI components
 ├── work/ - Work experience with expandable cards
 ├── projects/ - Project cards with modals
@@ -52,15 +57,21 @@ components/
 ```
 
 ### Layout System
-- **Base Layout**: Standard pages with sidebar navigation
+- **Base Layout**: Standard pages with top navbar navigation
 - **Blogpost Layout**: Special layout for blog articles with hero images
-- **Homepage**: Modal-based sections (About, Now, Someday)
+- **Homepage**: 
+  - Hero section with animated name and title
+  - Project showcase grid with 3-column layout (responsive)
+  - Footer with social links and copyright
+  - No sidebar - uses top navigation bar instead
 
 ### Important Implementation Details
 - Icons require `[&>path]:fill-none [&>path]:stroke-current` classes to render as outlines
 - Hydration issues resolved with mounted state checks in animated components
 - Footer positioning uses `min-h-screen` flex container for proper placement
-- Sidebar G logo uses consistent alignment with navigation icons
+- Navbar uses IconCircleLetterGFilled as logo from `@tabler/icons-react`
+- Tooltips appear on hover for theme toggle and contact buttons
+- Mobile menu uses Menu/X icons from `lucide-react` with rotation animations
 
 ## Development Notes
 
@@ -71,6 +82,8 @@ When working with styling:
 - Test hydration with server/client rendering differences
 
 When working with navigation:
-- All navigation changes should update both desktop sidebar and mobile views
-- Active route highlighting uses `router.pathname` comparison
-- Social links open in new tabs with proper security attributes
+- All navigation changes should update both desktop navbar and mobile menu
+- Navbar becomes glassmorphic with backdrop blur when scrolled
+- Mobile menu is full-screen overlay with smooth slide-in animation
+- External links (like Resume) open in new tabs with proper security attributes
+- Tooltips use group hover pattern with opacity transitions
