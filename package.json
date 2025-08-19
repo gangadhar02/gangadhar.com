@@ -15,6 +15,7 @@
     "@calcom/embed-react": "^1.5.3",
     "@google-analytics/admin": "^7.4.0",
     "@google-analytics/data": "^4.7.0",
+    "@mynaui/icons-react": "^0.3.9",
     "@notionhq/client": "^2.3.0",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-hover-card": "^1.1.14",
@@ -54,6 +55,7 @@
     "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.2",
     "@types/node": "^24.0.3",
     "@types/react": "^19.1.8",
     "autoprefixer": "^10.4.21",
@@ -62,5 +64,19 @@
     "eslint-config-prettier": "^8.3.0",
     "postcss": "^8.5.6",
     "typescript": "^5.8.3"
-  }
+  },
+  "main": ".eslintrc.hydration.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gangadhar02/gangadhar.com.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gangadhar02/gangadhar.com/issues"
+  },
+  "homepage": "https://github.com/gangadhar02/gangadhar.com#readme"
 }

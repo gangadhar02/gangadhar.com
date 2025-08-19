@@ -3,7 +3,7 @@ const items = [
     year: '2025',
     projects: [
       {
-        title: 'Email Subject Line Checker',
+        title: 'Subject Line Checker',
         description: 'AI-driven email marketing tool built with Claude to analyze and optimize subject lines for maximum open rates and engagement.',
         url: 'https://gangadhar02.github.io/subjectlinechecker/',
         githubUrl: 'https://github.com/gangadhar02/subjectlinechecker',
@@ -97,6 +97,75 @@ const items = [
           'A practical AI tool created with Lovable to solve the common problem of inconsistent ad naming in marketing campaigns.',
           'Helps marketing teams maintain organized, standardized nomenclature across all advertising platforms and creative assets.',
           'Simplifies campaign management by ensuring consistent naming conventions that improve team collaboration and asset tracking.'
+        ]
+      },
+      {
+        title: 'Portfolio Website',
+        description: 'Personal portfolio built with Next.js showcasing projects, writings, and professional journey.',
+        url: 'https://gangadhar.com',
+        githubUrl: 'https://github.com/gangadhar02/gangadhar.com',
+        active: true,
+        icon: 'ri-global-line',
+        stats: 'Live Site',
+        category: 'Web Development',
+        status: 'Live',
+        technologies: ['Next.js', 'React', 'Tailwind', 'Framer Motion'],
+        highlights: [
+          'Modern design with smooth animations',
+          'Dark mode support',
+          'Responsive across all devices',
+          'SEO optimized'
+        ],
+        detailedDescription: [
+          'A modern portfolio website built with Next.js and React.',
+          'Features smooth animations, dark mode, and responsive design.',
+          'Showcases projects, writings, and professional experience.'
+        ]
+      },
+      {
+        title: 'Marketing Dashboard',
+        description: 'Analytics dashboard for tracking marketing campaign performance across multiple channels.',
+        url: '#',
+        githubUrl: '',
+        active: false,
+        icon: 'ri-dashboard-line',
+        stats: 'In Development',
+        category: 'Analytics Tool',
+        status: 'Development',
+        technologies: ['React', 'D3.js', 'Node.js', 'PostgreSQL'],
+        highlights: [
+          'Real-time data visualization',
+          'Multi-channel campaign tracking',
+          'Custom reporting features',
+          'Export functionality'
+        ],
+        detailedDescription: [
+          'Comprehensive marketing analytics dashboard for performance tracking.',
+          'Visualizes campaign data from multiple advertising platforms.',
+          'Provides actionable insights for marketing optimization.'
+        ]
+      },
+      {
+        title: 'Content Optimizer',
+        description: 'AI-powered tool for optimizing blog content for SEO and readability.',
+        url: '#',
+        githubUrl: '',
+        active: false,
+        icon: 'ri-edit-line',
+        stats: 'Coming Soon',
+        category: 'Content Tool',
+        status: 'Planning',
+        technologies: ['Python', 'NLP', 'FastAPI', 'React'],
+        highlights: [
+          'SEO optimization suggestions',
+          'Readability analysis',
+          'Content scoring system',
+          'Keyword recommendations'
+        ],
+        detailedDescription: [
+          'An intelligent content optimization tool for bloggers and content creators.',
+          'Uses NLP to analyze and improve content for better SEO performance.',
+          'Provides actionable suggestions for content improvement.'
         ]
       }
     ],

@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'
 import Preloader from '../components/Preloader'
 import ComprehensiveHomepage from '../components/ComprehensiveHomepage'
 
-export default function IndexContent({ title, description }) {
+export default function IndexContent({ title, description, latestPost }) {
   const [shouldShowPreloader, setShouldShowPreloader] = useState(false)
   const [isPreloaderComplete, setIsPreloaderComplete] = useState(true)
   
@@ -31,7 +31,7 @@ export default function IndexContent({ title, description }) {
       <Navbar />
       <div className="flex flex-col min-h-screen pt-20">
         <div className="flex-1">
-          <ComprehensiveHomepage />
+          <ComprehensiveHomepage latestPost={latestPost} />
         </div>
         <Footer />
       </div>

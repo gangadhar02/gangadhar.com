@@ -7,11 +7,12 @@ import { cn } from '../lib/utils'
 import { IconCircleLetterGFilled } from '@tabler/icons-react'
 import { useTheme } from '../contexts/ThemeContext'
 import { useHasMounted } from '../components/ClientOnly'
+import { FunnyGhost } from '@mynaui/icons-react'
 
 const menuItems = [
   { name: 'Home', href: '/' },
   { name: 'Projects', href: '/projects' },
-  { name: 'Writings', href: '/articles' },
+  { name: 'Writings', href: '/writings' },
   { name: 'Clicks', href: '/clicks' },
   { name: 'Resume', href: 'https://drive.google.com/file/d/1_l6dV5NvkmSNBJ8Bmk8CLrTOlRHstcUK/view', external: true },
 ]
@@ -124,27 +125,48 @@ export default function Navbar() {
                 </ul>
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit items-center">
-                <button
-                  onClick={toggleTheme}
-                  className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-100 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
-                >
-                  <i 
-                    suppressHydrationWarning
-                    className={cn(
-                      "w-4 h-4 flex-shrink-0",
-                      mounted ? (theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line') : 'ri-contrast-2-line'
-                    )} 
-                    style={{ fontSize: '16px', lineHeight: '1' }}
-                  />
-                  <span suppressHydrationWarning>
-                    {mounted ? (theme === 'dark' ? 'Light' : 'Dark') : 'Theme'}
-                  </span>
-                </button>
-                <Link href="/contact">
-                  <button className="navbar-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-9 rounded-md px-3 cursor-pointer">
-                    Contact
+                <div className="relative group">
+                  <button
+                    onClick={toggleTheme}
+                    className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white p-2 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-100 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                    aria-label={mounted ? (theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode') : 'Toggle Theme'}
+                  >
+                    <i 
+                      suppressHydrationWarning
+                      className={cn(
+                        "w-4 h-4 flex-shrink-0",
+                        mounted ? (theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line') : 'ri-contrast-2-line'
+                      )} 
+                      style={{ fontSize: '16px', lineHeight: '1' }}
+                    />
                   </button>
-                </Link>
+                  
+                  {/* Tooltip */}
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+                    <span suppressHydrationWarning>
+                      {mounted ? (theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode') : 'Toggle Theme'}
+                    </span>
+                    {/* Tooltip arrow */}
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-b-gray-900 dark:border-b-gray-700"></div>
+                  </div>
+                </div>
+                <div className="relative group">
+                  <Link href="/contact">
+                    <button className="navbar-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-9 rounded-md px-3 cursor-pointer">
+                      Contact
+                    </button>
+                  </Link>
+                  
+                  {/* Contact Tooltip */}
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+                    <div className="flex items-center gap-1.5">
+                      <FunnyGhost className="w-3 h-3 [&>path]:fill-none [&>path]:stroke-current" />
+                      <span>Say Hello</span>
+                    </div>
+                    {/* Tooltip arrow */}
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-b-gray-900 dark:border-b-gray-700"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -10,13 +10,17 @@ import Reveal from './motion/Reveal'
 import { Stagger } from './motion/Stagger'
 import TextReveal from './motion/TextReveal'
 import workData from '../data/work'
+import projectsData from '../data/projects'
 
-export default function ComprehensiveHomepage() {
+export default function ComprehensiveHomepage({ latestPost }) {
   const [showPreviousRoles, setShowPreviousRoles] = useState(false)
 
   // Get current and previous roles
   const currentRole = workData[0] // First item is current
   const previousRoles = workData.slice(1) // Rest are previous
+
+  // Get all projects flattened from years
+  const allProjects = projectsData.flatMap(yearGroup => yearGroup.projects)
 
   return (
     <div className="max-w-[760px] mx-auto px-6 py-12">
@@ -184,6 +188,132 @@ export default function ComprehensiveHomepage() {
             <p className="text-lg text-primary leading-relaxed">
               I started out as a growth guy just trying to figure things out at my first startup job (IFYKYK). That chaos gave me exposure to a lot of things, and somewhere along the way I realized I actually liked marketing. So I leaned in, became a creative strategist, experimented with AI tools, taught myself AI Assisted Coding (Vibe Coding), and discovered I could do much more than basic marketing. These days, I'm building random things on the internet and gearing up to launch something of my own soon :)
             </p>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* Newest Writing Section */}
+      {latestPost && (
+        <section className="space-y-8 mt-2">
+          <div className="relative flex items-baseline gap-4">
+            <TextReveal
+              as="h2"
+              text="NEWEST WRITING"
+              per="word"
+              delay={0.1}
+              speed={0.1}
+              duration={1.0}
+              className="text-xl font-semibold text-gray-400 uppercase tracking-wider flex-shrink-0"
+            />
+            <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600" style={{ marginTop: '-0.6em' }}></div>
+            <Link href="/writings" className="text-lg text-secondary hover:text-primary transition-colors flex-shrink-0">
+              → all writing
+            </Link>
+          </div>
+
+          <Reveal delay={0.3} y={20} duration={1.2}>
+            <div className="border border-black/[0.08] dark:border-white/[0.145] rounded-2xl p-8 bg-card/50 backdrop-blur-sm">
+              <div className="space-y-6">
+                <div className="flex justify-between items-baseline">
+                  <h3 className="text-2xl font-semibold text-primary">
+                    {latestPost.title.replace(/"/g, '')}
+                  </h3>
+                  <time className="text-sm text-secondary/60">
+                    {new Date(latestPost.date).toLocaleDateString('en-US', {
+                      day: '2-digit',
+                      month: 'long',
+                      year: 'numeric'
+                    }).toLowerCase()}
+                  </time>
+                </div>
+                
+                <p className="text-lg text-secondary leading-relaxed">
+                  {latestPost.description}
+                </p>
+
+                <Link href={`/blog/${latestPost.slug}`} className="inline-block">
+                  <button className="px-6 py-2.5 border border-black/[0.08] dark:border-white/[0.145] rounded-lg text-primary hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                    Read post
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+      )}
+
+      {/* Projects Section */}
+      <section className="space-y-6 mt-2">
+        <div className="relative flex items-baseline gap-4">
+          <TextReveal
+            as="h2"
+            text="PROJECTS"
+            per="word"
+            delay={0.1}
+            speed={0.1}
+            duration={1.0}
+            className="text-xl font-semibold text-gray-400 uppercase tracking-wider flex-shrink-0"
+          />
+          <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600" style={{ marginTop: '-0.6em' }}></div>
+        </div>
+
+        <Reveal delay={0.3} y={20} duration={1.2}>
+          <div 
+            className="grid gap-3 overflow-x-auto pb-2"
+            style={{
+              gridTemplateColumns: 'repeat(auto-fit, 224px)',
+              maxWidth: '100%'
+            }}
+          >
+            {allProjects.map((project, index) => (
+              <div 
+                key={index}
+                className="border border-black/[0.08] dark:border-[#1d1c1b] rounded-lg p-3 bg-card dark:bg-[#100f0f] transition-colors duration-150 hover:bg-black/[0.02] dark:hover:bg-[#1a1918]"
+                style={{
+                  width: '224px',
+                  height: '224px',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
+                <div className="flex flex-col flex-1">
+                  <div className="flex items-baseline gap-1.5 mb-2">
+                    {project.active && <span className="!text-green-500 text-sm leading-none" style={{ color: '#10b981' }}>•</span>}
+                    {project.url && project.url !== '#' ? (
+                      <a 
+                        href={project.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="hover:underline transition-all duration-200"
+                      >
+                        <h3 className="text-base font-medium text-primary leading-tight">
+                          {project.title}
+                        </h3>
+                      </a>
+                    ) : (
+                      <h3 className="text-base font-medium text-primary leading-tight">
+                        {project.title}
+                      </h3>
+                    )}
+                  </div>
+                  <p className="text-secondary text-sm leading-relaxed line-clamp-3 flex-1 ml-3">
+                    {project.description.length > 80 
+                      ? project.description.substring(0, 80) + '...' 
+                      : project.description}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                    <span 
+                      key={techIndex} 
+                      className="px-2 py-0.5 text-xs border border-black/[0.08] dark:border-[#1d1c1b] rounded bg-black/[0.02] dark:bg-[#1a1918] text-secondary"
+                    >
+                      {tech.split(' ')[0]}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </Reveal>
       </section>
