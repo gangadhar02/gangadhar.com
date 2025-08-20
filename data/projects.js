@@ -102,7 +102,7 @@ const items = [
       {
         title: 'Portfolio Website',
         description: 'Personal portfolio built with Next.js showcasing projects, writings, and professional journey.',
-        url: 'https://gangadhar.com',
+        url: 'https://bengaluruboy.in',
         githubUrl: 'https://github.com/gangadhar02/gangadhar.com',
         active: true,
         icon: 'ri-global-line',

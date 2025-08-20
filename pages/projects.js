@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import { AnimateSharedLayout } from 'framer-motion'
-import { ExpandableProjectCard } from '../components/projects/ExpandableProjectCard'
+import ProjectGrid from '../components/ProjectGrid'
 import items from '../data/projects'
 import Base from '../layouts/Base'
 import stripHtml from '../lib/strip-html'
@@ -43,8 +43,8 @@ function Projects(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://gangadhar.com/projects" property="og:url" />
-        <meta content={`https://gangadhar.com${image}`} property="og:image" />
+        <meta content="https://bengaluruboy.in/projects" property="og:url" />
+        <meta content={`https://bengaluruboy.in${image}`} property="og:image" />
       </Head>
 
       <AnimateSharedLayout>
@@ -62,7 +62,7 @@ function Projects(props) {
           className="mb-8"
         />
         <Reveal delay={0.5} y={24} duration={1.3}>
-          <ExpandableProjectCard projects={getAllProjects()} />
+          <ProjectGrid projects={getAllProjects()} />
         </Reveal>
       </AnimateSharedLayout>
     </>

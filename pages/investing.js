@@ -36,8 +36,8 @@ function Investing(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://gangadhar.com/investing" property="og:url" />
-        <meta content={`https://gangadhar.com${image}`} property="og:image" />
+        <meta content="https://bengaluruboy.in/investing" property="og:url" />
+        <meta content={`https://bengaluruboy.in${image}`} property="og:image" />
       </Head>
 
       <p dangerouslySetInnerHTML={{ __html: description }} />

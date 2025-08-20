@@ -38,7 +38,7 @@ function Work(props) {
   }
 
   const { title, image } = props
-  const description = `My journey in marketing began with a passion for <strong>Creative Strategy</strong> and <strong>Performance Marketing</strong>. Since then, I've dedicated myself to building AI-powered marketing solutions and driving growth strategies, accumulating <strong>${items.length} roles</strong> of hands-on experience in creative strategy, campaign optimization, and revenue operations. Want to work together? <a href="https://gangadhar.com/contact" target="_blank">Let's connect!</a>`
+  const description = `My journey in marketing began with a passion for <strong>Creative Strategy</strong> and <strong>Performance Marketing</strong>. Since then, I've dedicated myself to building AI-powered marketing solutions and driving growth strategies, accumulating <strong>${items.length} roles</strong> of hands-on experience in creative strategy, campaign optimization, and revenue operations. Want to work together? <a href="https://bengaluruboy.in/contact" target="_blank">Let's connect!</a>`
 
   return (
     <>
@@ -47,8 +47,8 @@ function Work(props) {
         <meta content={title} property="og:title" />
         <meta content={stripHtml(description)} name="description" />
         <meta content={stripHtml(description)} property="og:description" />
-        <meta content="https://gangadhar.com/work" property="og:url" />
-        <meta content={`https://gangadhar.com${image}`} property="og:image" />
+        <meta content="https://bengaluruboy.in/work" property="og:url" />
+        <meta content={`https://bengaluruboy.in${image}`} property="og:image" />
       </Head>
 
       <AnimateSharedLayout>

@@ -11,11 +11,11 @@ function Post(props) {
 
   const title = `${props.title} // Gangadhar S`
   const description = props.description || ''
-  const url = `https://gangadhar.com/${props.slug}`
+  const url = `https://bengaluruboy.in/${props.slug}`
   const date = new Date(props.date).toISOString()
   const image = props.image
-    ? `https://gangadhar.com${props.image}`
-    : 'https://gangadhar.com/static/images/home-opt.jpg'
+    ? `https://bengaluruboy.in${props.image}`
+    : 'https://bengaluruboy.in/static/images/home-opt.jpg'
 
   return (
     <>
@@ -65,7 +65,7 @@ export async function getStaticProps({ params }) {
 
     const isProd = process.env.NODE_ENV === 'production'
     const base = isProd
-      ? 'https://www.gangadhar.com'
+      ? 'https://bengaluruboy.in'
       : 'http://localhost:3000'
 
     return {

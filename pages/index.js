@@ -27,8 +27,8 @@ export default function Index(props) {
         <meta content={title} property="og:title" />
         <meta content={description} name="description" />
         <meta content={description} property="og:description" />
-        <meta content="https://gangadhar.com" property="og:url" />
-        <meta content={`https://gangadhar.com${image}`} property="og:image" />
+        <meta content="https://bengaluruboy.in" property="og:url" />
+        <meta content={`https://bengaluruboy.in${image}`} property="og:image" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
