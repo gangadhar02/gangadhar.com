@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { Menu, X, Home, FolderOpen, PenTool, Camera, FileText } from 'lucide-react'
 import { Button } from './ui/button'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { cn } from '../lib/utils'
 import { IconCircleLetterGFilled } from '@tabler/icons-react'
 import { useTheme } from '../contexts/ThemeContext'
@@ -22,6 +22,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { theme, toggleTheme } = useTheme()
   const mounted = useHasMounted()
+  const menuRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +31,25 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Handle click outside to close menu
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuState && menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuState(false)
+      }
+    }
+
+    if (menuState) {
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('touchstart', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
+  }, [menuState])
 
   return (
     <header>
@@ -108,7 +128,9 @@ export default function Navbar() {
             </div>
 
             {/* Mobile + Buttons */}
-            <div className={cn(
+            <div 
+              ref={menuRef}
+              className={cn(
               "bg-background mb-6 w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent lg:overflow-visible",
               menuState ? "block lg:flex" : "hidden lg:flex"
             )}>

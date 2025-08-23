@@ -2,7 +2,7 @@ import { format, parseISO } from 'date-fns'
 import { AnimateSharedLayout } from 'framer-motion'
 import Head from 'next/head'
 import React from 'react'
-import { ExpandableWorkCard } from '../components/work/ExpandableWorkCard'
+import { SimpleWorkCard } from '../components/work/SimpleWorkCard'
 import awards from '../data/awards'
 import items from '../data/work'
 import Base from '../layouts/Base'
@@ -66,7 +66,7 @@ function Work(props) {
           className="mb-8"
         />
         <Reveal delay={0.5} y={24} duration={1.3}>
-          <ExpandableWorkCard workItems={items} />
+          <SimpleWorkCard workItems={items} />
         </Reveal>
 
         <TextReveal

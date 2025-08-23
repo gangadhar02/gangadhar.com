@@ -11,14 +11,14 @@ import { Stagger } from './motion/Stagger'
 import TextReveal from './motion/TextReveal'
 import ProjectGrid from './ProjectGrid'
 import workData from '../data/work'
+import { SimpleWorkCard } from './work/SimpleWorkCard'
 import projectsData from '../data/projects'
 
 export default function ComprehensiveHomepage({ latestPost }) {
-  const [showPreviousRoles, setShowPreviousRoles] = useState(false)
+  // Removed showPreviousRoles state - no longer needed with SimpleWorkCard
 
   // Get current and previous roles
-  const currentRole = workData[0] // First item is current
-  const previousRoles = workData.slice(1) // Rest are previous
+  // Work data is now handled directly by SimpleWorkCard component
 
   // Get all projects flattened from years
   const allProjects = projectsData.flatMap(yearGroup => yearGroup.projects)
@@ -44,7 +44,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
         </Reveal>
 
         {/* Intro Text */}
-        <div className="md:col-span-2 space-y-6">
+        <div className="md:col-span-2 space-y-6 text-center md:text-left">
           <Reveal delay={0.3} y={20} duration={1.2}>
             <div className={cn(
               "prose prose-lg dark:prose-invert max-w-none",
@@ -58,7 +58,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
 
           <Reveal delay={0.5} y={20} duration={1.2}>
             <div className={cn(
-              "flex items-center gap-2",
+              "flex items-center gap-2 justify-center md:justify-start",
               "text-secondary text-base"
             )}>
               <IconWorld className="h-5 w-5 text-secondary [&>path]:fill-none [&>path]:stroke-current" />
@@ -73,7 +73,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
         <div className="relative flex items-baseline gap-4">
           <TextReveal
             as="h2"
-            text="WORK"
+            text="WORK EXPERIENCE"
             per="word"
             delay={0.1}
             speed={0.1}
@@ -83,90 +83,11 @@ export default function ComprehensiveHomepage({ latestPost }) {
           <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600" style={{ marginTop: '-0.6em' }}></div>
         </div>
 
-        {/* Current Role */}
+        {/* Work Cards */}
         <Reveal delay={0.3} y={20} duration={1.2}>
-          <div className="border border-black/[0.08] dark:border-white/[0.08] rounded p-3 bg-card transition-colors duration-150">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-4">
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-primary">{currentRole.jobTitle}</h3>
-                <p className="text-sm text-secondary">{currentRole.startDate.split('-')[0]} - Present</p>
-              </div>
-              <div className="md:text-right md:flex-shrink-0">
-                <h4 className="text-xl font-semibold text-primary">{currentRole.company}</h4>
-                <p className="text-sm text-secondary">{currentRole.location?.split(',')[0] || 'Remote'}</p>
-              </div>
-            </div>
-          </div>
+          <SimpleWorkCard workItems={workData} />
         </Reveal>
 
-        {/* Previous Roles Collapsible */}
-        <div>
-          <motion.button
-            onClick={() => setShowPreviousRoles(!showPreviousRoles)}
-            className={cn(
-              "flex items-center gap-2 text-left py-2",
-              "hover:text-primary transition-colors duration-200"
-            )}
-            whileTap={{ scale: 0.98 }}
-          >
-            <motion.div
-              animate={{ rotate: showPreviousRoles ? 180 : 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <ChevronDown className="h-4 w-4 text-secondary" />
-            </motion.div>
-            <span className="font-medium text-secondary">Previous roles</span>
-            <span className="text-sm text-secondary bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">{previousRoles.length}</span>
-          </motion.button>
-          
-          <AnimatePresence>
-            {showPreviousRoles && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="overflow-hidden mt-4"
-              >
-                <motion.div
-                  initial={{ y: -10 }}
-                  animate={{ y: 0 }}
-                  exit={{ y: -10 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="space-y-4"
-                >
-                  {previousRoles.map((role, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ 
-                        duration: 0.3, 
-                        delay: index * 0.05,
-                        ease: "easeOut" 
-                      }}
-                      className="border border-black/[0.08] dark:border-white/[0.08] rounded p-3 bg-card transition-colors duration-150"
-                    >
-                      <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-4">
-                        <div className="flex-1">
-                          <h4 className="text-xl font-semibold text-primary">{role.jobTitle}</h4>
-                          <p className="text-sm text-secondary">
-                            {role.startDate.split('-')[0]} - {role.endDate ? role.endDate.split('-')[0] : 'Present'}
-                          </p>
-                        </div>
-                        <div className="md:text-right md:flex-shrink-0">
-                          <p className="text-xl font-semibold text-primary">{role.company}</p>
-                          <p className="text-sm text-secondary">{role.location?.split(',')[0] || 'Remote'}</p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
       </section>
 
       {/* What I Do Section */}
@@ -179,7 +100,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
             delay={0.1}
             speed={0.1}
             duration={1.0}
-            className="text-xl font-semibold text-gray-400 uppercase tracking-wider flex-shrink-0"
+            className="text-base md:text-xl font-semibold text-gray-400 uppercase tracking-wider flex-shrink-0"
           />
           <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600" style={{ marginTop: '-0.6em' }}></div>
         </div>
@@ -262,7 +183,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
         </div>
 
         <Reveal delay={0.3} y={20} duration={1.2}>
-          <ProjectGrid projects={allProjects} limit={6} />
+          <ProjectGrid projects={allProjects} limit={3} />
         </Reveal>
       </section>
 
