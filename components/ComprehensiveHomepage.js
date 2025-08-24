@@ -24,9 +24,9 @@ export default function ComprehensiveHomepage({ latestPost }) {
   const allProjects = projectsData.flatMap(yearGroup => yearGroup.projects)
 
   return (
-    <div className="max-w-[760px] mx-auto px-6 py-12">
+    <div className="max-w-[760px] mx-auto px-6 py-6">
       {/* Hero Section */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
         {/* Photo */}
         <Reveal delay={0.1} y={20} duration={1.2}>
           <div className="md:col-span-1">
@@ -44,14 +44,14 @@ export default function ComprehensiveHomepage({ latestPost }) {
         </Reveal>
 
         {/* Intro Text */}
-        <div className="md:col-span-2 space-y-6 text-center md:text-left">
+        <div className="md:col-span-2 space-y-2 text-center md:text-left">
           <Reveal delay={0.3} y={20} duration={1.2}>
             <div className={cn(
               "prose prose-lg dark:prose-invert max-w-none",
               "[&_p]:text-secondary [&_p]:leading-relaxed"
             )}>
-              <p className="text-lg">
-                Hey, I'm <span className="text-primary font-medium">Gangadhar</span>. By day, I'm a <span className="text-primary font-medium">marketer</span>. By night, I'm busy <span className="text-primary font-medium">building</span>, <span className="text-primary font-medium">tinkering</span>, and <span className="text-primary font-medium">writing</span> about the random things I find cool. I'm probably <span className="text-primary font-medium">lifting</span>, <span className="text-primary font-medium">running</span>, <span className="text-primary font-medium">trekking</span>, <span className="text-primary font-medium">watching movies</span>, or <span className="text-primary font-medium">plotting my next trip</span>.
+              <p className="text-lg !mt-0">
+                Hey, I'm <span className="text-primary font-medium">Gangadhar</span>. By day, I'm a <span className="text-primary font-medium">marketer</span>. By night, I'm busy <span className="text-primary font-medium">building</span>, <span className="text-primary font-medium">exploring</span>, and <span className="text-primary font-medium">writing</span> about the random things I find cool. When I'm not in my hustle mode, I'm probably <span className="text-primary font-medium">lifting</span>, <span className="text-primary font-medium">running</span>, <span className="text-primary font-medium">trekking</span>, <span className="text-primary font-medium">watching movies</span>, or <span className="text-primary font-medium">plotting my next trip</span>.
               </p>
             </div>
           </Reveal>
@@ -69,7 +69,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
       </section>
 
       {/* Work Section */}
-      <section className="space-y-4 mt-2">
+      <section className="space-y-2 mt-0">
         <div className="relative flex items-baseline gap-4">
           <TextReveal
             as="h2"
@@ -78,7 +78,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
             delay={0.1}
             speed={0.1}
             duration={1.0}
-            className="text-xl font-semibold text-gray-400 uppercase tracking-wider flex-shrink-0"
+            className="text-xl font-semibold text-gray-400 uppercase tracking-wider flex-shrink-0 !mt-[30px]"
           />
           <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600" style={{ marginTop: '-0.6em' }}></div>
         </div>
@@ -91,7 +91,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
       </section>
 
       {/* What I Do Section */}
-      <section className="space-y-8 mt-2">
+      <section className="space-y-8 mt-0">
         <div className="relative flex items-baseline gap-4">
           <TextReveal
             as="h2"
@@ -100,7 +100,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
             delay={0.1}
             speed={0.1}
             duration={1.0}
-            className="text-base md:text-xl font-semibold text-gray-400 uppercase tracking-wider flex-shrink-0"
+            className="text-base md:text-xl font-semibold text-gray-400 uppercase tracking-wider flex-shrink-0 !mt-[30px]"
           />
           <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600" style={{ marginTop: '-0.6em' }}></div>
         </div>
@@ -116,7 +116,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
 
       {/* Newest Writing Section */}
       {latestPost && (
-        <section className="space-y-8 mt-2">
+        <section className="space-y-8 mt-1">
           <div className="relative flex items-baseline gap-4">
             <TextReveal
               as="h2"
@@ -165,7 +165,7 @@ export default function ComprehensiveHomepage({ latestPost }) {
       )}
 
       {/* Projects Section */}
-      <section className="space-y-6 mt-2">
+      <section className="space-y-6 mt-1">
         <div className="relative flex items-baseline gap-4">
           <TextReveal
             as="h2"
